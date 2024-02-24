@@ -1,7 +1,7 @@
 \usepackage[english]{babel}
 \usepackage{hyperref}
 \usepackage{graphicx}
-\usepackage{amssymb,amsmath}
+\usepackage{amssymb, amsmath}
 \usepackage[english]{cleveref}
 \usepackage{geometry}
 \usepackage{titling}
@@ -47,12 +47,12 @@
 
 \newcommand{\chapterWithoutNumber}[1]{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
 
-\let\oldbibliography\bibliography
-\renewcommand{\bibliography}[1]{
-    \addcontentsline{toc}{part}{}
-    \addcontentsline{toc}{chapter}{\bibname}
-    \oldbibliography{#1}
-}
+% \let\oldbibliography\bibliography
+% \renewcommand{\bibliography}[1]{
+%     \addcontentsline{toc}{part}{}
+%     \addcontentsline{toc}{chapter}{\bibname}
+%     \oldbibliography{#1}
+% }
 
 \def\themainlinespacing{1}
 \newcommand{\mainlinespacing}[1]{\def\themainlinespacing{#1}}
