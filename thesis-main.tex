@@ -7,20 +7,26 @@
 \usepackage{acronym}
 
 \school{\unibo}
-\programme{Corso di Laurea [Magistrale?] in Ingegneria e Scienze Informatiche}
-\title{Fancy Title}
-\author{Candidate Name}
+\programme{Corso di Laurea Magistrale in Ingegneria e Scienze Informatiche}
+\title{Design and implementation of a scalable domain specific language foundation for ScaFi with Scala 3}
+\author{Luca Deluigi}
 \date{\today}
-\subject{Supervisor's course name}
-\supervisor{Prof. Supervisor Here}
-\cosupervisor{Dott. CoSupervisor 1}
-\morecosupervisor{Dott. CoSupervisor 2}
-\session{I}
+\subject{Paradigmi di Programmazione e Sviluppo}
+\supervisor{Prof. Mirko Viroli}
+\cosupervisor{Dott. Gianluca Aguzzi}
+% \morecosupervisor{Dott. Roberto Casadei}
+\session{IV}
 \academicyear{2022-2023}
 
 % Definition of acronyms
 \acrodef{IoT}{Internet of Thing}
-\acrodef{vm}[VM]{Virtual Machine}
+\acrodef{VM}{Virtual Machine}
+\acrodef{CAS}{Collective Adaptive System}
+\acrodef{MAS}{Multi Agent System}
+\acrodef{DSL}{Domain Specific Language}
+\acrodef{FC}{Field Calculus}
+\acrodef{HFC}{Higher-Order Field Calculus}
+\acrodef{XC}{Exchange Calculus}
 
 
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
@@ -49,51 +55,21 @@ Optional. Max 1 page.
 
 \mainmatter
 
-%----------------------------------------------------------------------------------------
-\chapter{Introduction}
-\label{chap:introduction}
-%----------------------------------------------------------------------------------------
+\include{scafi-xc-thesis/chapters/0-introduction}
 
-Write your intro here.
-\sidenote{Add sidenotes in this way. They are named after the author of the thesis}
+\include{scafi-xc-thesis/chapters/1-state-of-the-art}
 
-You can use acronyms that your defined previously,
-such as \ac{IoT}.
-%
-If you use acronyms twice,
-they will be written in full only once
-(indeed, you can mention the \ac{IoT} now without it being fully explained).
-%
-In some cases, you may need a plural form of the acronym.
-%
-For instance,
-that you are discussing \acp{vm},
-you may need both \ac{vm} and \acp{vm}.
+\include{scafi-xc-thesis/chapters/2-background}
 
-\paragraph{Structure of the Thesis}
+\include{scafi-xc-thesis/chapters/3-analysis}
 
-\note{At the end, describe the structure of the paper}
+\include{scafi-xc-thesis/chapters/4-design}
 
-\chapter{State of the art}
+\include{scafi-xc-thesis/chapters/5-implementation}
 
-I suggest referencing stuff as follows: \cref{fig:random-image} or \Cref{fig:random-image}
+\include{scafi-xc-thesis/chapters/6-evaluation}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=.8\linewidth]{figures/random-image.pdf}
-    \caption{Some random image}
-    \label{fig:random-image}
-\end{figure}
-
-\section{Some cool topic}
-
-\chapter{Contribution}
-
-You may also put some code snippet (which is NOT float by default), eg: \cref{lst:random-code}.
-
-\lstinputlisting[float,language=Java,label={lst:random-code}]{listings/HelloWorld.java}
-
-\section{Fancy formulas here}
+\include{scafi-xc-thesis/chapters/7-conclusion-and-future-work}
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
