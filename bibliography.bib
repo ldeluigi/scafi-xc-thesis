@@ -7,27 +7,18 @@ year = {2024},
 issn = {0164-1212},
 doi = {https://doi.org/10.1016/j.jss.2024.111976},
 url = {https://www.sciencedirect.com/science/article/pii/S0164121224000190},
-author = {Giorgio Audrito and Roberto Casadei and Ferruccio Damiani and Guido Salvaneschi and Mirko Viroli},
-keywords = {Distributed programming, Collective computing, Core calculus, Operational semantics, Type soundness, Scala DSL, C＋＋ DSL},
-abstract = {Distributed collective systems are systems formed by homogeneous dynamic collections of devices acting in a shared environment to pursue a joint task or goal. Typical applications emerge in the context of wireless sensor networks, robot swarms, groups of wearable-augmented people, and computing infrastructures. Programming such systems is notoriously hard, due to requirements of scalability, concurrency, faults, and difficulty in making desired collective behaviour ultimately emerge: ad-hoc languages and mechanisms have been proposed threads like spatial computing, macro-programming, and field-based coordination. In this paper we present the eXchange Calculus (XC), formalising a tiny set of key mechanisms, usable across many different languages and platforms, allowing to express the overall interactive behaviour of distributed collective systems in a declarative way. In this approach, computation (executed in asynchronous rounds), communication (which is neighbour-based), and state over time, are all expressed by a single declarative construct, called exchange. We provide a formalisation of XC in terms of syntax, device-level and network-level semantics, prove a number of properties of the calculus, and discuss applicability considering a smart city scenario. XC is implemented as a DSL in Scala and in C＋＋, with different trade-offs in terms of productivity and platform targetting.}
+author = {Giorgio Audrito and Roberto Casadei and Ferruccio Damiani and Guido Salvaneschi and Mirko Viroli}
 }
 
 @InProceedings{share-operator,
-author="Audrito, Giorgio
-and Beal, Jacob
-and Damiani, Ferruccio
-and Pianini, Danilo
-and Viroli, Mirko",
-editor="Riis Nielson, Hanne 
-and Tuosto, Emilio",
-title="The share Operator for Field-Based Coordination",
-booktitle="Coordination Models and Languages",
-year="2019",
-publisher="Springer International Publishing",
-address="Cham",
-pages="54--71",
-abstract="Recent work in the area of coordination models and collective adaptive systems promotes a view of distributed computations as functions manipulating computational fields (data structures spread over space and evolving over time), and introduces the field calculus as a formal foundation for field computations. With the field calculus, evolution (time) and neighbor interaction (space) are handled by separate functional operators: however, this intrinsically limits the speed of information propagation that can be achieved by their combined use. In this paper, we propose a new field-based coordination operator called share, which captures the space-time nature of field computations in a single operator that declaratively achieves: (i) observation of neighbors' values; (ii) reduction to a single local value; and (iii) update and converse sharing to neighbors of a local variable. In addition to conceptual economy, use of the share operator also allows many prior field calculus algorithms to be greatly accelerated, which we validate empirically with simulations of a number of frequently used network propagation and collection algorithms.",
-isbn="978-3-030-22397-7"
+author={"Audrito, Giorgio and Beal, Jacob and Damiani, Ferruccio and Pianini, Danilo and Viroli, Mirko"},
+editor={"Riis Nielson, Hanne and Tuosto, Emilio"},
+title={"The share Operator for Field-Based Coordination"},
+booktitle={"Coordination Models and Languages"},
+year={"2019"},
+publisher={"Springer International Publishing"},
+address={"Cham"},
+pages={"54--71"}
 }
 
 @phdthesis{scafi-thesis,
@@ -36,21 +27,12 @@ title = {Aggregate Programming in Scala: a Core Library and Actor-Based Platform
 url = {http://amslaurea.unibo.it/10341/},
 keywords = {aggregate-programming field-calculus distributed-framework actors self-organization Scala},
 school = {Alma Mater Studiorum - Università di Bologna},
-year = {2016},
-abstract = {La programmazione aggregata {\`e} un paradigma che supporta la programmazione di sistemi di dispositivi, adattativi ed eventualmente a larga scala, nel loro insieme -- come aggregati. L'approccio prevalente in questo contesto {\`e} basato sul field calculus, un calcolo formale che consente di definire programmi aggregati attraverso la composizione funzionale di campi computazionali, creando i presupposti per la specifica di pattern di auto-organizzazione robusti.
-
-La programmazione aggregata {\`e} attualmente supportata, in modo pi{\`u} o meno parziale e principalmente per la simulazione, da DSL dedicati (cf., Protelis), ma non esistono framework per linguaggi mainstream finalizzati allo sviluppo di applicazioni. Eppure, un simile supporto sarebbe auspicabile per ridurre tempi e sforzi d'adozione e per semplificare l'accesso al paradigma nella costruzione di sistemi reali, nonch{\'e} per favorire la ricerca stessa nel campo.
-
-Il presente lavoro consiste nello sviluppo, a partire da un prototipo della semantica operazionale del field calculus, di un framework per la programmazione aggregata in Scala.
-
-La scelta di Scala come linguaggio host nasce da motivi tecnici e pratici. Scala {\`e} un linguaggio moderno, interoperabile con Java, che ben integra i paradigmi ad oggetti e funzionale, ha un sistema di tipi espressivo, e fornisce funzionalit{\`a} avanzate per lo sviluppo di librerie e DSL. Inoltre, la possibilit{\`a} di appoggiarsi, su Scala, ad un framework ad attori solido come Akka, costituisce un altro fattore trainante, data la necessit{\`a} di colmare l'abstraction gap inerente allo sviluppo di un middleware distribuito.
-
-Nell'elaborato di tesi si presenta un framework che raggiunge il triplice obiettivo: la costruzione di una libreria Scala che realizza la semantica del field calculus in modo corretto e completo, la realizzazione di una piattaforma distribuita Akka-based su cui sviluppare applicazioni, e l'esposizione di un'API generale e flessibile in grado di supportare diversi scenari.}
+year = {2016}
 }
 
 @InProceedings{xc-experiment-with-scafi,
   author =	{Audrito, Giorgio and Casadei, Roberto and Damiani, Ferruccio and Salvaneschi, Guido and Viroli, Mirko},
-  title =	{{Functional Programming for Distributed Systems with XC}},
+  title =	{Functional Programming for Distributed Systems with XC},
   booktitle =	{36th European Conference on Object-Oriented Programming (ECOOP 2022)},
   pages =	{20:1--20:28},
   series =	{Leibniz International Proceedings in Informatics (LIPIcs)},
@@ -79,7 +61,8 @@ Nell'elaborato di tesi si presenta un framework che raggiunge il triplice obiett
   keywords={Aggregates;Programming;Calculus;Context;Libraries;DSL;Robustness;aggregate programming;Scala;DSL;simulation},
   doi={},
   ISSN={},
-  month={Sep.},}
+  month={Sep.}
+}
 
 @article{scafi,
 title = {ScaFi: A Scala DSL and Toolkit for Aggregate Programming},
@@ -90,12 +73,10 @@ year = {2022},
 issn = {2352-7110},
 doi = {https://doi.org/10.1016/j.softx.2022.101248},
 url = {https://www.sciencedirect.com/science/article/pii/S2352711022001662},
-author = {Roberto Casadei and Mirko Viroli and Gianluca Aguzzi and Danilo Pianini},
-keywords = {Aggregate programming, Computational fields, Macro-level programming, Distributed computing, Scala toolkit},
-abstract = {Supported by current socio-scientific trends, programming the global behaviour of whole computational collectives makes for great opportunities, but also significant challenges. Recently, aggregate computing has emerged as a prominent paradigm for so-called collective adaptive systems programming. To shorten the gap between such research endeavours and mainstream software development and engineering, we present ScaFi, a Scala toolkit providing an internal domain-specific language, libraries, a simulation environment, and runtime support for practical aggregate computing systems development.}
+author = {Roberto Casadei and Mirko Viroli and Gianluca Aguzzi and Danilo Pianini}
 }
 
-@ARTICLE{aggregate-programming,
+@article{aggregate-programming,
   author={Beal, Jacob and Pianini, Danilo and Viroli, Mirko},
   journal={Computer}, 
   title={Aggregate Programming for the Internet of Things}, 
@@ -103,16 +84,14 @@ abstract = {Supported by current socio-scientific trends, programming the global
   volume={48},
   number={9},
   pages={22-30},
-  abstract={Through field calculus constructs and building-block APIs, aggregate programming could help unlock the IoT's true potential by allowing complex distributed services to be specified succinctly and by enabling such services to be safely encapsulated, modulated, and composed with one another.},
-  keywords={Internet of things;Programming;Embedded systems;Internet of things;Aggregate programmin;Pervasive computing;aggregate programming;pervasive computing;field calculus;distributed systems;domain-specific languages;DSLs;embedded systems;Internet of Things;IoT},
   doi={10.1109/MC.2015.261},
   ISSN={1558-0814},
-  month={Sep.},}
+  month={Sep.}
+}
 
 @article{macroprogramming-state-of-the-art,
   author       = {Roberto Casadei},
-  title        = {Macroprogramming: Concepts, State of the Art, and Opportunities of
-                  Macroscopic Behaviour Modelling},
+  title        = {Macroprogramming: Concepts, State of the Art, and Opportunities of Macroscopic Behaviour Modelling},
   journal      = {CoRR},
   volume       = {abs/2201.03473},
   year         = {2022},
@@ -134,8 +113,7 @@ issn = {2352-2208},
 doi = {https://doi.org/10.1016/j.jlamp.2019.100486},
 url = {https://www.sciencedirect.com/science/article/pii/S235222081930032X},
 author = {Mirko Viroli and Jacob Beal and Ferruccio Damiani and Giorgio Audrito and Roberto Casadei and Danilo Pianini},
-keywords = {Distributed systems, Aggregate computing, Field calculus, Spatial computing},
-abstract = {Aggregate computing is an emerging approach to the engineering of complex coordination for distributed systems, based on viewing system interactions in terms of information propagating through collectives of devices, rather than in terms of individual devices and their interaction with their peers and environment. The foundation of this approach is the distillation of a number of prior approaches, both formal and pragmatic, proposed under the umbrella of field-based coordination, and culminating into the field calculus, a universal functional programming model for the specification and composition of collective behaviours with equivalent local and aggregate semantics. This foundation has been elaborated into a layered approach to engineering coordination of complex distributed systems, building up to pragmatic applications through intermediate layers encompassing reusable libraries of program components. Furthermore, some of these components are formally shown to satisfy formal properties like self-stabilisation, which transfer to whole application services by functional composition. In this survey, we trace the development and antecedents of field calculus, review the field calculus itself and the current state of aggregate computing theory and practice, and discuss a roadmap of current research directions with implications for the development of a broad range of distributed systems.}
+keywords = {Distributed systems, Aggregate computing, Field calculus, Spatial computing}
 }
 
 @inproceedings{protelis,
@@ -147,9 +125,8 @@ publisher = {Association for Computing Machinery},
 address = {New York, NY, USA},
 url = {https://doi.org/10.1145/2695664.2695913},
 doi = {10.1145/2695664.2695913},
-abstract = {The notion of a computational field has been proposed as a unifying abstraction for developing distributed systems, focusing on the computations and coordination of aggregates of devices instead of individual behavior. Prior field-based languages, however, have suffered from a number of practical limitations that have posed barriers to adoption and use. We address these limitations by introduction of Protelis, a functional language based on computational fields and embedded in Java, thereby enabling the construction of widely reusable components of aggregate systems. We demonstrate the simplicity of Protelis integration and programming through two examples: simulation of a pervasive computing scenario in the Alchemist simulator [24], and coordinated management of a network of services.},
 booktitle = {Proceedings of the 30th Annual ACM Symposium on Applied Computing},
-pages = {1846–1853},
+pages = {1846-1853},
 numpages = {8},
 keywords = {aggregate programming, alchemist, computational field, coordination, field calculus},
 location = {Salamanca, Spain},
@@ -177,12 +154,10 @@ number = {1},
 issn = {1529-3785},
 url = {https://doi.org/10.1145/3285956},
 doi = {10.1145/3285956},
-abstract = {The complexity of large-scale distributed systems, particularly when deployed in physical space, calls for new mechanisms to address composability and reusability of collective adaptive behaviour. Computational fields have been proposed as an effective abstraction to fill the gap between the macro-level of such systems (specifying a system’s collective behaviour) and the micro-level (individual devices’ actions of computation and interaction to implement that collective specification), thereby providing a basis to better facilitate the engineering of collective APIs and complex systems at higher levels of abstraction. This article proposes a full formal foundation for field computations, in terms of a core (higher-order) calculus of computational fields containing a few key syntactic constructs, and equipped with typing, denotational and operational semantics. Critically, this allows formal establishment of a link between the micro- and macro-levels of collective adaptive systems by a result of computational adequacy and abstraction for the (aggregate) denotational semantics with respect to the (per-device) operational semantics.},
 journal = {ACM Trans. Comput. Logic},
 month = {jan},
 articleno = {5},
-numpages = {55},
-keywords = {Adequacy, aggregate programming, computational field, core calculus, full abstraction, spatial computing, type inference system, type soundness}
+numpages = {55}
 }
 
 @inproceedings{fc,
