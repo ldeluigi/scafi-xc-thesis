@@ -31,6 +31,12 @@ The building blocks of \ac{XC} are:
     \item the concept of \textit{alignment}.
 \end{itemize}
 
+For the expressiveness of \ac{XC}, two crucial factors are:
+\begin{itemize}
+    \item the ability, for an \textit{exchange} invocation, to send differentiated messages to neighbors,
+    \item and \textit{alignment}, because it enables \textit{functional composition of distribute behavior}\cite{xc}.
+\end{itemize}
+
 \subsection{System model}
 
 Similarly to \ac{FC}, \ac{XC} targets a system modeled as a collection of devices, generally equipped with sensors and/or actuators, that repeatedly compute execution \textit{rounds} of the \textbf{same program} and exchange asynchronous \textit{messages} with their respective neighbors\cite{xc}.
@@ -122,16 +128,78 @@ The complete syntax for \ac{XC} is available in the original paper\cite[p. 4]{xc
 
 \subsection{The \texttt{exchange} primitive}
 
-The following description is largely based on the original paper for \ac{XC}\cite{xc}.
+The following description is based on the original paper for \ac{XC}\cite{xc}.
 %
-In \ac{XC}, the only communication primitive is the function $exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{return} e_r \mathbf{send} e_s)$, which is defined using syntactic sugar and translates to $exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow (e_r, e_s))$.
+The only communication primitive present in \ac{XC} is the function $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\return} e_r \mathbf{\send} e_s)$$ which is defined using syntactic sugar and translates to $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow (e_r, e_s))$$
 %
 The evaluation of the primitive follows three steps:
 \begin{enumerate}
-    \item the device evaluates expression $e_i$ to obtain the \textit{initial} local value $l_i$;
-    \item 
+    \item the device evaluates the expression $e_i$ to obtain the \textit{initial} local value $l_i$;
+    \item $\underline{\mathbf{n}}$ is substituted with the nvalue $\underline{\mathbf{w}}$ of messages received from neighbors for this exchange, using $l_i$ as the default value for $\underline{\mathbf{w}}$, and the device evaluates the expression $e_r$ to the value $v_r$ to be returned;
+    \item the device evaluates the expression $e_s$ to obtain a nvalue $\underline{\mathbf{w_s}}$ to be sent to neighbors such as $\delta'$, that will use their corresponding value $\underline{\mathbf{w_s}}(\delta')$ in their next execution round.
 \end{enumerate}
 
-\subsection{Alignment}
+As a shorthand, $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\return} e \mathbf{\send} e)$$ can be written as $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\retsend} e)$$ according to the \ac{XC} paper\cite{xc}.
+
+Two examples of reusable functions written in \ac{XC} can be seen in \Cref{lst:xc-program}.
+%
+There, $mux(cond, e_1, e_2)$ is a conditional expression that first evaluates $cond$, $e_1$, and $e_2$, and then returns the value of $e_1$ if $cond$ is true, or the value of $e_2$ otherwise.
+%
+\texttt{mux} is useful to avoid breaking the alignment of the network by using conditionals, as explained in \Cref{chap:background->sec:xc->subsec:alignment}.
+%
+In the examples, $\underline{senseDist}$ is a network-based sensor that returns the nvalue containing the distances to neighbors, abstracting over the way the device obtains the measurements, with $Infinity$ as its default value used for all other devices.
+%
+\texttt{distanceEstimate} computes the minimum distance from a source using the distance sensor and the neighbors estimate $\underline{\mathbf{n}}$ of their minimum distance from the same source.
+%
+\texttt{distanceTo} computes the minimum distance from a source determined by a boolean expression, which is actually a \textit{gradient} with value $0$ in all devices where $src$ is true, and the minimum distance from the source in all other devices connected to a source device, or else $Infinity$.
+
+\lstinputlisting[float,language=XC,label={lst:xc-program}, caption={Implementation of a network-wide gradient, called \texttt{distanceTo}, in \ac{XC}.}]{listings/distanceTo.xc}
+
+\subsection{Alignment}\label{chap:background->sec:xc->subsec:alignment}
+
+A program can execute multiple exchanges in a single round, and \ac{XC} ensures that messages are dispatched to corresponding exchange expressions, using the concept of \textit{alignment}.
+%
+The corresponding exchange expressions are those that are found in the same position in the \ac{AST} and the same stack frame, thus ensuring correct alignment in case of branches, function calls, and recursion\cite{xc}.
+%
+As a consequence, the evaluation of an aggregate program implicitly builds a tree representation, which all aligned devices, as well as the device itself in the next rounds, replicate.
+
+Conditionals such as $if (cond) {e_1} else {e_2}$ interfere with alignment because only the \texttt{exchange} operations in the same position within the AST and stack frame align\cite{xc}.
+%
+As a consequence, \texttt{exchange} only aligns across devices that take the same branch of all the conditionals that are parent of the \texttt{exchange} operation in the AST.
+
+Alignment controls the evaluation of sub-expressions, in particular the evaluation of expressions involving nvalues, because in such expressions only aligned neighbors are considered.
+%
+As a result, every \texttt{if} expression splits the network into two non-communicating sub-networks, each evaluating a different branch based on the condition\cite{xc}.
+%
+Isolated sub-networks in this regard are also called \textit{sub-domains}, or simply \textit{domains}.
+
+\subsection{Formalization of XC}
+
+\ac{XC} is formalized in the paper\cite{xc} in its syntax, operational semantics, and denotational semantics.
+%
+The language takes inspiration from \ac{ML}, and as such is a standard functional language with a classic Hindley-Milner type system, whose formalization makes \ac{XC} type sound and deterministic once extended with \textit{value-tree} typing and \textit{configuration} typing\cite{xc}.
+
+\subsection{Defining FC primitives with XC}
+
+With the implementation of \ac{FC} primitives and expressiveness using \ac{XC}, the \ac{XC} inherits all the results found in literature that hold for \ac{FC}, such as eventual recovery and stabilization after transient changes\cite{self-stabilisation-in-fc}, independence from the density of devices\cite{density-independence-in-fc}, real-time error tolerance and convergence\cite{real-time-error-tolerance-in-fc}, and the list continues\cite{xc}.
+%
+Additionally, \ac{XC} opens the possibilities for writing programs not expressible with \ac{FC}, thanks to the expressiveness of the \texttt{exchange} primitive which allows sending differentiated messages to neighbors.
+%
+In \ac{FC}, the concept of \textit{field}, also called \textit{neighbouring value}, is defined as a neighbor-dependent value consisting of a map $\phi = \overline{\delta} \mapsto \overline{l}$ from neighbors to local values, which can be promoted to nvalue with any valid default value $l$.
+%
+This preserves the behavior of programs written in \ac{FC} but interpreted within \ac{XC}\cite{xc}.
+
+\ac{FC} presents three main primitives to implement with \ac{XC}:
+\begin{itemize}
+    \item \texttt{nbr}, used to access the neighbors values\cite{from-dc-to-fc-and-ap};
+    \item \texttt{rep}, used to compute a new value of an expression based on the result of the same expression in the previous round\cite{from-dc-to-fc-and-ap};
+    \item \texttt{share}, used to efficiently access neighbors' values while computing a new value from the previous result with a single primitive\cite{share-operator}.
+\end{itemize}
+
+The \texttt{nbr} primitive can be implemented as $$nbr(e: A): \underline{A} = exchange(e, (\underline{n}) \Rightarrow \return \underline{n} \send e)$$.
+%
+The \texttt{rep} primitive can be implemented as $$rep(e_i: A)\{(x) \Rightarrow e_n\}: A = exchange(e_i, (\underline{x}) => \retsend e_n[x := self(\underline{x})])$$.
+%
+The \texttt{share} primitive can be implemented as $$share(e_i: A)\{(\underline{x}) \Rightarrow e_n\}: A = self(exchange(e_i, (\underline{x}) => \retsend e_n))$$.
 
 \section{Scala 3}\label{chap:background->sec:scala3}

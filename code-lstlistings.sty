@@ -38,3 +38,25 @@
 	ndkeywords={@Deprecated, @JvmField, @JvmName, @JvmOverloads, @JvmStatic, @JvmSynthetic, Array, Byte, Double, Float, Int, Integer, Iterable, Long, Runnable, Short, String, Unit, it},
 	sensitive=true
 }
+
+\lstdefinelanguage{XC}{
+	%basicstyle=\normalsize\fontfamily{fvm}\lst@ifdisplaystyle\footnotesize\fi,
+	basicstyle=\normalsize\ttfamily\lst@ifdisplaystyle\footnotesize\fi,
+	frame=single,
+	basewidth=0.50em,
+	sensitive=true,
+	morestring=[b]",
+	morecomment=[l]{//},
+	morecomment=[n]{/*}{*/},
+	commentstyle=\color{darkgreen},
+	keywordstyle=\color{blue}\textbf, keywords={def,if,else,val,return,send,retsend},
+	%keywordstyle=[2]\color{violet}\textbf, keywords=[2]{let,in},
+	keywordstyle=[3]\color{violet}, keywords=[3]{updateSelf,self,fst,snd,and,or,nbrDist,uid,nfold,mux,pair,exchange},
+	%false, true, and not occurring in examples' source
+	keywordstyle=[4]\color{red}, keywords=[4]{let,in},
+	literate=
+	{NVn}{{\underline{n}}}2
+	{NVnum}{{\underline{num}}}3
+	{NVbool}{{\underline{bool}}}4
+	{NVsenseDist}{{\underline{senseDist}}}9
+}
