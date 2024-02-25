@@ -220,6 +220,19 @@ This possibility has been exploited by the Scala community to avoid reimplementi
 
 Originally, Scala 2 and Scala 3 compile to \ac{JVM} bytecode, but Scala 3 also supports the \ac{JS} and \textit{LLVM} backends, which are used to compile Scala code to JavaScript and native code, respectively, thanks to community-driven projects\footnote{Scala.js at \url{https://scala-js.org/}}\footnote{Scala Native at \url{https://scala-native.org/}}.
 
+\subsection{Values in Scala}
+
+In Scala, every value has a type, following the type hierarchy explained in \Cref{chap:background->sec:scala3->subsec:type-hierarchy}.
+%
+When declaring a new variable or field as container of a value, the type can be explicitly declared, or it can be inferred by the compiler.
+%
+Every declaration of variable or field must be preceded by the \texttt{val} keyword for an immutable value, or the \texttt{var} keyword for a mutable value.
+%
+Immutable values cannot be reassigned, while mutable values can be reassigned, but the type of the value cannot be changed.
+%
+\texttt{val} doesn't guarantee that the value itself is immutable, but only that the reference to the value cannot be changed.
+
+
 \subsection{New control syntax and significant indentation}
 
 Scala 3 introduced a new syntax for control expressions, as well as new rules that allow the indentation alone to replace the use of curly braces.
@@ -248,6 +261,12 @@ With Scala 3, traits are now able to have parameters like classes do, enhancing 
 %
 Additionally, Scala 3 introduces new rules for instantiation of classes that allow to avoid the use of the \texttt{new} keyword, as shown in \Cref{lst:scala3-without-braces}.
 %
+This feature is called \textit{universal apply methods} and is enabled by the generation of \texttt{apply} methods for classes done by the compiler when the user does not provide one.
+%
+This feature is enabled by a special role given to methods named \texttt{apply}, which in Scala can be invoked without the need to specify the method name.
+%
+When combined with companion objects, described in \Cref{chap:background->sec:scala3->subsec:singleton-objects}, it is often possible to replace auxiliary constructor in classes with multiple \texttt{apply} methods in the companion object, which is a common pattern in Scala.
+%
 Anonymous classes make it possible to instantiate a trait or abstract class by providing a concrete implementation of abstract methods on the fly.
 
 TODO add examples of trait listings
@@ -266,6 +285,13 @@ TODO add an example of infix notation listing
 This feature provides great flexibility in the definition of custom operators, and the development of \ac{DSL}s.
 %
 Since Scala 3, the intent of the definition of custom operators is more explicit thanks to the \texttt{infix} keyword before \texttt{def}.
+
+Even though method overloading is still possible, the Java generic type erasure rules apply in Scala too, and must be taken into account when defining overloaded methods.
+%
+In Scala, it is often possible to avoid method overloading by using default arguments, which are arguments that are automatically assigned a value if no value is provided by the caller, as shown in
+TODO add an example of default arguments listing
+%
+Scala 3 improves the default way to handle method invocation ambiguities with method overloading with the \texttt{@targetName} annotation, which allows to specify a unique name of the method once compiled to \ac{JVM} bytecode.
 
 TODO methods as functions
 
@@ -320,7 +346,7 @@ Starting with Scala 3, the \texttt{with} keyword is deprecated for type definiti
 TODO add example of intersection type listing
 
 
-\subsection{Singleton objects}
+\subsection{Singleton objects} \label{chap:background->sec:scala3->subsec:singleton-objects}
 
 In Scala, the \texttt{object} keyword is used to define a singleton object, which is a class that has only one instance.
 %
@@ -330,7 +356,7 @@ A class with a companion object can access the private members of the companion 
 %
 Singleton objects can be also used to implement traits to create modules, such as factories for collections.
 %
-An example of a singleton object used as a companion of a class can be found in listing \Cref{lst:scala3-singleton-object}.
+An example of a singleton object used as a companion of a class can be found in \Cref{lst:scala3-singleton-object}.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-singleton-object}, caption={Example of a singleton object in Scala 3.}]{listings/scala3-singleton-object.scala}
 
@@ -373,6 +399,8 @@ TODO write
 % type lambdas
 % match types
 
-\subsection{Impactful compiler flags}
-% Safe nulls and the scala type hierarchy
+\subsection{Safe nulls and the scala type hierarchy} \label{chap:background->sec:scala3->subsec:type-hierarchy} \label{chap:background->sec:scala3->subsec:safe-nulls}
+TODO write
+
+\subsection{Multiversal Equality} \label{chap:background->sec:scala3->subsec:multiversal-equality}
 % Multiversal equality
