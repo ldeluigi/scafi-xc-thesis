@@ -151,7 +151,7 @@ In the examples, $\underline{senseDist}$ is a network-based sensor that returns 
 %
 \texttt{distanceEstimate} computes the minimum distance from a source using the distance sensor and the neighbors estimate $\underline{\mathbf{n}}$ of their minimum distance from the same source.
 %
-\texttt{distanceTo} computes the minimum distance from a source determined by a boolean expression, which is actually a \textit{gradient} with value $0$ in all devices where $src$ is true, and the minimum distance from the source in all other devices connected to a source device, or else $Infinity$.
+\texttt{distanceTo} computes the minimum distance from a source determined by a boolean expression, which is a \textit{gradient} with value $0$ in all devices where $src$ is true, and the minimum distance from the source in all other devices connected to a source device, or else $Infinity$.
 
 \lstinputlisting[float,language=XC,label={lst:xc-program}, caption={Implementation of a network-wide gradient, called \texttt{distanceTo}, in \ac{XC}.}]{listings/distanceTo.xc}
 
@@ -185,7 +185,7 @@ With the implementation of \ac{FC} primitives and expressiveness using \ac{XC}, 
 %
 Additionally, \ac{XC} opens the possibilities for writing programs not expressible with \ac{FC}, thanks to the expressiveness of the \texttt{exchange} primitive which allows sending differentiated messages to neighbors.
 %
-In \ac{FC}, the concept of \textit{field}, also called \textit{neighbouring value}, is defined as a neighbor-dependent value consisting of a map $\phi = \overline{\delta} \mapsto \overline{l}$ from neighbors to local values, which can be promoted to nvalue with any valid default value $l$.
+In \ac{FC}, the concept of \textit{field}, also called \textit{neighboring value}, is defined as a neighbor-dependent value consisting of a map $\phi = \overline{\delta} \mapsto \overline{l}$ from neighbors to local values, which can be promoted to nvalue with any valid default value $l$.
 %
 This preserves the behavior of programs written in \ac{FC} but interpreted within \ac{XC}\cite{xc}.
 
@@ -203,4 +203,176 @@ The \texttt{rep} primitive can be implemented as $$rep(e_i: A)\{(x) \Rightarrow 
 The \texttt{share} primitive can be implemented as $$share(e_i: A)\{(\underline{x}) \Rightarrow e_n\}: A = self(exchange(e_i, (\underline{x}) => \retsend e_n))$$.
 
 \section{Scala 3}\label{chap:background->sec:scala3}
-TODO
+
+Scala 3 is the latest major release of the Scala language, a high-level programming language that combines object-oriented and functional programming paradigms.
+%
+Scala is a statically typed, general-purpose programming language designed to express common programming patterns in a concise, elegant, and type-safe way.
+%
+Scala 3 is compiled using the \textit{Dotty} compiler\footnote{\url{https://github.com/lampepfl/dotty}}, which is based on the \ac{DOT} calculus\cite{dot}, while Scala 2 is compiled using the \textit{scalac} compiler\footnote{\url{https://github.com/scala/scala}}.
+%
+This section provides an overview of the main features of Scala 3, which are relevant for the re-design of ScaFi, while also highlighting the differences between Scala 2 and Scala 3.
+
+\subsection{General considerations on Scala 3}
+
+Even though Scala 3 introduces breaking changes in the syntax from Scala 2, most of the code written in Scala 2 can be compiled with Dotty and is also binary compatible with Scala 2.
+%
+This possibility has been exploited by the Scala community to avoid reimplementing a new standard library for Scala 3, using the Scala 2 standard library instead, rewritten to be cross-compiled for both Scala 2 and Scala 3.
+
+Originally, Scala 2 and Scala 3 compile to \ac{JVM} bytecode, but Scala 3 also supports the \ac{JS} and \textit{LLVM} backends, which are used to compile Scala code to JavaScript and native code, respectively, thanks to community-driven projects\footnote{Scala.js at \url{https://scala-js.org/}}\footnote{Scala Native at \url{https://scala-native.org/}}.
+
+\subsection{New control syntax and significant indentation}
+
+Scala 3 introduced a new syntax for control expressions, as well as new rules that allow the indentation alone to replace the use of curly braces.
+%
+Both these changes are aimed at making the code more readable and concise, sometimes noticeably closer to the natural language.
+%
+For example, in \Cref{lst:scala2-with-braces}, the \texttt{if} expression is written with the traditional syntax, while in \Cref{lst:scala3-without-braces} the same expression is written using the new syntax.
+%
+The same is true of the \texttt{for} expression, the \texttt{while} loop, and the \texttt{match} expression.
+
+\lstinputlisting[float,language=Scala,label={lst:scala2-with-braces}, caption={Examples of syntax using braces in Scala 2.}]{listings/scala2-with-braces.scala}
+\lstinputlisting[float,language=Scala,label={lst:scala3-without-braces}, caption={Examples of syntax avoiding braces in Scala 3.}]{listings/scala3-without-braces.scala}
+
+In cases where a code block consists of many lines that make it a bit hard to follow indentation, the new syntax can be combined with \texttt{end} statements, as shown in \Cref{lst:scala3-with-end}.
+
+\lstinputlisting[float,language=Scala,label={lst:scala3-with-end}, caption={Example of syntax using \texttt{end} statements in Scala 3.}]{listings/scala3-without-braces-with-end.scala}
+
+
+\subsection{Traits and classes}
+
+Traits are a powerful feature of Scala that replaces Java's interfaces and abstract classes and were first introduced as a mechanism to organize behavior into small, modular units\cite{traits}.
+%
+In Scala, traits can be used both to define interfaces and to provide partial implementations, composable and mixable into classes when a concrete implementation is needed.
+%
+With Scala 3, traits are now able to have parameters like classes do, enhancing their expressiveness.
+%
+Additionally, Scala 3 introduces new rules for instantiation of classes that allow to avoid the use of the \texttt{new} keyword, as shown in \Cref{lst:scala3-without-braces}.
+%
+Anonymous classes make it possible to instantiate a trait or abstract class by providing a concrete implementation of abstract methods on the fly.
+
+TODO add examples of trait listings
+
+\subsubsection{Object-oriented programming in Scala 3}
+
+In Scala, classes, traits, enums, and objects can all have methods, defined using the \texttt{def} keyword, as seen in \Cref{lst:scala3-without-braces}.
+%
+Abstract methods are methods that do not have a body and must be overridden by concrete subclasses, while concrete methods have a body and can be overridden by subclasses.
+%
+In Scala, a method with no arguments can be overridden by a field with the same name.
+%
+Many features of Scala allow methods to be used as operators, such as the infix notation, which allows to call methods with a single argument without using the dot or parentheses, as shown in 
+TODO add an example of infix notation listing
+%
+This feature provides great flexibility in the definition of custom operators, and the development of \ac{DSL}s.
+%
+Since Scala 3, the intent of the definition of custom operators is more explicit thanks to the \texttt{infix} keyword before \texttt{def}.
+
+TODO methods as functions
+
+One of the most important features of Scala is the ability to define \textit{type members},
+which are members of a class or trait that define types, and can be used as types in the same way as classes or traits, as shown in \Cref{chap:background->sec:scala3->subsec:hkt}.
+%
+Abstract type members avoid Scala trait and class sources to grow in size both vertically and horizontally because they can often replace generic type parameters, with all the benefits of member inheritance, such as overriding and composition.
+
+\subsection{Algebraic Data Types}
+
+The union of the object-oriented and the functional programming paradigms within Scala has always promoted the use of algebraic data types, a kind of composite type that resembles mathematical operations between types.
+%
+Examples of such types are \textit{sum types}, \textit{product types}, and \textit{intersection types}.
+%
+In Scala, these can be implemented using \textit{sealed traits}, \textit{case classes}, and inheritance, respectively, but from Scala 3 the syntax to define these types has been simplified and clarified, as shown in the following paragraphs.
+
+\subsubsection{Sum types}
+
+Since Scala 2, sum types were enabled by the \texttt{sealed} keyword on traits or abstract classes that prevent inheritance outside the file where the sum type is defined.
+%
+This way, it was possible to define a finite set of subtypes to check for in pattern matching.
+%
+Thanks to the possibility of defining a singleton instance with the keyword \texttt{object} that inherits from the sum type, sum types could also be used to implement enumerations.
+%
+Starting with Scala 3, the \texttt{enum} keyword has been introduced to simplify the syntax in both these use cases.
+%
+Additionally, with Scala 3, the \texttt{|} operator can be used both for sum type options in type definitions and for pattern matching.
+
+TODO add examples of enum sum type listings
+
+\subsubsection{Product types}
+
+Since Scala 2, product types were enabled by the features provided by \textit{case classes}, which are Scala's implementation of the concept of \textit{records} in functional programming.
+%
+Case classes are classes equipped with compiler-generated methods for pattern matching, equality, copying, and printing.
+%
+In case classes, constructor parameters are public immutable fields by default, and the \texttt{copy} method can be used to create a new instance with some fields changed.
+%
+An example of a case class can be found in 
+TODO add an example of case class listing
+
+\subsubsection{Intersection types}
+
+Since Scala 2, it was possible to define a type as the intersection of other types using the \texttt{with} keyword, which is also used for mixin composition.
+%
+Mixin composition is the practice of combining multiple traits into a class, resembling multiple inheritance but with the compromise of avoiding the diamond problem through linearization.
+
+TODO add example of mixin composition listing
+
+Starting with Scala 3, the \texttt{with} keyword is deprecated for type definitions, in favor of the \texttt{\&} operator, which is also used for pattern matching.
+
+TODO add example of intersection type listing
+
+
+\subsection{Singleton objects}
+
+In Scala, the \texttt{object} keyword is used to define a singleton object, which is a class that has only one instance.
+%
+Singleton objects replace Java's static methods and fields and can be used to define utility methods and constants, as well as to implement the \textit{companion object} pattern, which is a design pattern that promotes the use of a singleton object to hold methods and fields that are not specific to any instance of a class but are still related to the class itself.
+%
+A class with a companion object can access the private members of the companion object, and vice versa, provided that they have the same name and are defined in the same file.
+%
+Singleton objects can be also used to implement traits to create modules, such as factories for collections.
+%
+An example of a singleton object used as a companion of a class can be found in listing \Cref{lst:scala3-singleton-object}.
+
+\lstinputlisting[float,language=Scala,label={lst:scala3-singleton-object}, caption={Example of a singleton object in Scala 3.}]{listings/scala3-singleton-object.scala}
+
+
+\subsection{Functional programming with Scala 3}
+
+Scala offers many features typical of \ac{FP} languages, such as \textit{lambdas}, higher-order functions, \textit{currying}, algebraic data types, and a standard library of immutable collections.
+%
+Lambdas, also known as anonymous functions, can be passed as an argument or returned as a result just like any other value.
+%
+A function that accepts or returns another function is called a \textit{higher-order function}.
+%
+In Scala, lambdas are defined using the \texttt{=>} operator, which is also used to define function types such as \texttt{A => B}, where \texttt{A} is the input type and \texttt{B} is the output type.
+%
+Sometimes it is possible to write lambdas with a more concise syntax, using the \texttt{\_} placeholder for the input argument, as shown in 
+TODO example of concise lambda syntax
+
+Starting with Scala 3, function types support new varieties of functions:
+\begin{itemize}
+    \item \textit{dependent function types}, which are function types where the result type can depend on the function's parameters, such as type members;
+TODO add example referencing scafi-xc dsl
+    \item \textit{polymorphic function types}, which are function types that accept type parameters, explained in \Cref{chap:background->sec:scala3->subsec:hkt};
+    \item \textit{context function types}, which are function types that accept only context parameters, explained in \Cref{chap:background->sec:scala3->subsec:contextual-abstractions}.
+\end{itemize}
+
+\paragraph{Currying} is the process of transforming a function that takes multiple arguments into a sequence of functions, each taking a subset of the arguments, thus simplifying the function's usage with partial applications.
+%
+An example of currying and partial application of a function can be found in \Cref{lst:scala3-currying}.
+
+\lstinputlisting[float,language=Scala,label={lst:scala3-currying}, caption={Example of currying and partial application in Scala 3.}]{listings/scala3-currying.scala}
+
+
+\subsection{Contextual Abstractions} \label{chap:background->sec:scala3->subsec:contextual-abstractions}
+
+TODO write
+
+\subsection{Higher-Kinded Types} \label{chap:background->sec:scala3->subsec:hkt}
+% type parameters
+% type members
+% type lambdas
+% match types
+
+\subsection{Impactful compiler flags}
+% Safe nulls and the scala type hierarchy
+% Multiversal equality
