@@ -268,8 +268,16 @@ This feature is enabled by a special role given to methods named \texttt{apply},
 When combined with companion objects, described in \Cref{chap:background->sec:scala3->subsec:singleton-objects}, it is often possible to replace auxiliary constructor in classes with multiple \texttt{apply} methods in the companion object, which is a common pattern in Scala.
 %
 Anonymous classes make it possible to instantiate a trait or abstract class by providing a concrete implementation of abstract methods on the fly.
+%
+Just like in Java, traits, classes, and singleton objects can be nested and can access each other's private members.
 
-TODO add examples of trait listings
+An advanced example of trait usage can be found in \Cref{lst:scala3-service-oriented-design}\footnote{\url{https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html}}, which shows how to use traits in a service-oriented way, a design pattern that promotes the use of traits to define services and their dependencies and to compose services into a single class\cite{service-oriented-design}.
+%
+In the mentioned example, some advanced features of Scala are involved, such as abstract type members, nested traits, and \textit{self-type annotations}.
+%
+The \texttt{self-type annotation} is a way to declare that a trait must be mixed into a class that extends another trait, and it is used to express dependencies between traits without using inheritance, allowing the composition of traits to be more flexible and less coupled, and delaying the choice of trait order to the class that mixes them.
+
+\lstinputlisting[float,language=Scala,label={lst:scala3-service-oriented-design}, caption={Advanced example of usage of traits, know as service-oriented design. The code was taken from the Scala 3 book.}]{listings/scala3-service-oriented-design.scala}
 
 \subsubsection{Object-oriented programming in Scala 3}
 
@@ -293,12 +301,18 @@ TODO add an example of default arguments listing
 %
 Scala 3 improves the default way to handle method invocation ambiguities with method overloading with the \texttt{@targetName} annotation, which allows to specify a unique name of the method once compiled to \ac{JVM} bytecode.
 
-TODO methods as functions
+Thanks to \textit{automatic eta expansion}, methods can be used in place of function values, and its implementation has been improved in Scala 3 to be almost completely seamless.
 
 One of the most important features of Scala is the ability to define \textit{type members},
 which are members of a class or trait that define types, and can be used as types in the same way as classes or traits, as shown in \Cref{chap:background->sec:scala3->subsec:hkt}.
 %
 Abstract type members avoid Scala trait and class sources to grow in size both vertically and horizontally because they can often replace generic type parameters, with all the benefits of member inheritance, such as overriding and composition.
+
+Generic types as well as type members can be constrained with \textit{upper bounds} and \textit{lower bounds}, which are used to restrict the types that can be used as type arguments or type members, respectively.
+%
+Generic types also support type variance control, which is used to specify how the subtyping relationship between two generic types is related to the subtyping relationship between their type arguments.
+%
+In Scala, the variance of a type parameter can be declared with the \texttt{+} and \texttt{-} symbols, which are used to declare a type parameter as covariant or contravariant, respectively, or else the type parameter is invariant by default.
 
 \subsection{Algebraic Data Types}
 
@@ -382,6 +396,16 @@ TODO add example referencing scafi-xc dsl
     \item \textit{context function types}, which are function types that accept only context parameters, explained in \Cref{chap:background->sec:scala3->subsec:contextual-abstractions}.
 \end{itemize}
 
+Following the principles of \ac{FP}, domain models should be immutable and deprived of behavior, and behavior should be defined in terms of pure functions, implemented in modules as extension methods, which are methods that can be added to existing types without modifying their source code.
+%
+Starting with Scala 3, extension methods have obtained a dedicated syntax, that avoids the cumbersome use of implicit classes, as shown in \Cref{lst:scala3-extension-methods}.
+%
+Some additional attention is needed when extension method names overlap with class methods, because the compiler will always prioritize the class method, and the extension method will be shadowed.
+%
+In those cases it is always possible to invoke the extension explicitly from the instance that provides it, passing the extended instance as the first argument.
+
+\lstinputlisting[float,language=Scala,label={lst:scala3-extension-methods}, caption={Example of extension methods usage in Scala 3.}]{listings/scala3-extension-methods.scala}
+
 \paragraph{Currying} is the process of transforming a function that takes multiple arguments into a sequence of functions, each taking a subset of the arguments, thus simplifying the function's usage with partial applications.
 %
 An example of currying and partial application of a function can be found in \Cref{lst:scala3-currying}.
@@ -392,15 +416,19 @@ An example of currying and partial application of a function can be found in \Cr
 \subsection{Contextual Abstractions} \label{chap:background->sec:scala3->subsec:contextual-abstractions}
 
 TODO write
+% abstract givens since scala 3
+% import * or _ skip given instances from scala 3
 
 \subsection{Higher-Kinded Types} \label{chap:background->sec:scala3->subsec:hkt}
 % type parameters
 % type members
 % type lambdas
 % match types
+TODO write
 
 \subsection{Safe nulls and the scala type hierarchy} \label{chap:background->sec:scala3->subsec:type-hierarchy} \label{chap:background->sec:scala3->subsec:safe-nulls}
 TODO write
 
 \subsection{Multiversal Equality} \label{chap:background->sec:scala3->subsec:multiversal-equality}
 % Multiversal equality
+TODO write
