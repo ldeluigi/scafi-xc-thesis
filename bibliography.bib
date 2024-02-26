@@ -1,21 +1,3 @@
-@inproceedings{10.1145/1094811.1094815,
-  author    = {Odersky, Martin and Zenger, Matthias},
-  title     = {Scalable component abstractions},
-  year      = {2005},
-  isbn      = {1595930310},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  url       = {https://doi.org/10.1145/1094811.1094815},
-  doi       = {10.1145/1094811.1094815},
-  abstract  = {We identify three programming language abstractions for the construction of reusable components: abstract type members, explicit selftypes, and modular mixin composition. Together, these abstractions enable us to transform an arbitrary assembly of static program parts with hard references between them into a system of reusable components. The transformation maintains the structure of the original system. We demonstrate this approach in two case studies, a subject/observer framework and a compiler front-end.},
-  booktitle = {Proceedings of the 20th Annual ACM SIGPLAN Conference on Object-Oriented Programming, Systems, Languages, and Applications},
-  pages     = {41–57},
-  numpages  = {17},
-  keywords  = {mixins, components, classes, abstract types, Scala},
-  location  = {San Diego, CA, USA},
-  series    = {OOPSLA '05}
-}
-
 @article{aggregate-programming,
   author  = {Beal, Jacob and Pianini, Danilo and Viroli, Mirko},
   journal = {Computer},
@@ -70,13 +52,19 @@
   booktitle = {Advances in Service-Oriented and Cloud Computing: Workshops of ESOCC 2013, M{\'a}laga, Spain, September 11-13, 2013, Revised Selected Papers 2}
 }
 
-@article{fcpp,
-  title   = {FCPP: an efficient and extensible Field Calculus framework},
-  author  = {Giorgio Audrito},
-  journal = {2020 IEEE International Conference on Autonomic Computing and Self-Organizing Systems (ACSOS)},
-  year    = {2020},
-  pages   = {153-159},
-  url     = {https://api.semanticscholar.org/CorpusID:221845334}
+@inproceedings{fcpp,
+  author    = {Audrito, Giorgio},
+  booktitle = {2020 IEEE International Conference on Autonomic Computing and Self-Organizing Systems (ACSOS)},
+  title     = {FCPP: an efficient and extensible Field Calculus framework},
+  year      = {2020},
+  volume    = {},
+  number    = {},
+  pages     = {153-159},
+  abstract  = {The Field Calculus is a promising language for the self-organisation of distributed devices, allowing to express on a high level of abstraction complex distributed algorithms with robust behaviour guarantees. This language has been argued to be fruitfully applicable to many different contexts: wireless sensor networks, internet of things, self-organising edge, fog or cloud computing scenarios, and simulations of such. However, existing implementations of this language rely on the Java Virtual Machine and have an high performance overhead, impairing their usability in contexts where performance is critical (cloud) or computational resources are tightly bounded (WSN/IoT).In this paper we present FCPP, a novel implementation of the Field Calculus as a C++ library. The library is built as a component-based system, in order to be easily extensible to fit different contexts. Furthermore, it leverages C++ template patterns to allow compile-time optimisation and minimal performance overhead, and enables fine-grained parallelism for scalability in self-organising cloud applications. A case study of an edge simulation shows the performance improvement compared to existing Field Calculus implementations, while preserving the same level of abstraction. This translates to a significant speed-up in the development process of distributed algorithms, paving the way towards application scenarios for which existing tools are unsuitable: microcontroller systems and self-organising cloud.},
+  keywords  = {Aggregates;Calculus;C++ languages;Tools;Programming;Cloud computing;Libraries;edge computing;aggregate computing;programming languages;field calculus;toolchains},
+  doi       = {10.1109/ACSOS49614.2020.00037},
+  issn      = {},
+  month     = {Aug}
 }
 
 @article{from-dc-to-fc-and-ap,
@@ -91,6 +79,7 @@
   author   = {Mirko Viroli and Jacob Beal and Ferruccio Damiani and Giorgio Audrito and Roberto Casadei and Danilo Pianini},
   keywords = {Distributed systems, Aggregate computing, Field calculus, Spatial computing}
 }
+
 
 @article{hofc,
   author     = {Audrito, Giorgio and Viroli, Mirko and Damiani, Ferruccio and Pianini, Danilo and Beal, Jacob},
@@ -189,6 +178,54 @@
   month     = {Sep.}
 }
 
+@inproceedings{scala-js,
+  author    = {Doeraene, S\'{e}bastien},
+  title     = {Cross-platform language design in Scala.js (keynote)},
+  year      = {2018},
+  isbn      = {9781450358361},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3241653.3266230},
+  doi       = {10.1145/3241653.3266230},
+  abstract  = {Have you ever wondered what is the secret sauce of Scala.js? What defines Scala.js, above all else, is the overarching will to make it cross-platform. A cross-platform language is both portable—most source code cross-compiles and behaves the same way on multiple platforms—and interoperable—code written in that language can interoperate with other languages on the target platforms. Most multi-platform languages are designed with one of those two properties in mind, and only address the other one as an afterthought. This results in poor integration, difficulty to write portable code, or even the impossibility to use some platform-specific libraries. This talk shows how Scala.js was designed as a cross-platform language. We show how portability and interoperability drive every design decision, from which language feature to include to performance considerations. We state a criteria of completeness for interoperability, and show how Scala.js satisfies it (with the exception of one JavaScript language feature, still work-in-progress). We give insights about what features are critical for portability, and which ones can be relaxed in the name of performance. In particular, we stress the importance of the ecosystem of libraries: existing assumptions in the ecosystem can force the language designer into reproducing behaviors of Scala/JVM, even when they are accidental. As a practical exercise, we study the main language changes that made it into Scala.js 1.x wrt. 0.6.x—as well as possible future developments—and how they fit into the cross-platform language design methodology.},
+  booktitle = {Proceedings of the 9th ACM SIGPLAN International Symposium on Scala},
+  pages     = {1},
+  numpages  = {1},
+  keywords  = {language design, SCALA},
+  location  = {St. Louis, MO, USA},
+  series    = {Scala 2018}
+}
+
+@inproceedings{scala-patterns,
+  author    = {Odersky, Martin and Zenger, Matthias},
+  title     = {Scalable component abstractions},
+  year      = {2005},
+  isbn      = {1595930310},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/1094811.1094815},
+  doi       = {10.1145/1094811.1094815},
+  abstract  = {We identify three programming language abstractions for the construction of reusable components: abstract type members, explicit selftypes, and modular mixin composition. Together, these abstractions enable us to transform an arbitrary assembly of static program parts with hard references between them into a system of reusable components. The transformation maintains the structure of the original system. We demonstrate this approach in two case studies, a subject/observer framework and a compiler front-end.},
+  booktitle = {Proceedings of the 20th Annual ACM SIGPLAN Conference on Object-Oriented Programming, Systems, Languages, and Applications},
+  pages     = {41-57},
+  numpages  = {17},
+  keywords  = {mixins, components, classes, abstract types, Scala},
+  location  = {San Diego, CA, USA},
+  series    = {OOPSLA '05}
+}
+
+@article{scala-popularity,
+  title     = {Programming language impact on the development of distributed systems},
+  author    = {Ghosh, Debasish and Sheehy, Justin and Thorup, Kresten Krab and Vinoski, Steve},
+  journal   = {Journal of Internet Services and Applications},
+  volume    = {3},
+  number    = {1},
+  pages     = {23--30},
+  year      = {2012},
+  publisher = {Springer}
+}
+
+
 @article{self-stabilisation-in-fc,
   author     = {Viroli, Mirko and Audrito, Giorgio and Beal, Jacob and Damiani, Ferruccio and Pianini, Danilo},
   title      = {Engineering Resilient Collective Adaptive Systems by Self-Stabilisation},
@@ -228,7 +265,6 @@
   numpages   = {17},
   keywords   = {mixins, components, classes, abstract types, Scala}
 }
-
 
 @inproceedings{share-operator,
   author    = {"Audrito, Giorgio and Beal, Jacob and Damiani, Ferruccio and Pianini, Danilo and Viroli, Mirko"},
@@ -315,4 +351,22 @@
   urn       = {urn:nbn:de:0030-drops-162486},
   doi       = {10.4230/LIPIcs.ECOOP.2022.20},
   annote    = {Keywords: Core calculus, operational semantics, type soundness, Scala DSL}
+}
+
+@misc{xc-experiment-with-scafi-code,
+  author    = {Roberto Casadei},
+  title     = {scafi/artifact-2021-ecoop-xc: v1.2},
+  month     = may,
+  year      = 2022,
+  publisher = {Zenodo},
+  version   = {v1.2},
+  doi       = {10.5281/zenodo.6538810},
+  url       = {https://doi.org/10.5281/zenodo.6538810}
+}
+
+@book{xtext,
+  title     = {Implementing domain-specific languages with Xtext and Xtend},
+  author    = {Bettini, Lorenzo},
+  year      = {2016},
+  publisher = {Packt Publishing Ltd}
 }

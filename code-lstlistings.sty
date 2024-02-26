@@ -60,3 +60,27 @@
 	{NVbool}{{\underline{bool}}}4
 	{NVsenseDist}{{\underline{senseDist}}}9
 }
+
+\lstdefinelanguage{Protelis}{
+    language=Java,
+	basicstyle=\linespread{1.0}\small\ttfamily\lst@ifdisplaystyle\footnotesize\fi,
+    columns=fullflexible,
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    keywordstyle=[2]\color{blue},
+    keywords={def, else, import, mux, sumHood, PlusSelf, let, rep, env, self, pi, if, public, NaN, false, true, minHood, nbr, it, share},
+    keywords=[2]{POSITIVE_INFINITY, map, reduce, sin, cos, foldMin, min, get, set, gossip, distanceTo},
+    keywords=[3]{nbrRange, nbrVersor, foldUnion, foldSum},
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+	numbers=left,
+    xleftmargin=0.4cm,
+    backgroundcolor=\color{white},
+    keywordstyle=\bfseries\color{purple},
+    emphstyle={\bfseries\color{blue!40!black}},
+    stringstyle=\ttfamily\color{orange},
+    commentstyle=\ttfamily\color{green!40!black},
+    escapechar=\%
+    frame=single,
+}
