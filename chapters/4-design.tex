@@ -3,12 +3,25 @@
 \chapter{Design}
 \label{chap:design}
 %----------------------------------------------------------------------------------------
-The design of \this has been divided into two main phases.
+The design of \this has been divided into three main phases.
 %
-In the first part, four design prototypes have been developed in order to choose the best user experience for three key user, the \textit{program developer}, the \textit{library developer}, and finally \textit{a new foundation researcher}, which represents a novelty in the use cases of an aggregate programming library.
+In the first part, four design prototypes have been developed in order to choose the best user experience for three key users, the \textit{program developer}, the \textit{library developer}, and finally \textit{a new foundation researcher}, which represents a novelty in the use cases of an aggregate programming library.
 %
-More on that can be found in \Cref{chap:design->sec:dsl}
+More on that can be found in \cref{chap:design->sec:dsl}
+
+In the second part, the final version of the \ac{DSL} has been designed, taking the best features from the prototypes and integrating them into a new core \ac{DSL} for \this.
+
+In the third and final part, the design process concerned the simulator and the testing suites, also designed to scale with future extensions of the \ac{DSL}, as well as to be used as a reference for the \textit{program developer} and the \textit{library developer}, and to be as readable and understandable as possible, effectively working as acceptance tests.
 
 \section{Designing a scalable internal Domain Specific Language} \label{chap:design->sec:dsl}
 
-TODO
+The process of designing a new core \ac{DSL} for \this has been carried out through rapid prototyping of four competing designs of different \acp{DSL}, each coming with a set of advantages and disadvantages, highlighted using code snippets for every key user.
+
+
+\section{Final design of the core DSL}
+
+\section{The simulator}
+
+\section{Scalable unit test design for the API}
+
+\section{Acceptance test design for the core using the simulator}

@@ -8,7 +8,7 @@ In the field of aggregate programming\cite{aggregate-programming}, multiple fram
 %
 Some of the prominent examples, that can be considered state of the art, are \textit{ScaFi}\footnote{\url{https://github.com/scafi/scafi}}\cite{scafi}, \textit{Protelis}\footnote{\url{https://github.com/Protelis/Protelis}}\cite{protelis} and, \textit{FCPP}\footnote{\url{https://github.com/fcpp/fcpp}}\cite{fcpp}.
 %
-In this chapter, each of these tools is briefly described in their fundamental characteristics, with a particular emphasis on ScaFi, which constitutes the direct parent to \this, as discussed in \Cref{chap:background}.
+In this chapter, each of these tools is briefly described in their fundamental characteristics, with a particular emphasis on ScaFi, which constitutes the direct parent to \this, as discussed in \cref{chap:background}.
 
 Each of these libraries is backed by a solid, coherent theoretical foundation, that provides theoretical consistency and guarantees the emergence of fundamental properties in derived work.
 %
@@ -20,9 +20,9 @@ The key aspect of \ac{FC} is the possibility, from a developer perspective, to f
 %
 In recent years, a new formal language has been developed, called \ac{XC}\cite{xc}, which is a promising evolution of \ac{FC} that has the potential to supersede \ac{FC} entirely given that \ac{XC} is a simpler yet more expressive language that can be used to implement all the \ac{FC} constructs while retaining their original semantics.
 %
-\this, as well as FCPP in its current version, is based on this newer formal language, further described in \Cref{chap:background}, where \ac{FC} and \ac{XC} are briefly compared.
+\this, as well as FCPP in its current version, is based on this newer formal language, further described in \cref{chap:background}, where \ac{FC} and \ac{XC} are briefly compared.
 %
-Some additional experiments with the implementation of \ac{XC} already exist, such as \textit{imperative-xc}\footnote{\url{https://github.com/cric96/imperative-xc}} and \textit{XC: Scala DSL Implementation}\footnote{\url{https://github.com/scafi/artifact-2021-ecoop-xc}}\cite{xc-experiment-with-scafi}, described in \Cref{chap:state-of-the-art->sec:xc} and \Cref{chap:state-of-the-art->sec:imperative-xc}, respectively.
+Some additional experiments with the implementation of \ac{XC} already exist, such as \textit{imperative-xc}\footnote{\url{https://github.com/cric96/imperative-xc}} and \textit{XC: Scala DSL Implementation}\footnote{\url{https://github.com/scafi/artifact-2021-ecoop-xc}}\cite{xc-experiment-with-scafi}, with the latter described in \cref{chap:state-of-the-art->sec:xc}.
 
 \section{Protelis}
 
@@ -32,15 +32,16 @@ As external \ac{DSL}, Protelis syntax is close to the \ac{FC} language it implem
 %
 As a result, domain branching in Protelis is transparent in its conditional control syntax, such as the \texttt{if} statement, while in internal \acp{DSL} the same feature must be achieved with a custom operator to avoid conflicts with the host language's homonymous constructs.
 %
-More information on domain branching can be found in \Cref{chap:background->sec:xc->subsec:alignment}.
+More information on domain branching can be found in \cref{chap:background->sec:xc->subsec:alignment}.
 %
 Nevertheless, the Protelis environment comes with some costs, such as a lack of compiler support for type checking, given that Protelis uses duck typing, and IDE support exclusively for the Eclipse platform, given that Protelis is based on the Xtext framework\cite{xtext}.
 %
 Additionally, external \acp{DSL} can't benefit from the community of developers and libraries of a general-purpose language such as Scala or C++, which are the host languages for ScaFi and FCPP, respectively.
 
-An example of a gradient distance written with Protelis can be found in \Cref{lst:gradient-distance-protelis}.
+An example of a gradient distance written with Protelis can be found in \cref{lst:gradient-distance-protelis}.
 
 \lstinputlisting[language=Protelis, caption={Gradient distance from a source in Protelis.}, label={lst:gradient-distance-protelis}]{listings/protelis-gradient-distance.pt}
+
 
 \section{FCPP}
 
@@ -50,26 +51,32 @@ FCPP is oriented towards efficiency and performance, to target devices with limi
 %
 As stated in the paper, FCPP suffers more limitations than ScaFi when it comes to avoiding conflicts with the host language, resulting in a less \quotes{clean} syntax, and it lacks integration with the Java environment, natively supported by the Scala language, which is the host language for ScaFi\cite{fcpp}.
 %
-Another important difference in the design of FCPP from ScaFi is the presence of explicit \texttt{field} types, which are absent in ScaFi thanks to its design around \texttt{foldhood} operations, as described in \Cref{chap:state-of-the-art->sec:scafi}.
+Another important difference in the design of FCPP from ScaFi is the presence of explicit \texttt{field} types, which are absent in ScaFi thanks to its design around \texttt{foldhood} operations, as described in \cref{chap:state-of-the-art->sec:scafi}.
 
-An example of a gradient distance written with FCPP can be found in \Cref{lst:gradient-distance-fcpp}.
+An example of a gradient distance written with FCPP can be found in \cref{lst:gradient-distance-fcpp}.
 
 \lstinputlisting[language=C++, caption={Gradient distance from a source in FCPP.}, label={lst:gradient-distance-fcpp}]{listings/fcpp-gradient-distance.cpp}
 
+
 \section{ScaFi} \label{chap:state-of-the-art->sec:scafi}
 
-\textit{ScaFi} (\textit{Sca}la \textit{Fi}elds) is an aggregate programming framework featuring an internal \ac{DSL} written in pure Scala 2\cite{scafi}.
+\textit{ScaFi} (\textit{Sca}la \textit{Fi}elds) is an aggregate programming framework featuring an internal \ac{DSL} written in pure Scala 2\cite{scafi}, implementing a variant of the \ac{HFC}.
 %
 Besides the \ac{DSL}, which represents the core of ScaFi, the framework offers additional components for the simulation, visualization, and deployment of aggregate programs.
+%
+Scafi cross-compiles for Scala 2.11, 2.12, and 2.13, while its \texttt{core} and \texttt{simulator} packages are also cross-built for \ac{JS} using \textit{Scala.js}\cite{scala-js}.
 
-TODO describe ScaFi in depth
+The most notable aspect of its \ac{DSL} is the \textit{fooldhood} semantics, which abstracts over a model of the concept of \textit{field} or \textit{neighbouring value}, as shown in \cref{lst:gradient-distance-scafi}.
+%
+There, the \texttt{foldhoodPlus} operator invokes and collects the results of the passed expression for each neighbor, including seld, accumulating all of them into a single value using \texttt{Math.min}.
+%
+This way, \texttt{nbr} can be used transparently like a local value, without the need for a \texttt{lift} operator that would enable to work with \texttt{field} types, as in FCPP or the \quotes{XC: Scala DSL Implementation} experiment, described in \cref{chap:state-of-the-art->sec:xc}.
+%
+As a limitation of the approach, \texttt{nbr} can't be used outside one of the \texttt{foldhood} variants.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=.8\linewidth]{figures/scafi-project-org.drawio.png}
-    \caption{ScaFi project organization.}
-    \label{fig:random-image2}
-\end{figure}
+\lstinputlisting[language=Scala, caption={Gradient distance from a source in ScaFi.}, label={lst:gradient-distance-scafi}]{listings/scafi-gradient-distance.scala}
+
+A more in-depth analysis of ScaFi can be found in \cref{chap:analysis->sec:scafi-analysis}.
 
 \section{XC: Scala DSL Implementation} \label{chap:state-of-the-art->sec:xc}
 
@@ -79,13 +86,10 @@ This implementation uses Scala 2.
 %
 Even though ScaFi hides the \texttt{field} abstraction from the user, in this experiment \textit{NValue}s had to be explicitly implemented, given the new semantics they provide.
 %
-The automatic conversion from local values to nvalues, explained in the \ac{XC} paper and in \Cref{chap:background->sec:xc->subsec:nvalues}, has been implemented seamlessly thanks to Scala 2 implicit conversions.
+The automatic conversion from local values to nvalues, explained in the \ac{XC} paper and in \cref{chap:background->sec:xc->subsec:nvalues}, has been implemented seamlessly thanks to Scala 2 implicit conversions.
 %
 In the experiment, publicly available on GitHub\footnote{\url{https://github.com/scafi/artifact-2021-ecoop-xc}} under the Apache 2.0 License and on Zenodo\cite{xc-experiment-with-scafi-code}, the \ac{FC} constructs have been implemented using \texttt{exchange}, the only communication primitive of \ac{XC}, suggesting a new syntax for a pure Scala \ac{XC}, later taken as inspiration for \this.
 
-An example of a gradient distance written with this DSL can be found in \Cref{lst:gradient-distance-xc-scala2-dsl}.
+An example of a gradient distance written with this DSL can be found in \cref{lst:gradient-distance-xc-scala2-dsl}.
 
 \lstinputlisting[language=Scala, caption={Gradient distance from a source in XC Scala 2 DSL.}, label={lst:gradient-distance-xc-scala2-dsl}]{listings/xc-experiment-scafi-gradient-distance.scala}
-
-\section{imperative-xc} \label{chap:state-of-the-art->sec:imperative-xc}
-TODO write

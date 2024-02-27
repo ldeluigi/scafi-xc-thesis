@@ -83,7 +83,7 @@ The default value is used when evaluating a NValue $\underline{\mathbf{w}} = l[\
 %
 The notation above can thus be read as \quotes{the nvalue $\underline{\mathbf{w}}$ is $l$ everywhere (i.e. for all neighbors) except for devices $\delta_1, ..., \delta_n$ with values $l_1, ..., l_n$, respectively}\cite{xc}.
 
-For example, in \Cref{fig:xc-nvalues-exampke}, the device $\delta_2$ wakes up for computation $\epsilon_2^4$ and processes a nvalue $\underline{\mathbf{w}} = 0[\delta_1 \mapsto 5, \delta_3 \mapsto 4, \delta_4 \mapsto 2]$, which corresponds to the messages carrying the scalar values 5, 4, and 2 sent by devices $\delta_1$, $\delta_3$, and $\delta_4$, respectively, some of which while device $\delta_2$ was asleep.
+For example, in \cref{fig:xc-nvalues-exampke}, the device $\delta_2$ wakes up for computation $\epsilon_2^4$ and processes a nvalue $\underline{\mathbf{w}} = 0[\delta_1 \mapsto 5, \delta_3 \mapsto 4, \delta_4 \mapsto 2]$, which corresponds to the messages carrying the scalar values 5, 4, and 2 sent by devices $\delta_1$, $\delta_3$, and $\delta_4$, respectively, some of which while device $\delta_2$ was asleep.
 %
 For all other devices, the entry in $\underline{\mathbf{w}}$ evaluates to $0$.
 %
@@ -141,11 +141,11 @@ The evaluation of the primitive follows three steps:
 
 As a shorthand, $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\return} e \mathbf{\send} e)$$ can be written as $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\retsend} e)$$ according to the \ac{XC} paper\cite{xc}.
 
-Two examples of reusable functions written in \ac{XC} can be seen in \Cref{lst:xc-program}.
+Two examples of reusable functions written in \ac{XC} can be seen in \cref{lst:xc-program}.
 %
 There, $mux(cond, e_1, e_2)$ is a conditional expression that first evaluates $cond$, $e_1$, and $e_2$, and then returns the value of $e_1$ if $cond$ is true, or the value of $e_2$ otherwise.
 %
-\texttt{mux} is useful to avoid breaking the alignment of the network by using conditionals, as explained in \Cref{chap:background->sec:xc->subsec:alignment}.
+\texttt{mux} is useful to avoid breaking the alignment of the network by using conditionals, as explained in \cref{chap:background->sec:xc->subsec:alignment}.
 %
 In the examples, $\underline{senseDist}$ is a network-based sensor that returns the nvalue containing the distances to neighbors, abstracting over the way the device obtains the measurements, with $Infinity$ as its default value used for all other devices.
 %
@@ -196,11 +196,11 @@ This preserves the behavior of programs written in \ac{FC} but interpreted withi
     \item \texttt{share}, used to efficiently access neighbors' values while computing a new value from the previous result with a single primitive\cite{share-operator}.
 \end{itemize}
 
-The \texttt{nbr} primitive can be implemented as $$nbr(e: A): \underline{A} = exchange(e, (\underline{n}) \Rightarrow \return \underline{n} \send e)$$.
+The \texttt{nbr} primitive can be implemented as: $$nbr(e: A): \underline{A} = exchange(e, (\underline{n}) \Rightarrow \return \underline{n} \send e)$$
 %
-The \texttt{rep} primitive can be implemented as $$rep(e_i: A)\{(x) \Rightarrow e_n\}: A = exchange(e_i, (\underline{x}) => \retsend e_n[x := self(\underline{x})])$$.
+The \texttt{rep} primitive can be implemented as: $$rep(e_i: A)\{(x) \Rightarrow e_n\}: A = exchange(e_i, (\underline{x}) => \retsend e_n[x := self(\underline{x})])$$
 %
-The \texttt{share} primitive can be implemented as $$share(e_i: A)\{(\underline{x}) \Rightarrow e_n\}: A = self(exchange(e_i, (\underline{x}) => \retsend e_n))$$.
+The \texttt{share} primitive can be implemented as: $$share(e_i: A)\{(\underline{x}) \Rightarrow e_n\}: A = self(exchange(e_i, (\underline{x}) => \retsend e_n))$$
 
 \section{Scala 3}\label{chap:background->sec:scala3}
 
@@ -218,17 +218,17 @@ Even though Scala 3 introduces breaking changes in the syntax from Scala 2, most
 %
 This possibility has been exploited by the Scala community to avoid reimplementing a new standard library for Scala 3, using the Scala 2 standard library instead, rewritten to be cross-compiled for both Scala 2 and Scala 3.
 
-Originally, Scala 2 and Scala 3 compile to \ac{JVM} bytecode, but Scala 3 also supports the \ac{JS} and \textit{LLVM} backends, which are used to compile Scala code to JavaScript and native code, respectively, thanks to community-driven projects\footnote{Scala.js at \url{https://scala-js.org/}}\footnote{Scala Native at \url{https://scala-native.org/}}\cite{scala-js}.
+Originally, Scala 2 and Scala 3 compile to \ac{JVM} bytecode, but Scala 3 also supports the \ac{JS} and \textit{LLVM} backends, which are used to compile Scala code to JavaScript and native code, respectively, thanks to community-driven projects\footnote{Scala.js at \url{https://scala-js.org}}\footnote{Scala Native at \url{https://scala-native.org}}\cite{scala-js}.
 %
 The provided support for cross-platform distribution, together with the popularity of Scala for distributed systems development\cite{scala-popularity} and the flexibility of the upgraded language features for advanced internal \ac{DSL} design, makes Scala 3 a great choice for a new ScaFi implementation based on \ac{XC}.
 
 \subsection{Values in Scala}
 
-In Scala, every value has a type, following the type hierarchy explained in \Cref{chap:background->sec:scala3->subsec:type-hierarchy}.
+In Scala, every value has a type, following the type hierarchy explained in \cref{chap:background->sec:scala3->subsec:type-hierarchy}.
 %
-When declaring a new variable or field as container of a value, the type can be explicitly declared, or it can be inferred by the compiler.
+When declaring a new variable or field as a container of a value, the type can be explicitly declared, or it can be inferred by the compiler.
 %
-Every declaration of variable or field must be preceded by the \texttt{val} keyword for an immutable value, or the \texttt{var} keyword for a mutable value.
+Every declaration of a variable or field must be preceded by the \texttt{val} keyword for an immutable value, or the \texttt{var} keyword for a mutable value.
 %
 Immutable values cannot be reassigned, while mutable values can be reassigned, but the type of the value cannot be changed.
 %
@@ -241,14 +241,14 @@ Scala 3 introduced a new syntax for control expressions, as well as new rules th
 %
 Both these changes are aimed at making the code more readable and concise, sometimes noticeably closer to the natural language.
 %
-For example, in \Cref{lst:scala2-with-braces}, the \texttt{if} expression is written with the traditional syntax, while in \Cref{lst:scala3-without-braces} the same expression is written using the new syntax.
+For example, in \cref{lst:scala2-with-braces}, the \texttt{if} expression is written with the traditional syntax, while in \cref{lst:scala3-without-braces} the same expression is written using the new syntax.
 %
 The same is true of the \texttt{for} expression, the \texttt{while} loop, and the \texttt{match} expression.
 
 \lstinputlisting[float,language=Scala,label={lst:scala2-with-braces}, caption={Examples of syntax using braces in Scala 2.}]{listings/scala2-with-braces.scala}
 \lstinputlisting[float,language=Scala,label={lst:scala3-without-braces}, caption={Examples of syntax avoiding braces in Scala 3.}]{listings/scala3-without-braces.scala}
 
-In cases where a code block consists of many lines that make it a bit hard to follow indentation, the new syntax can be combined with \texttt{end} statements, as shown in \Cref{lst:scala3-with-end}.
+In cases where a code block consists of many lines that make it a bit hard to follow indentation, the new syntax can be combined with \texttt{end} statements, as shown in \cref{lst:scala3-with-end}.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-with-end}, caption={Example of syntax using \texttt{end} statements in Scala 3.}]{listings/scala3-without-braces-with-end.scala}
 
@@ -261,29 +261,29 @@ In Scala, traits can be used both to define interfaces and to provide partial im
 %
 With Scala 3, traits are now able to have parameters like classes do, enhancing their expressiveness.
 %
-Additionally, Scala 3 introduces new rules for instantiation of classes that allow to avoid the use of the \texttt{new} keyword, as shown in \Cref{lst:scala3-without-braces}.
+Additionally, Scala 3 introduces new rules for instantiation of classes that allow to avoid the use of the \texttt{new} keyword, as shown in \cref{lst:scala3-without-braces}.
 %
 This feature is called \textit{universal apply methods} and is enabled by the generation of \texttt{apply} methods for classes done by the compiler when the user does not provide one.
 %
 This feature is enabled by a special role given to methods named \texttt{apply}, which in Scala can be invoked without the need to specify the method name.
 %
-When combined with companion objects, described in \Cref{chap:background->sec:scala3->subsec:singleton-objects}, it is often possible to replace auxiliary constructor in classes with multiple \texttt{apply} methods in the companion object, which is a common pattern in Scala.
+When combined with companion objects, described in \cref{chap:background->sec:scala3->subsec:singleton-objects}, it is often possible to replace auxiliary constructor in classes with multiple \texttt{apply} methods in the companion object, which is a common pattern in Scala.
 %
 Anonymous classes make it possible to instantiate a trait or abstract class by providing a concrete implementation of abstract methods on the fly.
 %
 Just like in Java, traits, classes, and singleton objects can be nested and can access each other's private members.
 
-An advanced example of trait usage can be found in \Cref{lst:scala3-service-oriented-design}\footnote{\url{https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html}}, which shows how to use traits in a service-oriented way, a design pattern that promotes the use of traits to define services and their dependencies and to compose services into a single class\cite{service-oriented-design}.
+An advanced example of trait usage can be found in \cref{lst:scala3-service-oriented-design}\footnote{\url{https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html}}, which shows how to use traits in a service-oriented way, a design pattern that promotes the use of traits to define services and their dependencies and to compose services into a single class\cite{service-oriented-design}.
 %
 In the mentioned example, some advanced features of Scala are involved, such as abstract type members, nested traits, and \textit{self-type annotations}.
 %
-The \texttt{self-type annotation} is a way to declare that a trait must be mixed into a class that extends another trait, and it is used to express dependencies between traits without using inheritance, allowing the composition of traits to be more flexible and less coupled, and delaying the choice of trait order to the class that mixes them.
+The \textit{self-type annotation} is a way to declare that a trait must be mixed into a class that extends another trait, and it is used to express dependencies between traits without using inheritance, allowing the composition of traits to be more flexible and less coupled, and delaying the choice of trait order to the class that mixes them.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-service-oriented-design}, caption={Advanced example of usage of traits, know as service-oriented design. The code was taken from the Scala 3 book.}]{listings/scala3-service-oriented-design.scala}
 
 \subsubsection{Object-oriented programming in Scala 3}
 
-In Scala, classes, traits, enums, and objects can all have methods, defined using the \texttt{def} keyword, as seen in \Cref{lst:scala3-without-braces}.
+In Scala, classes, traits, enums, and objects can all have methods, defined using the \texttt{def} keyword, as seen in \cref{lst:scala3-without-braces}.
 %
 Abstract methods are methods that do not have a body and must be overridden by concrete subclasses, while concrete methods have a body and can be overridden by subclasses.
 %
@@ -306,7 +306,7 @@ Scala 3 improves the default way to handle method invocation ambiguities with me
 Thanks to \textit{automatic eta expansion}, methods can be used in place of function values, and its implementation has been improved in Scala 3 to be almost completely seamless.
 
 One of the most important features of Scala is the ability to define \textit{type members},
-which are members of a class or trait that define types, and can be used as types in the same way as classes or traits, as shown in \Cref{chap:background->sec:scala3->subsec:hkt}.
+which are members of a class or trait that define types, and can be used as types in the same way as classes or traits, as shown in \cref{chap:background->sec:scala3->subsec:type-system}.
 %
 Abstract type members avoid Scala trait and class sources to grow in size both vertically and horizontally because they can often replace generic type parameters, with all the benefits of member inheritance, such as overriding and composition.
 
@@ -372,12 +372,12 @@ A class with a companion object can access the private members of the companion 
 %
 Singleton objects can be also used to implement traits to create modules, such as factories for collections.
 %
-An example of a singleton object used as a companion of a class can be found in \Cref{lst:scala3-singleton-object}.
+An example of a singleton object used as a companion of a class can be found in \cref{lst:scala3-singleton-object}.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-singleton-object}, caption={Example of a singleton object in Scala 3.}]{listings/scala3-singleton-object.scala}
 
 
-\subsection{Functional programming with Scala 3}
+\subsection{Functional programming with Scala 3} \label{chap:background->sec:scala3->subsec:functional-programming}
 
 Scala offers many features typical of \ac{FP} languages, such as \textit{lambdas}, higher-order functions, \textit{currying}, algebraic data types, and a standard library of immutable collections.
 %
@@ -394,13 +394,13 @@ Starting with Scala 3, function types support new varieties of functions:
 \begin{itemize}
     \item \textit{dependent function types}, which are function types where the result type can depend on the function's parameters, such as type members;
 TODO add example referencing scafi-xc dsl
-    \item \textit{polymorphic function types}, which are function types that accept type parameters, explained in \Cref{chap:background->sec:scala3->subsec:hkt};
-    \item \textit{context function types}, which are function types that accept only context parameters, explained in \Cref{chap:background->sec:scala3->subsec:contextual-abstractions}.
+    \item \textit{polymorphic function types}, which are function types that accept type parameters, explained in \cref{chap:background->sec:scala3->subsec:type-system};
+    \item \textit{context function types}, which are function types that accept only context parameters, explained in \cref{chap:background->sec:scala3->subsec:contextual-abstractions}.
 \end{itemize}
 
 Following the principles of \ac{FP}, domain models should be immutable and deprived of behavior, and behavior should be defined in terms of pure functions, implemented in modules as extension methods, which are methods that can be added to existing types without modifying their source code.
 %
-Starting with Scala 3, extension methods have obtained a dedicated syntax, that avoids the cumbersome use of implicit classes, as shown in \Cref{lst:scala3-extension-methods}.
+Starting with Scala 3, extension methods have obtained a dedicated syntax, that avoids the cumbersome use of implicit classes, as shown in \cref{lst:scala3-extension-methods}.
 %
 Some additional attention is needed when extension method names overlap with class methods, because the compiler will always prioritize the class method, and the extension method will be shadowed.
 %
@@ -410,27 +410,124 @@ In those cases it is always possible to invoke the extension explicitly from the
 
 \paragraph{Currying} is the process of transforming a function that takes multiple arguments into a sequence of functions, each taking a subset of the arguments, thus simplifying the function's usage with partial applications.
 %
-An example of currying and partial application of a function can be found in \Cref{lst:scala3-currying}.
+An example of currying and partial application of a function can be found in \cref{lst:scala3-currying}.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-currying}, caption={Example of currying and partial application in Scala 3.}]{listings/scala3-currying.scala}
 
 
 \subsection{Contextual Abstractions} \label{chap:background->sec:scala3->subsec:contextual-abstractions}
 
-TODO write
-% abstract givens since scala 3
-% import * or _ skip given instances from scala 3
+In Scala, contextual abstractions are a set of features coming from the core idea of \textit{term inference}, which is the ability of the compiler to synthesize a \quotes{canonical} term for a given type.
+%
+Examples of features enabled by term inference are \textit{extension methods}, \textit{type classes}, \textit{context parameters}, \textit{context bounds}, and many more.
+%
+In Scala 2, almost every feature of contextual abstractions was implemented using the \texttt{implicit} keyword, whereas with Scala 3 contextual abstractions have been redesigned to be more explicit on the intent of their usage, with the introduction of new ad-hoc keywords for each use case: \texttt{given}, \texttt{using}, and \texttt{extension}.
+%
+The \texttt{given} keyword is used to define a \textit{given instance}, which is a value that can be used as a \textit{context parameter} in a method or constructor.
+%
+The \texttt{using} keyword is used to specify a \textit{context parameter}, also called implicit parameter in Scala 2, which is a parameter that is used to require a \textit{given instance} for a method or constructor.
+%
+The \texttt{extension} keyword is used to define an \textit{extension method}, which is a method that can be added to existing types without modifying their source code, as explained in \cref{chap:background->sec:scala3->subsec:functional-programming}.
+%
+If not passed explicitly, the compiler searches for \textit{given instances} to satisfy \textit{context parameters} performing \textit{term inference}.
+%
+Starting with Scala 3, context parameters can be anonymous, and given instances can be abstract.
 
-\subsection{Higher-Kinded Types} \label{chap:background->sec:scala3->subsec:hkt}
-% type parameters
-% type members
-% type lambdas
-% match types
-TODO write
+\textit{Context bounds} in the form \texttt{T: Type} are syntactic sugar for context parameters with a more concise syntax, that gets desugared by the compiler to a context parameter of type \texttt{Type[T]}, as shown in .
+%
+An abstract class like \texttt{Type[T]} meant to be used to add behavior to any closed data type without sub-typing is called a \textit{type class}.
+TODO add examples of context bounds desugar
 
-\subsection{Safe nulls and the scala type hierarchy} \label{chap:background->sec:scala3->subsec:type-hierarchy} \label{chap:background->sec:scala3->subsec:safe-nulls}
-TODO write
+Given instances can be imported and exported using the \texttt{import} and \texttt{export} keywords, but starting with Scala 3, \textit{given imports} and \textit{given exports} require the \texttt{given} keyword, even in the cases where a wildcard is used, making more clear where givens in the current scope are coming from.
+
+Starting with Scala 3, implicit conversions are defined by providing given instances of the type \texttt{Conversion[From, To]}, and must be enabled with a compiler flag to avoid warnings when conversion is silently applied before passing an argument to a function call.
+%
+By default, the scala compiler provides implicit conversions for primitive types, such as \texttt{Int} to \texttt{Long}.
+
+
+\subsection{The Scala 3 type system} \label{chap:background->sec:scala3->subsec:type-system}
+
+Scala, as a statically typed language, has all the benefits of static typing, such as early error detection, better performance, and better tooling support, while also leveraging its features to feel like a dynamically typed language, such as type inference, type parameters, and type members.
+%
+Scala has always supported a strong type inference system, powered by a variant of the Hindley-Milner type system with support for subtyping, as well as generics and type bounds like in Java.
+%
+Additionally, Scala adds many type system features that are not present in Java, such as \textit{type variance}, \textit{type aliases}, \textit{type members}, \textit{covariant and contravariant overriding}, \textit{higher-kinded types}
+%
+Furthermore, starting with Scala 3, the type system features \textit{opaque type aliases}, \textit{structural types}, \textit{dependent function types}, improved \textit{type lambdas}, \textit{polymorphic function types}, \textit{context function types}, and \textit{match types}.
+
+In the next paragraphs, the most relevant features of the Scala 3 type system are explained.
+
+\paragraph{Type variance} allows to specify how the subtyping relationship between two generic types is related to the subtyping relationship between their type arguments.
+%
+In Scala, the variance of a type parameter can be declared with the \texttt{+} and \texttt{-} symbols, which are used to declare a type parameter as covariant or contravariant, respectively, or else the type parameter is invariant by default.
+
+TODO insert example as listing
+
+\paragraph{Type aliases} are used to define a new name for an existing type, and are often used to provide more descriptive names for types, or to shorten long type names.
+%
+Type aliases can be parameterized and can be recursive.
+%
+Their syntax is the same for defining type members, using the \texttt{type} keyword, as shown in
+%
+Opaque type aliases are a new feature of Scala 3 that allows defining a type alias that is not interchangeable with its underlying type, hiding it from consumers.
+
+TODO insert example as listing
+
+\paragraph{Covariant and contravariant overrides} allow to override a method defined in a superclass with a method that has a more specific return type or a more general parameter type, respectively.
+
+TODO insert example as listing
+
+\paragraph{Higher-kinded types} allow to define types and methods that work with generic types regardless of the actual type arguments, only requiring a fixed arity of type parameters.
+%
+Scala types are partitioned in kinds, based on the arity of their type parameters.
+%
+Higher-kinded types, also called type constructors, have an arity greater than zero, such as \texttt{List}, \texttt{Option}, and \texttt{Map}.
+%
+Scala 3 adds support for \textit{kind polymorphism}, which allows to define type parameters that accept types of any kind, through the special syntax \texttt{T <: AnyKind}.
+
+TODO insert example as listing
+
+\paragraph{Type lambdas} are simply anonymous type constructors, that starting from Scala 3 have a new syntax that allows to define them more concisely, using the type operator \texttt{=>>}.
+%
+For instance, \texttt{[X, Y] =>> Map[Y, X]} is a binary type constructor that maps arguments \texttt{X} and \texttt{Y} to the type \texttt{Map[Y, X]}.
+
+\paragraph{Match types} are conditional type aliases that allow the definition of a type as the result of a pattern match on a type, available since Scala 3.
+%
+An example of match types can be found in \cref{lst:scala3-match-types}.
+
+\lstinputlisting[float,language=Scala,label={lst:scala3-match-types}, caption={Example of match types in Scala 3.}]{listings/scala3-match-type.scala}
+
+\subsection{Explicit nulls and the Scala 3 type hierarchy} \label{chap:background->sec:scala3->subsec:type-hierarchy} \label{chap:background->sec:scala3->subsec:explicit-nulls}
+
+The Dotty compiler allows to enable some experimental features that change the language in various ways.
+%
+Two examples of experimental features relevant to \this are \textit{explicit nulls} and the \textit{multiversal equality}.
+
+Explicit nulls are enabled by the \quotes{\texttt{-Yexplicit-nulls}}, and the effect of this flag is to change the type hierarchy of Scala to make reference types non-nullable.
+%
+With explicit nulls disabled, the type system looks like the one in Java, pictured in \cref{fig:scala-hierarchy-with-explicit-nulls-disabled}, whereas with explicit nulls enabled, the type system looks like the one in \cref{fig:scala-hierarchy-with-explicit-nulls-enabled}.
+%
+To define a nullable value with the option enable, sum types can be used, such as in \texttt{Type | Null}.
+%
+Scala 3 provides an extension method \texttt{.nn} to convert a nullable value to a non-nullable value, through casting, resulting in \textit{NullPointerException} if the value was \texttt{null} at runtime.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{figures/scalaHierarchyWithMatchable.png}
+    \caption{Scala type hierarchy with explicit nulls disabled.}
+    \label{fig:scala-hierarchy-with-explicit-nulls-disabled}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{figures/scalaHierarchyWithMatchableAndSafeNull.png}
+    \caption{Scala type hierarchy with explicit nulls enabled.}
+    \label{fig:scala-hierarchy-with-explicit-nulls-enabled}
+\end{figure}
+
 
 \subsection{Multiversal Equality} \label{chap:background->sec:scala3->subsec:multiversal-equality}
-% Multiversal equality
-TODO write
+
+Using context parameters of type \texttt{CanEqual[X, Y]}, the Scala 3 compiler with the \quotes{\texttt{-language:strictEquality}} flag enabled forbids universal equality, that allowed comparing any two values of any type, and replaces it with multiversal equality, which allows comparing any two values of any type, but only if the compiler can prove that the types are related by a \texttt{CanEqual} instance.
+%
+Implementing \texttt{CanEqual[X, Y]} instances can be automated with \textit{type class derivation}, a feature of Scala 3 that allows the compiler to synthesize given instances following rules defined by the user, often based on compositions of algebraic data types.
