@@ -13,12 +13,74 @@ In the second part, the final version of the \ac{DSL} has been designed, taking 
 
 In the third and final part, the design process concerned the simulator and the testing suites, also designed to scale with future extensions of the \ac{DSL}, as well as to be used as a reference for the \textit{program developer} and the \textit{library developer}, and to be as readable and understandable as possible, effectively working as acceptance tests.
 
+
 \section{Designing a scalable internal Domain Specific Language} \label{chap:design->sec:dsl}
 
 The process of designing a new core \ac{DSL} for \this has been carried out through rapid prototyping of four competing designs of different \acp{DSL}, each coming with a set of advantages and disadvantages, highlighted using code snippets for every key user.
+%
+Prototipation has been necessary to explore the design space and to understand the trade-offs between different design choices, as well as to test in practice the interactions of different combinations of language features.
+%
+For each of the four prototypes, a brief description of the design choices and the programming experience is provided, followed by the final design described in \cref{chap:design->sec:final-dsl}.
+%
+Each prototype is named after the Scala 3 feature it's mainly based on, and each aims to separate the definition of the syntax from the definition of the semantics, and separate the definition of the semantics from the actual implementation.
+%
+This way, more than one semantic can be defined for the same syntax, and more than one implementation can be defined for the same semantic, allowing for more flexible customization and composition.
+%
+For the scope of \this, \ac{XC}\cite{xc} is the only semantics considered for implementation, but the design should be flexible enough to allow for future \quotes{calculi} to be implemented as alternative foundations.
+
+\subsection{Prototype 1: Extension Methods} \label{chap:design->sec:dsl->subsec:prototype-1-extension-methods}
+
+In this design, an \texttt{AggregateFoundation} base trait defines a common syntax for all the aggregate programming foundations, such as the existence of a type called \texttt{AggregateValue[T]} that represents a collection of values coming from neighboring devices, including self.
+%
+The \texttt{AggregateFoundation} trait also defines a set of \textit{abstract extension methods} that provide basic functionalities for aggregate values, such as \textit{lifting} for composition and mapping, \textit{folding} for reduction, methods for retrieving the value for the current device or exclude the current device, mimicking the functionalities of the \texttt{foldhood} and \texttt{fooldhoodPlus} of ScaFi, as shown in \cref{lst:prototype-1-aggregate-foundation}.
+%
+In the example, the source of the \texttt{Liftable} and \texttt{Foldable} type classes is included for completeness, but they are not part of the \texttt{AggregateFoundation} source file as they are located in the \texttt{commons} module.
+
+\lstinputlisting[float, language=Scala, caption={Prototype 1: Aggregate Foundation and helper type classes.}, label={lst:prototype-1-aggregate-foundation}]{listings/prototype-1-aggregate-foundation.scala}
+
+By defining an abstract type member \texttt{AggregateValue[T]}, semantics like \ac{XC} can override it to model any kind of specific interface, such as \textit{NValues}, on top of which they can provide any additional behavior and syntax.
+%
+Implicitly, this design abandons the \quotes{field-transparent} semantics of the \texttt{foooldhood*} methods of ScaFi in favor of having explicit \textit{field} types, similarly to FCPP (\cref{chap:state-of-the-art->sec:fcpp}) and the \ac{XC} \ac{DSL} experiment (\cref{chap:state-of-the-art->sec:xc-experiment}).
+%
+Nevertheless, a semantics design that replicates that lost feature can still be implemented with an extension of \texttt{AggregateFoundation} that provides a \texttt{foldhood} construct that works the same as the \texttt{foldhood*} methods of ScaFi.
+
+\textit{Aggregate Semantics} such as \texttt{ExchangeCalculusSemantics} are defined as a trait that extends \texttt{AggregateFoundation} and provides a concrete type for the abstract type member \texttt{AggregateValue[T]}, such as \texttt{NValues[T]}, even if that type is a trait and not a concrete implementation.
+%
+For instance, the \texttt{ExchangeCalculusSemantics} provides an abstract type member \texttt{ID} for device identifiers, an abstract given instance of \texttt{CanEqual[ID, ID]} to provide equality comparisons between device identifiers, as well as the core \ac{XC} constructs: \texttt{xcexchange} and \texttt{xcbranch}, corresponding to the \texttt{exchange} primitive and the domain branching behavior of \ac{XC}.
+%
+These core constructs are protected because they are meant to be invoked only through a facade that corresponds to one or more syntax of a \textit{calculus}.
+%
+The syntaxes for both \ac{FC} and \ac{XC} are shown in \cref{lst:prototype-1-syntaxes}, and the \ac{XC} semantics is shown in \cref{lst:prototype-1-exchange-calculus-semantics}.
+%
+Finally, \cref{lst:prototype-1-syntaxes-impl} shows the implementation of the syntaxes in terms of the \ac{XC} semantics.
+%
+One nice feature of having a facade defined using extension methods is that the compatibility layer between a semantic and a syntax is provided through the implementation of a given instance, much like a written proof that a syntax can be obtained extending a given semantics.
+%
+Another nice feature is the possibility to import dependencies and preferred syntax/facade with an \texttt{import} statement at the beginning of the file, instead of having to mix in traits like in ScaFi.
+%
+Additionally, this design allows implementing a new library by simply writing new extension methods of a generic language \texttt{L} that extends \texttt{AggregateFoundation} and the required other syntaxes, as shown in \cref{lst:prototype-1-usage-lib}.
+
+\lstinputlisting[float, language=Scala, caption={Prototype 1: Syntax definitions.}, label={lst:prototype-1-syntaxes}]{listings/prototype-1-syntaxes.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1: Exchange Calculus Semantics.}, label={lst:prototype-1-exchange-calculus-semantics}]{listings/prototype-1-exchange-calculus-semantics.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1: Syntax implementations in terms of the exchange semantics.}, label={lst:prototype-1-syntaxes-impl}]{listings/prototype-1-syntaxes-impl.scala}
+
+Even though this design proves to be very flexible and extensible, it has a few drawbacks.
+%
+The most important one is the impossibility of invoking an extension method without the \quotes{\texttt{.}}, having at best to invoke constructs on \texttt{this}, as in \cref{lst:prototype-1-usage}.
+%
+The next prototypes focus on overcoming this limitation at any cost, even if it means losing some of the flexibility and clarity of the design, in order to provide empirical evidence of the trade-offs between the different design choices.
+
+\lstinputlisting[float, language=Scala, caption={Prototype 1: Example usage by an aggregate program developer.}, label={lst:prototype-1-usage}]{listings/prototype-1-usage.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1: Example usage by a library developer.}, label={lst:prototype-1-usage-lib}]{listings/prototype-1-usage-lib.scala}
 
 
-\section{Final design of the core DSL}
+\subsection{Prototype 2: Implicit parameter in constructors} \label{chap:design->sec:dsl->subsec:prototype-2-implicit-parameter-in-constructors}
+
+\subsection{Prototype 3: Implicit parameter in methods} \label{chap:design->sec:dsl->subsec:prototype-3-implicit-parameter-in-methods}
+
+\subsection{Prototype 4: Mixin composition} \label{chap:design->sec:dsl->subsec:prototype-4-mixin-composition}
+
+\section{Final design of the core DSL} \label{chap:design->sec:final-dsl}
 
 \section{The simulator}
 

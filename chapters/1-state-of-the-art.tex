@@ -22,9 +22,9 @@ In recent years, a new formal language has been developed, called \ac{XC}\cite{x
 %
 \this, as well as FCPP in its current version, is based on this newer formal language, further described in \cref{chap:background}, where \ac{FC} and \ac{XC} are briefly compared.
 %
-Some additional experiments with the implementation of \ac{XC} already exist, such as \textit{imperative-xc}\footnote{\url{https://github.com/cric96/imperative-xc}} and \textit{XC: Scala DSL Implementation}\footnote{\url{https://github.com/scafi/artifact-2021-ecoop-xc}}\cite{xc-experiment-with-scafi}, with the latter described in \cref{chap:state-of-the-art->sec:xc}.
+Some additional experiments with the implementation of \ac{XC} already exist, such as \textit{imperative-xc}\footnote{\url{https://github.com/cric96/imperative-xc}} and \textit{XC: Scala DSL Implementation}\footnote{\url{https://github.com/scafi/artifact-2021-ecoop-xc}}\cite{xc-experiment-with-scafi}, with the latter described in \cref{chap:state-of-the-art->sec:xc-experiment}.
 
-\section{Protelis}
+\section{Protelis} \label{chap:state-of-the-art->sec:protelis}
 
 Protelis is an external domain-specific language derived from the discontinued \textit{Proto}, whose syntax resembles that of C or Java, but it's purely functional, albeit dynamically typed and interpreted by a virtual machine written in Java\cite{protelis}.
 %
@@ -43,7 +43,7 @@ An example of a gradient distance written with Protelis can be found in \cref{ls
 \lstinputlisting[float, language=Protelis, caption={Gradient distance from a source in Protelis.}, label={lst:gradient-distance-protelis}]{listings/protelis-gradient-distance.pt}
 
 
-\section{FCPP}
+\section{FCPP} \label{chap:state-of-the-art->sec:fcpp}
 
 FCPP is an internal domain-specific language written in C++, originally based on \ac{FC} but already updated to support \ac{XC}\cite{xc}.
 %
@@ -70,7 +70,7 @@ The most notable aspect of its \ac{DSL} is the \textit{fooldhood} semantics, whi
 %
 There, the \texttt{foldhoodPlus} operator invokes and collects the results of the passed expression for each neighbor, including seld, accumulating all of them into a single value using \texttt{Math.min}.
 %
-This way, \texttt{nbr} can be used transparently like a local value, without the need for a \texttt{lift} operator that would enable to work with \texttt{field} types, as in FCPP or the \quotes{XC: Scala DSL Implementation} experiment, described in \cref{chap:state-of-the-art->sec:xc}.
+This way, \texttt{nbr} can be used transparently like a local value, without the need for a \texttt{lift} operator that would enable to work with \texttt{field} types, as in FCPP or the \quotes{XC: Scala DSL Implementation} experiment, described in \cref{chap:state-of-the-art->sec:xc-experiment}.
 %
 As a limitation of the approach, \texttt{nbr} can't be used outside one of the \texttt{foldhood} variants.
 
@@ -78,7 +78,7 @@ As a limitation of the approach, \texttt{nbr} can't be used outside one of the \
 
 A more in-depth analysis of ScaFi can be found in \cref{chap:analysis->sec:scafi-analysis}.
 
-\section{XC: Scala DSL Implementation} \label{chap:state-of-the-art->sec:xc}
+\section{XC: Scala DSL Implementation} \label{chap:state-of-the-art->sec:xc-experiment}
 
 The first implementation of \ac{XC} in Scala is based on ScaFi and presented in the \ac{XC} papers\cite{xc}\cite{xc-experiment-with-scafi}.
 %
