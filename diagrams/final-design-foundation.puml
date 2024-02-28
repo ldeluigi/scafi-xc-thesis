@@ -1,4 +1,4 @@
-@startuml Final DSL Diagram
+@startuml Final Design Foundation
 hide empty members
 
 !unquoted procedure subtypeOf()

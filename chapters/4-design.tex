@@ -160,7 +160,28 @@ The disadvantage of this design would have been the different invocation syntax 
 %
 This disadvantage has been overcome by defining a facade library for every core syntax, hiding the \texttt{language.\_} prefix necessary for invoking core syntax constructs, with the small cost of having to write a facade library for every future syntax developed by researchers.
 %
-A diagram of the final model is shown in \cref{fig:final-dsl-diagram}.
+A diagram of the final model for the foundation is shown in \cref{fig:final-design-foundation-diagram}.
+
+TODO go on
+
+\begin{figure}
+    \centering
+    \caption{Final design: \ac{UML} diagram of the \texttt{AggregateFoundation}.}
+    \label{fig:final-design-foundation-diagram}
+    \resizebox{\linewidth}{!}{
+        \input{diagrams/final-design-foundation/Final Design Foundation.latex}
+    }
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \caption{Final design: \ac{UML} diagram of the \texttt{ExchangeCalculusSemantics} mixin composition.}
+    \label{fig:final-design-exchange-calculus-semantics-diagram}
+    \resizebox{\linewidth}{!}{
+        \input{diagrams/final-design-semantics/Final Design Semantics.latex}
+    }
+\end{figure}
 
 
 \section{The simulator}

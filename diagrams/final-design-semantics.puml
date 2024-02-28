@@ -1,4 +1,4 @@
-@startuml Final DSL Diagram
+@startuml Final Design Semantics
 left to right direction
 hide empty members
 
