@@ -1,0 +1,60 @@
+@startuml Final DSL Diagram
+left to right direction
+hide empty members
+
+!unquoted procedure subtypeOf()
+""&#60;:""
+!endprocedure
+
+!unquoted procedure supertypeOf()
+""&#62;:""
+!endprocedure
+
+package foundation {
+
+
+    interface AggregateFoundation
+
+    metaclass DeviceAwareAggregateFoundation <<self: AggregateFoundation>>
+    DeviceAwareAggregateFoundation --|> AggregateFoundation
+}
+
+package syntax {
+    metaclass BranchingSyntax <<self: AggregateFoundation>>{
+        {abstract} {method} + branch[T](cond: Boolean)(th: => T)(el: => T): T
+    }
+
+    metaclass ExchangeCalculusSyntax <<self: AggregateFoundation>> {
+        {abstract} {method} + exchange[T](initial: AggregateValue[T])(\n\
+            f: AggregateValue[T] => RetSend[AggregateValue[T]],\n\
+        ): AggregateValue[T]
+    }
+
+    metaclass FieldCalculusSyntax <<self: AggregateFoundation>> {
+        {abstract} {method} + nbr[A](expr: A): AggregateValue[A]
+        {abstract} {method} + rep[A](init: A)(f: A => A): A
+        {abstract} {method} + share[A](init: A)(f: AggregateValue[A] => A): A
+    }
+}
+
+package semantics.exchange {
+    package syntaxes {
+        metaclass BranchingExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.BranchingSyntax
+        metaclass ExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.ExchangeCalculusSyntax
+        metaclass FieldCalculusByExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.FieldCalculusSyntax
+    }
+    interface ExchangeCalculusSemantics {
+        {abstract} {field} + <<given>> nvalues: NValuesOps[AggregateValue, DeviceId]
+        {abstract} {field} + <<given>> convert[T]: Conversion[T, AggregateValue[T]]
+        {abstract} {method} # br[T](cond: Boolean)(th: => T)(el: => T): T
+        {abstract} {method} # xc[T](init: AggregateValue[T])(\n\
+      f: AggregateValue[T] => (AggregateValue[T], AggregateValue[T]),\n\
+  ): AggregateValue[T]
+    }
+    ExchangeCalculusSemantics --|> AggregateFoundation
+    ExchangeCalculusSemantics --|> DeviceAwareAggregateFoundation
+    ExchangeCalculusSemantics --|> ExchangeSemantics
+    ExchangeCalculusSemantics --|> BranchingExchangeSemantics
+    ExchangeCalculusSemantics --|> FieldCalculusByExchangeSemantics
+}
+@enduml

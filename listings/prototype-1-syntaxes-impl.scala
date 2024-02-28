@@ -12,3 +12,17 @@ given ExpressiveFieldCalculusSyntax[ExchangeCalculusSemantics] with
           f: language.AggregateValue[A] => language.AggregateValue[A],
       ): language.AggregateValue[A] =
         language.exchange(init.onlySelf)(f)
+
+given ClassicFieldCalculusSyntax[ExchangeCalculusSemantics] with
+    extension (language: ExchangeCalculusSemantics)
+      override def nbr[V](expr: => NValues[language.ID, V]): NValues[language.ID, V] =
+        summon[ExpressiveFieldCalculusSyntax[ExchangeCalculusSemantics]]
+          .nbr(language)(expr)
+      override def rep[A](init: => A)(f: A => A): A =
+        summon[ExpressiveFieldCalculusSyntax[ExchangeCalculusSemantics]]
+          .rep(language)(init)(nv => nv.map(f))
+          .onlySelf
+      override def share[A](init: => A)(f: A => A): A =
+        summon[ExpressiveFieldCalculusSyntax[ExchangeCalculusSemantics]]
+          .share(language)(init)(nv => nv.map(f))
+          .onlySelf

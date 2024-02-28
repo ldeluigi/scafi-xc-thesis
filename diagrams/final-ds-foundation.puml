@@ -1,0 +1,56 @@
+@startuml Final DSL Diagram
+hide empty members
+
+!unquoted procedure subtypeOf()
+""&#60;:""
+!endprocedure
+
+!unquoted procedure supertypeOf()
+""&#62;:""
+!endprocedure
+
+package commons {
+
+    interface SafeIterable<+A> {
+        {abstract} {method} # iterator: Iterator[A]
+        {method} + toIterable: Iterable[A]
+        {method} + fold[A1 supertypeOf() A](z: A1)(op: (A1, A1) => A1): A1
+        {method} ...
+    }
+
+    interface Aggregate<F[A] subtypeOf() SafeIterable[A]> {
+        {method} + <<extension: F[A]>> withoutSelf: SafeIterable[A]
+        {method} + <<extension: F[A]>> onlySelf: A
+    }
+
+    Aggregate ..> SafeIterable
+
+    interface Liftable<F[_]> {
+        {abstract} {method} + lift[A, B](a: F[A])(f: A => B): F[B]
+        {abstract} {method} + lift[A, B, C](a: F[A], b: F[B])(f: (A, B) => C): F[C]
+        {method} + <<extension: F[A]>> map[B](f: A => B): F[B]
+        {static} {method} + lift[A, B, C, F[_]: Liftable](a: F[A], b: F[B])(f: (A, B) => C): F[C]
+        {method} ...
+    }
+}
+
+package foundation {
+
+    interface AggregateFoundation {
+        {abstract} {field} + <<type>> AggregateValue[T] subtypeOf() SafeIterable[T]
+        {abstract} {field} + <<given>> aggregate: Aggregate[AggregateValue]
+        {abstract} {field} + <<given>> liftable: Liftable[AggregateValue]
+    }
+    AggregateFoundation o-- Aggregate
+    AggregateFoundation o-- Liftable
+    AggregateFoundation ..> SafeIterable
+
+    metaclass DeviceAwareAggregateFoundation <<self: AggregateFoundation>> {
+        {abstract} {field} + <<type>> DeviceId
+        {abstract} {field} + <<given>> idEquality: CanEqual[DeviceId, DeviceId]
+        {abstract} {field} + self: DeviceId
+        {abstract} {field} + device: AggregateValue[DeviceId]
+    }
+    DeviceAwareAggregateFoundation --|> AggregateFoundation
+}
+@enduml

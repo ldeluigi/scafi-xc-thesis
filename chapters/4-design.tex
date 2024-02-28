@@ -13,6 +13,7 @@ In the second part, the final version of the \ac{DSL} has been designed, taking 
 
 In the third and final part, the design process concerned the simulator and the testing suites, also designed to scale with future extensions of the \ac{DSL}, as well as to be used as a reference for the \textit{program developer} and the \textit{library developer}, and to be as readable and understandable as possible, effectively working as acceptance tests.
 
+TODO link design process to requirements from the analysis chapter
 
 \section{Designing a scalable internal Domain Specific Language} \label{chap:design->sec:dsl}
 
@@ -27,6 +28,19 @@ Each prototype is named after the Scala 3 feature it's mainly based on, and each
 This way, more than one semantic can be defined for the same syntax, and more than one implementation can be defined for the same semantic, allowing for more flexible customization and composition.
 %
 For the scope of \this, \ac{XC}\cite{xc} is the only semantics considered for implementation, but the design should be flexible enough to allow for future \quotes{calculi} to be implemented as alternative foundations.
+%
+In practice, there is a very subtle difference between the semantics and the syntax of the same formal calculus.
+%
+In the case of \ac{XC}, the syntax and the semantics both consist of two methods, \texttt{branch} and \texttt{exchange}.
+%
+The difference lies in the role of the two methods in the two contexts: in the syntax, they are constructs that the programmer uses to write programs, and should be treated as an \ac{API} at all effects, while in the semantics, they are constructs that the programmer uses to implement all the supported syntaxes \ac{API}, meaning they are not part of an \ac{API} used by aggregate programs and are focused on being as complete and simple to implement as possible.
+%
+For instance, the \texttt{exchange} method of the \texttt{ExchangeCalculusSyntax} trait is focused on its usage experience, attempting to mimick the syntax provided in the paper, meanwhile the \texttt{xcexchange} method of the \texttt{ExchangeCalculusSemantics} has \texttt{protected} visibility and its signature provides only the most complete and expressive version of the \texttt{exchange} primitive presented in the paper\cite{xc}.
+
+Each of the four prototypes retains the separation between syntax definitions, semantic definitions, syntax support declaration, and semantics implementations, and considers the programmer experience of all the three key users.
+%
+For brevity, only the most relevant advantages and disadvantages are highlighted, and the full code of the prototypes is available in the project repository git history, under the git tag \texttt{experiments}\footnote{\url{https://github.com/ldeluigi/scafi-xc/tree/experiments}}, after which the code got removed to avoid confusion with the final design.
+
 
 \subsection{Prototype 1: Extension Methods} \label{chap:design->sec:dsl->subsec:prototype-1-extension-methods}
 
@@ -44,21 +58,31 @@ Implicitly, this design abandons the \quotes{field-transparent} semantics of the
 %
 Nevertheless, a semantics design that replicates that lost feature can still be implemented with an extension of \texttt{AggregateFoundation} that provides a \texttt{foldhood} construct that works the same as the \texttt{foldhood*} methods of ScaFi.
 
-\textit{Aggregate Semantics} such as \texttt{ExchangeCalculusSemantics} are defined as a trait that extends \texttt{AggregateFoundation} and provides a concrete type for the abstract type member \texttt{AggregateValue[T]}, such as \texttt{NValues[T]}, even if that type is a trait and not a concrete implementation.
+\textit{Aggregate Semantics} such as \texttt{ExchangeCalculusSemantics} are defined as a trait that extends \texttt{AggregateFoundation}.
 %
-For instance, the \texttt{ExchangeCalculusSemantics} provides an abstract type member \texttt{ID} for device identifiers, an abstract given instance of \texttt{CanEqual[ID, ID]} to provide equality comparisons between device identifiers, as well as the core \ac{XC} constructs: \texttt{xcexchange} and \texttt{xcbranch}, corresponding to the \texttt{exchange} primitive and the domain branching behavior of \ac{XC}.
+A semantics trait can provide a concrete type for the abstract type member \texttt{AggregateValue[T]}, even if the type refers to a trait and not a concrete implementation.
+
+For instance, the \texttt{ExchangeCalculusSemantics} provides a concrete implementation for \texttt{AggregateValue[T]} corresponding to \texttt{NValues[ID, T]}, where \texttt{ID} is an abstract type member for device identifiers.
 %
-These core constructs are protected because they are meant to be invoked only through a facade that corresponds to one or more syntax of a \textit{calculus}.
+Additionally, the semantics provides an abstract given instance of \texttt{CanEqual[ID, ID]} to provide equality comparisons between device identifiers, as well as the core \ac{XC} constructs: \texttt{xcexchange} and \texttt{xcbranch}, corresponding to the \texttt{exchange} primitive and the domain branching behavior of \ac{XC}.
+%
+These core constructs of the semantics are protected in visibility because they are meant to be invoked only through a facade that corresponds to one or more syntax of a \textit{calculus}, whereas abstract given instances are public as they are meant to be available to libraries that depend on a specific semantics.
 %
 The syntaxes for both \ac{FC} and \ac{XC} are shown in \cref{lst:prototype-1-syntaxes}, and the \ac{XC} semantics is shown in \cref{lst:prototype-1-exchange-calculus-semantics}.
 %
 Finally, \cref{lst:prototype-1-syntaxes-impl} shows the implementation of the syntaxes in terms of the \ac{XC} semantics.
+
+One notable feature of having a facade defined using extension methods is that the compatibility layer between a semantic and a syntax is provided through the implementation of a given instance, much like a written proof that a syntax can be obtained extending a given semantics.
 %
-One nice feature of having a facade defined using extension methods is that the compatibility layer between a semantic and a syntax is provided through the implementation of a given instance, much like a written proof that a syntax can be obtained extending a given semantics.
+The proof can \texttt{summon} other given instances of supported syntax in order to define a proof dependent on another proof, as shown in \cref{lst:prototype-1-syntaxes-impl}.
 %
-Another nice feature is the possibility to import dependencies and preferred syntax/facade with an \texttt{import} statement at the beginning of the file, instead of having to mix in traits like in ScaFi.
+Another significant feature is the possibility to import dependencies and preferred syntax/facade with an \texttt{import} statement at the beginning of the file, instead of having to mix in traits like in ScaFi.
 %
 Additionally, this design allows implementing a new library by simply writing new extension methods of a generic language \texttt{L} that extends \texttt{AggregateFoundation} and the required other syntaxes, as shown in \cref{lst:prototype-1-usage-lib}.
+%
+This allows libraries to be singleton objects, imported where needed with a top-level \texttt{import} statement.
+%
+One hidden feature of this design is the possibility to hide, by default, transitive library dependencies, something that ScaFi could not allow because it used a mixin composition where every library was a trait that mixed in other traits, thus exposing all the dependencies of the mixed-in traits.
 
 \lstinputlisting[float, language=Scala, caption={Prototype 1: Syntax definitions.}, label={lst:prototype-1-syntaxes}]{listings/prototype-1-syntaxes.scala}
 \lstinputlisting[float, language=Scala, caption={Prototype 1: Exchange Calculus Semantics.}, label={lst:prototype-1-exchange-calculus-semantics}]{listings/prototype-1-exchange-calculus-semantics.scala}
@@ -74,16 +98,81 @@ The next prototypes focus on overcoming this limitation at any cost, even if it 
 \lstinputlisting[float, language=Scala, caption={Prototype 1: Example usage by a library developer.}, label={lst:prototype-1-usage-lib}]{listings/prototype-1-usage-lib.scala}
 
 
-\subsection{Prototype 2: Implicit parameter in constructors} \label{chap:design->sec:dsl->subsec:prototype-2-implicit-parameter-in-constructors}
+\subsection{Prototype 2: Context parameter in constructors} \label{chap:design->sec:dsl->subsec:prototype-2-implicit-parameter-in-constructors}
+
+Even though the second prototype is based on the use of a context parameter that passes a semantics instance down to every construct invocation, the folding and lifting functionalities are provided through abstract given instances of type classes declaring extension methods, as per prototype 1.
+%
+Libraries, as well as core syntaxes, are defined as classes and traits, respectively, that take a context parameter of type \texttt{L}, short for \texttt{Language}, that must be a subtype of \texttt{AggregateFoundation}, as shown in \cref{lst:prototype-2-syntax}.
+%
+Libraries dependent on other libraries must either instantiate their dependencies or require a context parameter that provides them, as shown in \cref{lst:prototype-2-usage-lib}.
+%
+This approach has the side effect that the type member \texttt{AggregateValue} present in the \texttt{AggregateFoundation} is seen as a different type for every dependent method of every library, thus making passing an aggregate value from a library method to another impossible.
+%
+This forced each semantics, library, and syntax to have a generic type constructor parameter \texttt{AV[\_]} that generalizes and uniformizes the type of the aggregate value for all the dependencies, making them compatible again.
+%
+\cref{lst:prototype-2-usage-lib} also shows how this design, with the additional cost of a static \texttt{import} for dependencies methods and given instance, allows to invoke constructs such as \texttt{branch} or \texttt{distanceTo} with having to use the \texttt{.} operator and the same applies to user programs.
+
+\lstinputlisting[float, language=Scala, caption={Prototype 2: \ac{FC} syntax definition.}, label={lst:prototype-2-syntax}]{listings/prototype-2-syntax.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 2: Example usage by a library developer.}, label={lst:prototype-2-usage-lib}]{listings/prototype-2-usage-lib.scala}
+
+Having to explicitly import the methods from dependencies inside every library of programs, added to the necessity of instantiating libraries, makes this design very cumbersome to use.
+%
+The next prototype attempts to improve the usability by returning to libraries defined as singleton objects, having each construct take the context parameter that were in the library class constructor in this prototype.
+
 
 \subsection{Prototype 3: Implicit parameter in methods} \label{chap:design->sec:dsl->subsec:prototype-3-implicit-parameter-in-methods}
 
+This prototype design shares some similarities with the previous one, but it has a different approach to the problem of passing the semantics instance to the constructs, and to dealing with library dependencies.
+%
+In this design, libraries are singleton objects, where each method takes a context parameter for the semantics and a context parameter for every syntax needed as a dependency, as shown in \cref{lst:prototype-3-usage-lib}.
+%
+Alternatively, a library method can instantiate its syntax dependencies and only take a context parameter for the semantics, as shown in \cref{lst:prototype-3-usage-lib}.
+%
+Even though the issue of library dependencies is solved, syntax dependencies are still cumbersome to use and still require static imports inside the body of the methods to invoke the constructs without the \texttt{.} operator.
+%
+In addition to that, \texttt{AggregateFoundation} still needs the generic aggregate value type constructor parameter to make syntax dependencies compatible with each other.
+
+\lstinputlisting[float, language=Scala, caption={Prototype 3: Example usage by a library developer.}, label={lst:prototype-3-usage-lib}]{listings/prototype-3-usage-lib.scala}
+
+The last prototype represents a return to the original mixin-oriented design used in ScaFi and its purpose is closer to a comparison baseline rather than a design alternative, but it's still useful for the last design phase where the best features of all the prototypes will be cherry-picked and combined.
+
 \subsection{Prototype 4: Mixin composition} \label{chap:design->sec:dsl->subsec:prototype-4-mixin-composition}
+
+In this design, the \texttt{AggregateFoundation} trait is the same as in prototype 1 (see \cref{lst:prototype-1-aggregate-foundation}), without the need for the generic type constructor for aggregate values, because syntaxes, semantics, and the foundation are meant to become part of the same type hierarchy, and a type member for aggregate values will be the same for all the mixed-in traits.
+%
+For instance, given a semantics such as \texttt{ExchangeCalculusSemantics}, giving proof for the support for a syntax means to define a trait to be mixed in with the semantics, that implements the syntax in terms of the semantics.
+%
+Libraries are defined, like in ScaFi, with mixin traits that declare their dependencies using self-type annotations, as shown in \cref{lst:prototype-4-usage-lib}.
+
+The main advantage of this design is the possibility to invoke constructs without the \texttt{.} operator, as shown in \cref{lst:prototype-4-usage-lib}, while the main disadvantage is the need to inherit from all the transitive dependencies together in the program class, and having to honor a global construct naming consistency both in all the libraries and in the semantics implementation.
+
+\lstinputlisting[float, language=Scala, caption={Prototype 4: Example usage by a library developer.}, label={lst:prototype-4-usage-lib}]{listings/prototype-4-usage-lib.scala}
 
 \section{Final design of the core DSL} \label{chap:design->sec:final-dsl}
 
+Taking inspiration from the best features of all the prototypes, the final design was developed and showcased with a presentation in front of the research group, which provided positive feedback on the resulting user experience.
+%
+The final design consists of an \texttt{AggregateFoundation} similar to prototypes 1 and 4, with core syntaxes and libraries defined as traits for a mixin composition.
+%
+The twist is that libraries are instead defined as singleton objects, able to be imported with a top-level \texttt{import} statement, without having visibility on transitive dependencies and without having to mix them in together with the semantics in the program class.
+%
+The disadvantage of this design would have been the different invocation syntax for library constructs versus core syntax constructs such as \texttt{nbr} and \texttt{rep}.
+%
+This disadvantage has been overcome by defining a facade library for every core syntax, hiding the \texttt{language.\_} prefix necessary for invoking core syntax constructs, with the small cost of having to write a facade library for every future syntax developed by researchers.
+%
+A diagram of the final model is shown in \cref{fig:final-dsl-diagram}.
+
+
 \section{The simulator}
+
+TODO The simulator
+
 
 \section{Scalable unit test design for the API}
 
+TODO Scalable unit test design for the API
+
+
 \section{Acceptance test design using the simulator}
+
+TODO Acceptance test design using the simulator

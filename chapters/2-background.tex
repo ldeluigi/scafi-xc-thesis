@@ -439,6 +439,10 @@ An abstract class like \texttt{Type[T]} meant to be used to add behavior to any 
 TODO add examples of context bounds desugar
 
 Given instances can be imported and exported using the \texttt{import} and \texttt{export} keywords, but starting with Scala 3, \textit{given imports} and \textit{given exports} require the \texttt{given} keyword, even in the cases where a wildcard is used, making more clear where givens in the current scope are coming from.
+%
+Concrete given instances can be anonymous, in which case the compiler synthesizes a name for them.
+%
+This feature is useful to avoid polluting the namespace with names that are not meant to be used directly by the user, because often given instances are imported by their type instead of by their name.
 
 Starting with Scala 3, implicit conversions are defined by providing given instances of the type \texttt{Conversion[From, To]}, and must be enabled with a compiler flag to avoid warnings when conversion is silently applied before passing an argument to a function call.
 %
@@ -505,7 +509,7 @@ Two examples of experimental features relevant to \this are \textit{explicit nul
 
 Explicit nulls are enabled by the \quotes{\texttt{-Yexplicit-nulls}}, and the effect of this flag is to change the type hierarchy of Scala to make reference types non-nullable.
 %
-With explicit nulls disabled, the type system looks like the one in Java, pictured in \cref{fig:scala-hierarchy-with-explicit-nulls-disabled}, whereas with explicit nulls enabled, the type system looks like the one in \cref{fig:scala-hierarchy-with-explicit-nulls-enabled}.
+With explicit nulls disabled, the type system looks like the one in Java, pictured in \cref{fig:scala-hierarchy-with-explicit-nulls-disabled}, whereas with explicit nulls enabled, the type system looks more like the one in Kotlin, where null safety is part of the language, pictured in \cref{fig:scala-hierarchy-with-explicit-nulls-enabled}.
 %
 To define a nullable value with the option enable, sum types can be used, such as in \texttt{Type | Null}.
 %
