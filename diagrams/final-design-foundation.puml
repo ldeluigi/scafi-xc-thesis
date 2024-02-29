@@ -1,20 +1,13 @@
 @startuml Final Design Foundation
-hide empty members
-
-!unquoted procedure subtypeOf()
-""&#60;:""
-!endprocedure
-
-!unquoted procedure supertypeOf()
-""&#62;:""
-!endprocedure
+!include style.iuml
 
 package commons {
 
-    interface SafeIterable<+A> {
+    interface SafeIterable<covariant(A)> {
         {abstract} {method} # iterator: Iterator[A]
         {method} + toIterable: Iterable[A]
         {method} + fold[A1 supertypeOf() A](z: A1)(op: (A1, A1) => A1): A1
+        ..
         {method} ...
     }
 
@@ -30,6 +23,7 @@ package commons {
         {abstract} {method} + lift[A, B, C](a: F[A], b: F[B])(f: (A, B) => C): F[C]
         {method} + <<extension: F[A]>> map[B](f: A => B): F[B]
         {static} {method} + lift[A, B, C, F[_]: Liftable](a: F[A], b: F[B])(f: (A, B) => C): F[C]
+        ..
         {method} ...
     }
 }

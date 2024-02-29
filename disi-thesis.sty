@@ -9,6 +9,7 @@
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{array}
+\usepackage{tikz}
 
 \fancypagestyle{plain}{
     \fancyhf{}
@@ -134,3 +135,6 @@
     \end{titlepage}
     \restoregeometry
 }
+
+\tikzset{every picture/.style={/utils/exec={\sffamily}}}
+\tikzstyle{every node}=[font=\LARGE]

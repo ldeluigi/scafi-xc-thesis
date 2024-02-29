@@ -1,14 +1,6 @@
 @startuml Final Design Semantics
+!include style.iuml
 left to right direction
-hide empty members
-
-!unquoted procedure subtypeOf()
-""&#60;:""
-!endprocedure
-
-!unquoted procedure supertypeOf()
-""&#62;:""
-!endprocedure
 
 package foundation {
 
@@ -51,8 +43,8 @@ package semantics.exchange {
       f: AggregateValue[T] => (AggregateValue[T], AggregateValue[T]),\n\
   ): AggregateValue[T]
     }
-    ExchangeCalculusSemantics --|> AggregateFoundation
-    ExchangeCalculusSemantics --|> DeviceAwareAggregateFoundation
+    ExchangeCalculusSemantics -|> AggregateFoundation
+    ExchangeCalculusSemantics -|> DeviceAwareAggregateFoundation
     ExchangeCalculusSemantics --|> ExchangeSemantics
     ExchangeCalculusSemantics --|> BranchingExchangeSemantics
     ExchangeCalculusSemantics --|> FieldCalculusByExchangeSemantics
