@@ -1,0 +1,8 @@
+@startuml Simulator
+!include style.iuml
+left to right direction
+
+package simulator {
+
+}
+@enduml

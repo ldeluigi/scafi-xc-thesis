@@ -3,124 +3,154 @@
 \definecolor{plantucolor0001}{RGB}{241,241,241}
 \definecolor{plantucolor0002}{RGB}{24,24,24}
 \definecolor{plantucolor0003}{RGB}{180,167,229}
-\definecolor{plantucolor0004}{RGB}{204,204,204}
-\definecolor{plantucolor0005}{RGB}{132,190,132}
-\definecolor{plantucolor0006}{RGB}{3,128,72}
+\definecolor{plantucolor0004}{RGB}{3,128,72}
+\definecolor{plantucolor0005}{RGB}{204,204,204}
+\definecolor{plantucolor0006}{RGB}{132,190,132}
 \definecolor{plantucolor0007}{RGB}{255,255,68}
 \definecolor{plantucolor0008}{RGB}{179,141,34}
+\definecolor{plantucolor0009}{RGB}{255,255,255}
 \begin{tikzpicture}[yscale=-1
 ,pstyle0/.style={color=black,line width=1.5pt}
 ,pstyle1/.style={color=plantucolor0002,fill=plantucolor0001,line width=0.5pt}
 ,pstyle2/.style={color=plantucolor0002,fill=plantucolor0003,line width=1.0pt}
-,pstyle3/.style={color=plantucolor0002,fill=plantucolor0004,line width=1.0pt}
-,pstyle4/.style={color=plantucolor0002,line width=0.5pt}
-,pstyle5/.style={color=plantucolor0006,fill=plantucolor0005,line width=1.0pt}
-,pstyle6/.style={color=plantucolor0006,line width=1.0pt}
+,pstyle3/.style={color=plantucolor0002,line width=0.5pt}
+,pstyle4/.style={color=plantucolor0004,line width=1.0pt}
+,pstyle5/.style={color=plantucolor0002,fill=plantucolor0005,line width=1.0pt}
+,pstyle6/.style={color=plantucolor0004,fill=plantucolor0006,line width=1.0pt}
 ,pstyle7/.style={color=plantucolor0008,fill=plantucolor0007,line width=1.0pt}
-,pstyle8/.style={color=plantucolor0002,line width=1.0pt}
-,pstyle9/.style={color=plantucolor0002,line width=1.0pt,dash pattern=on 7.0pt off 7.0pt}
+,pstyle9/.style={color=plantucolor0002,line width=1.0pt}
+,pstyle10/.style={color=plantucolor0002,line width=1.0pt,dash pattern=on 7.0pt off 7.0pt}
 ]
-\draw[pstyle0] (211.5pt,1035.8945pt) -- (318.491pt,1035.8945pt) arc(270:360:3.75pt)  -- (327.991pt,1067.2461pt) -- (1145.5pt,1067.2461pt) arc(270:360:2.5pt)  -- (1148pt,1155.3945pt) arc(0:90:2.5pt)  -- (211.5pt,1157.8945pt) arc(90:180:2.5pt)  -- (209pt,1038.3945pt) arc(180:270:2.5pt) ;
-\draw[pstyle0] (209pt,1067.2461pt) -- (327.991pt,1067.2461pt);
-\node at (213pt,1037.8945pt)[below right,color=black]{\textbf{foundation}};
-\draw[pstyle0] (72.5pt,6.8945pt) -- (138.4091pt,6.8945pt) arc(270:360:3.75pt)  -- (147.9091pt,38.2461pt) -- (736.5pt,38.2461pt) arc(270:360:2.5pt)  -- (739pt,519.3945pt) arc(0:90:2.5pt)  -- (72.5pt,521.8945pt) arc(90:180:2.5pt)  -- (70pt,9.3945pt) arc(180:270:2.5pt) ;
-\draw[pstyle0] (70pt,38.2461pt) -- (147.9091pt,38.2461pt);
-\node at (74pt,8.8945pt)[below right,color=black]{\textbf{syntax}};
-\draw[pstyle0] (8.5pt,545.8945pt) -- (107.2171pt,545.8945pt) arc(270:360:3.75pt)  -- (116.7171pt,577.2461pt) -- (1259.5pt,577.2461pt) arc(270:360:2.5pt)  -- (1262pt,1009.3945pt) arc(0:90:2.5pt)  -- (8.5pt,1011.8945pt) arc(90:180:2.5pt)  -- (6pt,548.3945pt) arc(180:270:2.5pt) ;
-\draw[pstyle0] (6pt,577.2461pt) -- (116.7171pt,577.2461pt);
-\node at (10pt,547.8945pt)[below right,color=black]{\textbf{semantics}};
-\draw[pstyle0] (32.5pt,597.8945pt) -- (127.0848pt,597.8945pt) arc(270:360:3.75pt)  -- (136.5848pt,629.2461pt) -- (1235.5pt,629.2461pt) arc(270:360:2.5pt)  -- (1238pt,985.3945pt) arc(0:90:2.5pt)  -- (32.5pt,987.8945pt) arc(90:180:2.5pt)  -- (30pt,600.3945pt) arc(180:270:2.5pt) ;
-\draw[pstyle0] (30pt,629.2461pt) -- (136.5848pt,629.2461pt);
-\node at (34pt,599.8945pt)[below right,color=black]{\textbf{exchange}};
-\draw[pstyle0] (809.5pt,649.8945pt) -- (896.7849pt,649.8945pt) arc(270:360:3.75pt)  -- (906.2849pt,681.2461pt) -- (1211.5pt,681.2461pt) arc(270:360:2.5pt)  -- (1214pt,961.3945pt) arc(0:90:2.5pt)  -- (809.5pt,963.8945pt) arc(90:180:2.5pt)  -- (807pt,652.3945pt) arc(180:270:2.5pt) ;
-\draw[pstyle0] (807pt,681.2461pt) -- (906.2849pt,681.2461pt);
-\node at (811pt,651.8945pt)[below right,color=black]{\textbf{syntaxes}};
-\draw[pstyle1] (889pt,1092.3945pt) arc (180:270:5pt) -- (894pt,1087.3945pt) -- (1126.6034pt,1087.3945pt) arc (270:360:5pt) -- (1131.6034pt,1092.3945pt) -- (1131.6034pt,1117.7461pt) arc (0:90:5pt) -- (1126.6034pt,1122.7461pt) -- (894pt,1122.7461pt) arc (90:180:5pt) -- (889pt,1117.7461pt) -- cycle;
-\draw[pstyle2] (905pt,1105.0703pt) ellipse (12pt and 12pt);
-\node at (905pt,1105.0703pt)[]{\textbf{\Large I}};
-\node at (920pt,1092.3945pt)[below right,color=black]{\textit{AggregateFoundation}};
-\draw[pstyle1] (225pt,1085.3945pt) arc (180:270:5pt) -- (230pt,1080.3945pt) -- (579.3376pt,1080.3945pt) arc (270:360:5pt) -- (584.3376pt,1085.3945pt) -- (584.3376pt,1136.0977pt) arc (0:90:5pt) -- (579.3376pt,1141.0977pt) -- (230pt,1141.0977pt) arc (90:180:5pt) -- (225pt,1136.0977pt) -- cycle;
-\draw[pstyle3] (241pt,1110.7461pt) ellipse (12pt and 12pt);
-\node at (241pt,1110.7461pt)[]{\textbf{\Large M}};
-\node at (278.9276pt,1085.3945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
-\node at (256pt,1110.7461pt)[below right,color=black]{DeviceAwareAggregateFoundation};
-\draw[pstyle1] (151.5pt,55.8945pt) arc (180:270:5pt) -- (156.5pt,50.8945pt) -- (652.1815pt,50.8945pt) arc (270:360:5pt) -- (657.1815pt,55.8945pt) -- (657.1815pt,139.9492pt) arc (0:90:5pt) -- (652.1815pt,144.9492pt) -- (156.5pt,144.9492pt) arc (90:180:5pt) -- (151.5pt,139.9492pt) -- cycle;
-\draw[pstyle3] (262.0996pt,81.2461pt) ellipse (12pt and 12pt);
-\node at (262.0996pt,81.2461pt)[]{\textbf{\Large M}};
-\node at (282.0996pt,55.8945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
-\node at (343.9135pt,81.2461pt)[below right,color=black]{BranchingSyntax};
-\draw[pstyle4] (152.5pt,111.5977pt) -- (656.1815pt,111.5977pt);
-\draw[pstyle5] (162.5pt,129.7734pt) ellipse (3pt and 3pt);
-\node at (172.5pt,115.5977pt)[below right,color=black]{\textit{branch[T](cond: Boolean)(th: =\textgreater  T)(el: =\textgreater  T): T}};
-\draw[pstyle1] (86pt,185.3945pt) arc (180:270:5pt) -- (91pt,180.3945pt) -- (717.8977pt,180.3945pt) arc (270:360:5pt) -- (722.8977pt,185.3945pt) -- (722.8977pt,320.1523pt) arc (0:90:5pt) -- (717.8977pt,325.1523pt) -- (91pt,325.1523pt) arc (90:180:5pt) -- (86pt,320.1523pt) -- cycle;
-\draw[pstyle3] (262.2077pt,210.7461pt) ellipse (12pt and 12pt);
-\node at (262.2077pt,210.7461pt)[]{\textbf{\Large M}};
-\node at (282.2077pt,185.3945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
-\node at (306.3692pt,210.7461pt)[below right,color=black]{ExchangeCalculusSyntax};
-\draw[pstyle4] (87pt,241.0977pt) -- (721.8977pt,241.0977pt);
-\draw[pstyle5] (97pt,284.625pt) ellipse (3pt and 3pt);
-\node at (107pt,245.0977pt)[below right,color=black]{\textit{exchange[T](initial: AggregateValue[T])(}};
-\node at (107pt,270.4492pt)[below right,color=black]{\textit{            f: AggregateValue[T] =\textgreater  RetSend[AggregateValue[T]],}};
-\node at (107pt,295.8008pt)[below right,color=black]{\textit{        ): AggregateValue[T]}};
-\draw[pstyle1] (158.5pt,365.3945pt) arc (180:270:5pt) -- (163.5pt,360.3945pt) -- (645.9937pt,360.3945pt) arc (270:360:5pt) -- (650.9937pt,365.3945pt) -- (650.9937pt,500.1523pt) arc (0:90:5pt) -- (645.9937pt,505.1523pt) -- (163.5pt,505.1523pt) arc (90:180:5pt) -- (158.5pt,500.1523pt) -- cycle;
-\draw[pstyle3] (262.5057pt,390.7461pt) ellipse (12pt and 12pt);
-\node at (262.5057pt,390.7461pt)[]{\textbf{\Large M}};
-\node at (282.5057pt,365.3945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
-\node at (327.1462pt,390.7461pt)[below right,color=black]{FieldCalculusSyntax};
-\draw[pstyle4] (159.5pt,421.0977pt) -- (649.9937pt,421.0977pt);
-\draw[pstyle5] (169.5pt,439.2734pt) ellipse (3pt and 3pt);
-\node at (179.5pt,425.0977pt)[below right,color=black]{\textit{nbr[A](expr: A): AggregateValue[A]}};
-\draw[pstyle5] (169.5pt,464.625pt) ellipse (3pt and 3pt);
-\node at (179.5pt,450.4492pt)[below right,color=black]{\textit{rep[A](init: A)(f: A =\textgreater  A): A}};
-\draw[pstyle5] (169.5pt,489.9766pt) ellipse (3pt and 3pt);
-\node at (179.5pt,475.8008pt)[below right,color=black]{\textit{share[A](init: A)(f: AggregateValue[A] =\textgreater  A): A}};
-\draw[pstyle1] (46pt,773.3945pt) arc (180:270:5pt) -- (51pt,768.3945pt) -- (758.074pt,768.3945pt) arc (270:360:5pt) -- (763.074pt,773.3945pt) -- (763.074pt,966.8555pt) arc (0:90:5pt) -- (758.074pt,971.8555pt) -- (51pt,971.8555pt) arc (90:180:5pt) -- (46pt,966.8555pt) -- cycle;
-\draw[pstyle2] (262.8121pt,786.0703pt) ellipse (12pt and 12pt);
-\node at (262.8121pt,786.0703pt)[]{\textbf{\Large I}};
-\node at (284.8121pt,773.3945pt)[below right,color=black]{\textit{ExchangeCalculusSemantics}};
-\draw[pstyle4] (47pt,803.7461pt) -- (762.074pt,803.7461pt);
-\draw[pstyle6] (57pt,821.9219pt) ellipse (3pt and 3pt);
-\node at (67pt,807.7461pt)[below right,color=black]{\textit{\guillemotleft given\guillemotright  nvalues: NValuesOps[AggregateValue, DeviceId]}};
-\draw[pstyle6] (57pt,847.2734pt) ellipse (3pt and 3pt);
-\node at (67pt,833.0977pt)[below right,color=black]{\textit{\guillemotleft given\guillemotright  convert[T]: Conversion[T, AggregateValue[T]]}};
-\draw[pstyle4] (47pt,862.4492pt) -- (762.074pt,862.4492pt);
-\draw[pstyle7] (57pt,875.625pt) -- (61pt,879.625pt) -- (57pt,883.625pt) -- (53pt,879.625pt) -- cycle;
-\node at (67pt,866.4492pt)[below right,color=black]{\textit{br[T](cond: Boolean)(th: =\textgreater  T)(el: =\textgreater  T): T}};
-\draw[pstyle7] (57pt,926.3281pt) -- (61pt,930.3281pt) -- (57pt,934.3281pt) -- (53pt,930.3281pt) -- cycle;
-\node at (67pt,891.8008pt)[below right,color=black]{\textit{xc[T](init: AggregateValue[T])(}};
-\node at (67pt,917.1523pt)[below right,color=black]{\textit{      f: AggregateValue[T] =\textgreater  (AggregateValue[T], AggregateValue[T]),}};
-\node at (67pt,942.5039pt)[below right,color=black]{\textit{  ): AggregateValue[T]}};
-\draw[pstyle1] (823pt,699.3945pt) arc (180:270:5pt) -- (828pt,694.3945pt) -- (1193.3986pt,694.3945pt) arc (270:360:5pt) -- (1198.3986pt,699.3945pt) -- (1198.3986pt,750.0977pt) arc (0:90:5pt) -- (1193.3986pt,755.0977pt) -- (828pt,755.0977pt) arc (90:180:5pt) -- (823pt,750.0977pt) -- cycle;
-\draw[pstyle3] (839pt,724.7461pt) ellipse (12pt and 12pt);
-\node at (839pt,724.7461pt)[]{\textbf{\Large M}};
-\node at (852pt,699.3945pt)[below right,color=black]{\textit{\guillemotleft self: ExchangeCalculusSemantics\guillemotright }};
-\node at (886.3546pt,724.7461pt)[below right,color=black]{BranchingExchangeSemantics};
-\draw[pstyle1] (823pt,795.3945pt) arc (180:270:5pt) -- (828pt,790.3945pt) -- (1193.3986pt,790.3945pt) arc (270:360:5pt) -- (1198.3986pt,795.3945pt) -- (1198.3986pt,846.0977pt) arc (0:90:5pt) -- (1193.3986pt,851.0977pt) -- (828pt,851.0977pt) arc (90:180:5pt) -- (823pt,846.0977pt) -- cycle;
-\draw[pstyle3] (839pt,820.7461pt) ellipse (12pt and 12pt);
-\node at (839pt,820.7461pt)[]{\textbf{\Large M}};
-\node at (852pt,795.3945pt)[below right,color=black]{\textit{\guillemotleft self: ExchangeCalculusSemantics\guillemotright }};
-\node at (933.1445pt,820.7461pt)[below right,color=black]{ExchangeSemantics};
-\draw[pstyle1] (823pt,891.3945pt) arc (180:270:5pt) -- (828pt,886.3945pt) -- (1193.3986pt,886.3945pt) arc (270:360:5pt) -- (1198.3986pt,891.3945pt) -- (1198.3986pt,942.0977pt) arc (0:90:5pt) -- (1193.3986pt,947.0977pt) -- (828pt,947.0977pt) arc (90:180:5pt) -- (823pt,942.0977pt) -- cycle;
-\draw[pstyle3] (839pt,916.7461pt) ellipse (12pt and 12pt);
-\node at (839pt,916.7461pt)[]{\textbf{\Large M}};
-\node at (852pt,891.3945pt)[below right,color=black]{\textit{\guillemotleft self: ExchangeCalculusSemantics\guillemotright }};
-\node at (856.1493pt,916.7461pt)[below right,color=black]{FieldCalculusByExchangeSemantics};
-\draw[pstyle8] (584.27pt,1109.1145pt) ..controls (682.37pt,1108.1445pt) and (783.4009pt,1107.1442pt) .. (870.5509pt,1106.2742pt);
-\draw[pstyle8] (888.55pt,1106.0945pt) -- (870.491pt,1100.2745pt) -- (870.6108pt,1112.2739pt) -- (888.55pt,1106.0945pt) -- cycle;
-\draw[pstyle9] (675.1533pt,116.589pt) ..controls (713.1233pt,127.389pt) and (732.43pt,138.7445pt) .. (763pt,162.8945pt) ..controls (940.86pt,303.4145pt) and (993.34pt,598.5245pt) .. (1006pt,694.2245pt);
-\draw[pstyle8] (657.84pt,111.6645pt) -- (673.5118pt,122.3601pt) -- (676.7948pt,110.8179pt) -- (657.84pt,111.6645pt) -- cycle;
-\draw[pstyle9] (737.9354pt,317.3473pt) ..controls (752.6454pt,327.4973pt) and (751.3pt,329.1145pt) .. (763pt,342.8945pt) ..controls (825.06pt,415.9945pt) and (736.13pt,700.4945pt) .. (799pt,772.8945pt) ..controls (806pt,780.9645pt) and (814.06pt,787.8245pt) .. (822.84pt,793.6545pt);
-\draw[pstyle8] (723.12pt,307.1245pt) -- (734.5278pt,322.2857pt) -- (741.343pt,312.4088pt) -- (723.12pt,307.1245pt) -- cycle;
-\draw[pstyle9] (631.9778pt,514.0929pt) ..controls (687.8278pt,543.1529pt) and (726.66pt,574.0645pt) .. (763pt,625.8945pt) ..controls (825.67pt,715.2945pt) and (724.83pt,788.7745pt) .. (799pt,868.8945pt) ..controls (806pt,876.4545pt) and (813.93pt,882.9545pt) .. (822.5pt,888.5145pt);
-\draw[pstyle8] (616.01pt,505.7845pt) -- (629.2083pt,519.4155pt) -- (634.7473pt,508.7703pt) -- (616.01pt,505.7845pt) -- cycle;
-\draw[pstyle8] (667.35pt,971.7745pt) ..controls (779.65pt,1015.4645pt) and (882.7249pt,1055.5681pt) .. (946.4949pt,1080.3781pt);
-\draw[pstyle8] (963.27pt,1086.9045pt) -- (948.6703pt,1074.7864pt) -- (944.3194pt,1085.9698pt) -- (963.27pt,1086.9045pt) -- cycle;
-\draw[pstyle8] (404.5pt,971.8045pt) ..controls (404.5pt,1007.9745pt) and (404.5pt,1026.1345pt) .. (404.5pt,1062.2945pt);
-\draw[pstyle8] (404.5pt,1080.2945pt) -- (410.5pt,1062.2945pt) -- (398.5pt,1062.2945pt) -- (404.5pt,1080.2945pt) -- cycle;
-\draw[pstyle8] (763.39pt,840.8645pt) ..controls (783.62pt,839.2145pt) and (785.5487pt,839.0567pt) .. (804.6987pt,837.5067pt);
-\draw[pstyle8] (822.64pt,836.0545pt) -- (804.2146pt,831.5263pt) -- (805.1827pt,843.4871pt) -- (822.64pt,836.0545pt) -- cycle;
-\draw[pstyle8] (763.33pt,781.4045pt) ..controls (775.36pt,778.5145pt) and (787.28pt,775.6745pt) .. (799pt,772.8945pt) ..controls (822.61pt,767.2945pt) and (830.2068pt,765.4841pt) .. (854.5868pt,759.8841pt);
-\draw[pstyle8] (872.13pt,755.8545pt) -- (853.2436pt,754.0364pt) -- (855.93pt,765.7319pt) -- (872.13pt,755.8545pt) -- cycle;
-\draw[pstyle8] (763.39pt,897.7445pt) ..controls (783.62pt,899.3145pt) and (785.5442pt,899.4682pt) .. (804.6942pt,900.9582pt);
-\draw[pstyle8] (822.64pt,902.3545pt) -- (805.1597pt,894.9763pt) -- (804.2288pt,906.9401pt) -- (822.64pt,902.3545pt) -- cycle;
+\draw[pstyle0] (305.41pt,1114.8945pt) -- (412.401pt,1114.8945pt) arc(270:360:3.75pt)  -- (421.901pt,1146.2461pt) -- (1413.91pt,1146.2461pt) arc(270:360:2.5pt)  -- (1416.41pt,1292.3945pt) arc(0:90:2.5pt)  -- (305.41pt,1294.8945pt) arc(90:180:2.5pt)  -- (302.91pt,1117.3945pt) arc(180:270:2.5pt) ;
+\draw[pstyle0] (302.91pt,1146.2461pt) -- (421.901pt,1146.2461pt);
+\node at (306.91pt,1116.8945pt)[below right,color=black]{\textbf{foundation}};
+\draw[pstyle0] (166.41pt,6.8945pt) -- (232.3191pt,6.8945pt) arc(270:360:3.75pt)  -- (241.8191pt,38.2461pt) -- (830.41pt,38.2461pt) arc(270:360:2.5pt)  -- (832.91pt,519.3945pt) arc(0:90:2.5pt)  -- (166.41pt,521.8945pt) arc(90:180:2.5pt)  -- (163.91pt,9.3945pt) arc(180:270:2.5pt) ;
+\draw[pstyle0] (163.91pt,38.2461pt) -- (241.8191pt,38.2461pt);
+\node at (167.91pt,8.8945pt)[below right,color=black]{\textbf{syntax}};
+\draw[pstyle0] (83.91pt,545.8945pt) -- (182.6271pt,545.8945pt) arc(270:360:3.75pt)  -- (192.1271pt,577.2461pt) -- (1416.91pt,577.2461pt) arc(270:360:2.5pt)  -- (1419.41pt,1088.3945pt) arc(0:90:2.5pt)  -- (83.91pt,1090.8945pt) arc(90:180:2.5pt)  -- (81.41pt,548.3945pt) arc(180:270:2.5pt) ;
+\draw[pstyle0] (81.41pt,577.2461pt) -- (192.1271pt,577.2461pt);
+\node at (85.41pt,547.8945pt)[below right,color=black]{\textbf{semantics}};
+\draw[pstyle0] (107.91pt,597.8945pt) -- (202.4948pt,597.8945pt) arc(270:360:3.75pt)  -- (211.9948pt,629.2461pt) -- (1392.91pt,629.2461pt) arc(270:360:2.5pt)  -- (1395.41pt,1064.3945pt) arc(0:90:2.5pt)  -- (107.91pt,1066.8945pt) arc(90:180:2.5pt)  -- (105.41pt,600.3945pt) arc(180:270:2.5pt) ;
+\draw[pstyle0] (105.41pt,629.2461pt) -- (211.9948pt,629.2461pt);
+\node at (109.41pt,599.8945pt)[below right,color=black]{\textbf{exchange}};
+\draw[pstyle0] (966.91pt,649.8945pt) -- (1054.1949pt,649.8945pt) arc(270:360:3.75pt)  -- (1063.6949pt,681.2461pt) -- (1368.91pt,681.2461pt) arc(270:360:2.5pt)  -- (1371.41pt,961.3945pt) arc(0:90:2.5pt)  -- (966.91pt,963.8945pt) arc(90:180:2.5pt)  -- (964.41pt,652.3945pt) arc(180:270:2.5pt) ;
+\draw[pstyle0] (964.41pt,681.2461pt) -- (1063.6949pt,681.2461pt);
+\node at (968.41pt,651.8945pt)[below right,color=black]{\textbf{syntaxes}};
+\draw[pstyle1] (935.41pt,1170.8945pt) arc (180:270:5pt) -- (940.41pt,1165.8945pt) -- (1394.9832pt,1165.8945pt) arc (270:360:5pt) -- (1399.9832pt,1170.8945pt) -- (1399.9832pt,1254.9492pt) arc (0:90:5pt) -- (1394.9832pt,1259.9492pt) -- (940.41pt,1259.9492pt) arc (90:180:5pt) -- (935.41pt,1254.9492pt) -- cycle;
+\draw[pstyle2] (1058.8949pt,1183.5703pt) ellipse (12pt and 12pt);
+\node at (1058.8949pt,1183.5703pt)[]{\textbf{\Large I}};
+\node at (1080.8949pt,1170.8945pt)[below right,color=black]{\textit{AggregateFoundation}};
+\draw[pstyle3] (936.41pt,1201.2461pt) -- (1398.9832pt,1201.2461pt);
+\draw[pstyle4] (946.41pt,1219.4219pt) ellipse (3pt and 3pt);
+\node at (956.41pt,1205.2461pt)[below right,color=black]{\textit{\guillemotleft type\guillemotright  AggregateValue[T] }};
+\node at (1216.8317pt,1205.2461pt)[below right,color=black]{\textit{\textless :}};
+\node at (1240.4317pt,1205.2461pt)[below right,color=black]{\textit{ SafeIterable[T]}};
+\node at (956.41pt,1230.5977pt)[below right,color=black]{...};
+\draw[pstyle1] (318.91pt,1164.3945pt) arc (180:270:5pt) -- (323.91pt,1159.3945pt) -- (673.2476pt,1159.3945pt) arc (270:360:5pt) -- (678.2476pt,1164.3945pt) -- (678.2476pt,1273.8008pt) arc (0:90:5pt) -- (673.2476pt,1278.8008pt) -- (323.91pt,1278.8008pt) arc (90:180:5pt) -- (318.91pt,1273.8008pt) -- cycle;
+\draw[pstyle5] (334.91pt,1189.7461pt) ellipse (12pt and 12pt);
+\node at (334.91pt,1189.7461pt)[]{\textbf{\Large M}};
+\node at (372.8376pt,1164.3945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
+\node at (349.91pt,1189.7461pt)[below right,color=black]{DeviceAwareAggregateFoundation};
+\draw[pstyle3] (319.91pt,1220.0977pt) -- (677.2476pt,1220.0977pt);
+\draw[pstyle4] (329.91pt,1238.2734pt) ellipse (3pt and 3pt);
+\node at (339.91pt,1224.0977pt)[below right,color=black]{\textit{\guillemotleft type\guillemotright  DeviceId}};
+\node at (339.91pt,1249.4492pt)[below right,color=black]{...};
+\draw[pstyle1] (245.41pt,55.8945pt) arc (180:270:5pt) -- (250.41pt,50.8945pt) -- (746.0915pt,50.8945pt) arc (270:360:5pt) -- (751.0915pt,55.8945pt) -- (751.0915pt,139.9492pt) arc (0:90:5pt) -- (746.0915pt,144.9492pt) -- (250.41pt,144.9492pt) arc (90:180:5pt) -- (245.41pt,139.9492pt) -- cycle;
+\draw[pstyle5] (356.0096pt,81.2461pt) ellipse (12pt and 12pt);
+\node at (356.0096pt,81.2461pt)[]{\textbf{\Large M}};
+\node at (376.0096pt,55.8945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
+\node at (437.8235pt,81.2461pt)[below right,color=black]{BranchingSyntax};
+\draw[pstyle3] (246.41pt,111.5977pt) -- (750.0915pt,111.5977pt);
+\draw[pstyle6] (256.41pt,129.7734pt) ellipse (3pt and 3pt);
+\node at (266.41pt,115.5977pt)[below right,color=black]{\textit{branch[T](cond: Boolean)(th: =\textgreater  T)(el: =\textgreater  T): T}};
+\draw[pstyle1] (179.91pt,185.3945pt) arc (180:270:5pt) -- (184.91pt,180.3945pt) -- (811.8077pt,180.3945pt) arc (270:360:5pt) -- (816.8077pt,185.3945pt) -- (816.8077pt,320.1523pt) arc (0:90:5pt) -- (811.8077pt,325.1523pt) -- (184.91pt,325.1523pt) arc (90:180:5pt) -- (179.91pt,320.1523pt) -- cycle;
+\draw[pstyle5] (356.1177pt,210.7461pt) ellipse (12pt and 12pt);
+\node at (356.1177pt,210.7461pt)[]{\textbf{\Large M}};
+\node at (376.1177pt,185.3945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
+\node at (400.2792pt,210.7461pt)[below right,color=black]{ExchangeCalculusSyntax};
+\draw[pstyle3] (180.91pt,241.0977pt) -- (815.8077pt,241.0977pt);
+\draw[pstyle6] (190.91pt,284.625pt) ellipse (3pt and 3pt);
+\node at (200.91pt,245.0977pt)[below right,color=black]{\textit{exchange[T](initial: AggregateValue[T])(}};
+\node at (200.91pt,270.4492pt)[below right,color=black]{\textit{            f: AggregateValue[T] =\textgreater  RetSend[AggregateValue[T]],}};
+\node at (200.91pt,295.8008pt)[below right,color=black]{\textit{        ): AggregateValue[T]}};
+\draw[pstyle1] (252.41pt,365.3945pt) arc (180:270:5pt) -- (257.41pt,360.3945pt) -- (739.9037pt,360.3945pt) arc (270:360:5pt) -- (744.9037pt,365.3945pt) -- (744.9037pt,500.1523pt) arc (0:90:5pt) -- (739.9037pt,505.1523pt) -- (257.41pt,505.1523pt) arc (90:180:5pt) -- (252.41pt,500.1523pt) -- cycle;
+\draw[pstyle5] (356.4157pt,390.7461pt) ellipse (12pt and 12pt);
+\node at (356.4157pt,390.7461pt)[]{\textbf{\Large M}};
+\node at (376.4157pt,365.3945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
+\node at (421.0562pt,390.7461pt)[below right,color=black]{FieldCalculusSyntax};
+\draw[pstyle3] (253.41pt,421.0977pt) -- (743.9037pt,421.0977pt);
+\draw[pstyle6] (263.41pt,439.2734pt) ellipse (3pt and 3pt);
+\node at (273.41pt,425.0977pt)[below right,color=black]{\textit{nbr[A](expr: A): AggregateValue[A]}};
+\draw[pstyle6] (263.41pt,464.625pt) ellipse (3pt and 3pt);
+\node at (273.41pt,450.4492pt)[below right,color=black]{\textit{rep[A](init: A)(f: A =\textgreater  A): A}};
+\draw[pstyle6] (263.41pt,489.9766pt) ellipse (3pt and 3pt);
+\node at (273.41pt,475.8008pt)[below right,color=black]{\textit{share[A](init: A)(f: AggregateValue[A] =\textgreater  A): A}};
+\draw[pstyle1] (121.41pt,647.3945pt) arc (180:270:5pt) -- (126.41pt,642.3945pt) -- (870.008pt,642.3945pt) arc (270:360:5pt) -- (875.008pt,647.3945pt) -- (875.008pt,840.8555pt) arc (0:90:5pt) -- (870.008pt,845.8555pt) -- (126.41pt,845.8555pt) arc (90:180:5pt) -- (121.41pt,840.8555pt) -- cycle;
+\draw[pstyle2] (356.4841pt,660.0703pt) ellipse (12pt and 12pt);
+\node at (356.4841pt,660.0703pt)[]{\textbf{\Large I}};
+\node at (378.4841pt,647.3945pt)[below right,color=black]{\textit{ExchangeCalculusSemantics}};
+\draw[pstyle3] (122.41pt,677.7461pt) -- (874.008pt,677.7461pt);
+\draw[pstyle4] (132.41pt,695.9219pt) ellipse (3pt and 3pt);
+\node at (142.41pt,681.7461pt)[below right,color=black]{\textit{\guillemotleft given\guillemotright  nvalues: NValuesOps[AggregateValue, DeviceId]}};
+\draw[pstyle4] (132.41pt,721.2734pt) ellipse (3pt and 3pt);
+\node at (142.41pt,707.0977pt)[below right,color=black]{\textit{\guillemotleft given\guillemotright  convert[T]: Conversion[T, AggregateValue[T]]}};
+\draw[pstyle3] (122.41pt,736.4492pt) -- (874.008pt,736.4492pt);
+\draw[pstyle7] (132.41pt,749.625pt) -- (136.41pt,753.625pt) -- (132.41pt,757.625pt) -- (128.41pt,753.625pt) -- cycle;
+\node at (142.41pt,740.4492pt)[below right,color=black]{\textit{br[T](cond: Boolean)(th: =\textgreater  T)(el: =\textgreater  T): T}};
+\draw[pstyle7] (132.41pt,800.3281pt) -- (136.41pt,804.3281pt) -- (132.41pt,808.3281pt) -- (128.41pt,804.3281pt) -- cycle;
+\node at (142.41pt,765.8008pt)[below right,color=black]{\textit{xc[T](init: AggregateValue[T])(}};
+\node at (142.41pt,791.1523pt)[below right,color=black]{\textit{            f: AggregateValue[T] =\textgreater  (AggregateValue[T], AggregateValue[T]),}};
+\node at (142.41pt,816.5039pt)[below right,color=black]{\textit{        ): AggregateValue[T]}};
+\draw[pstyle1] (224.41pt,885.8945pt) arc (180:270:5pt) -- (229.41pt,880.8945pt) -- (767.3541pt,880.8945pt) arc (270:360:5pt) -- (772.3541pt,885.8945pt) -- (772.3541pt,1046.0039pt) arc (0:90:5pt) -- (767.3541pt,1051.0039pt) -- (229.41pt,1051.0039pt) arc (90:180:5pt) -- (224.41pt,1046.0039pt) -- cycle;
+\draw[pstyle2] (353.9537pt,898.5703pt) ellipse (12pt and 12pt);
+\node at (353.9537pt,898.5703pt)[]{\textbf{\Large I}};
+\node at (375.9537pt,885.8945pt)[below right,color=black]{\textit{NValuesOps}};
+\draw[color=plantucolor0002,fill=white,line width=1.0pt] (615.8974pt,877.8945pt) rectangle (775.3541pt,905.2461pt);
+\node at (616.8974pt,878.8945pt)[below right,color=black]{\textit{NV[\_], DeviceId}};
+\draw[pstyle3] (225.41pt,916.2461pt) -- (771.3541pt,916.2461pt);
+\draw[pstyle6] (235.41pt,934.4219pt) ellipse (3pt and 3pt);
+\node at (245.41pt,920.2461pt)[below right,color=black]{\textit{\guillemotleft extension: NV[T]\guillemotright  default: T}};
+\draw[pstyle6] (235.41pt,959.7734pt) ellipse (3pt and 3pt);
+\node at (245.41pt,945.5977pt)[below right,color=black]{\textit{\guillemotleft extension: NV[T]\guillemotright  values: MapView[DeviceId, T]}};
+\draw[pstyle6] (235.41pt,985.125pt) ellipse (3pt and 3pt);
+\node at (245.41pt,970.9492pt)[below right,color=black]{\textit{\guillemotleft extension: NV[T]\guillemotright  set(id: DeviceId, value: T): NV[T]}};
+\draw[pstyle6] (235.41pt,1010.4766pt) ellipse (3pt and 3pt);
+\node at (245.41pt,996.3008pt)[below right,color=black]{\textit{\guillemotleft extension: NV[T]\guillemotright  get(id: DeviceId): T}};
+\draw[pstyle6] (235.41pt,1035.8281pt) ellipse (3pt and 3pt);
+\node at (245.41pt,1021.6523pt)[below right,color=black]{\guillemotleft extension: NV[T]\guillemotright  apply(id: DeviceId): T};
+\draw[pstyle1] (980.41pt,699.3945pt) arc (180:270:5pt) -- (985.41pt,694.3945pt) -- (1350.8086pt,694.3945pt) arc (270:360:5pt) -- (1355.8086pt,699.3945pt) -- (1355.8086pt,750.0977pt) arc (0:90:5pt) -- (1350.8086pt,755.0977pt) -- (985.41pt,755.0977pt) arc (90:180:5pt) -- (980.41pt,750.0977pt) -- cycle;
+\draw[pstyle5] (996.41pt,724.7461pt) ellipse (12pt and 12pt);
+\node at (996.41pt,724.7461pt)[]{\textbf{\Large M}};
+\node at (1009.41pt,699.3945pt)[below right,color=black]{\textit{\guillemotleft self: ExchangeCalculusSemantics\guillemotright }};
+\node at (1043.7646pt,724.7461pt)[below right,color=black]{BranchingExchangeSemantics};
+\draw[pstyle1] (980.41pt,795.3945pt) arc (180:270:5pt) -- (985.41pt,790.3945pt) -- (1350.8086pt,790.3945pt) arc (270:360:5pt) -- (1355.8086pt,795.3945pt) -- (1355.8086pt,846.0977pt) arc (0:90:5pt) -- (1350.8086pt,851.0977pt) -- (985.41pt,851.0977pt) arc (90:180:5pt) -- (980.41pt,846.0977pt) -- cycle;
+\draw[pstyle5] (996.41pt,820.7461pt) ellipse (12pt and 12pt);
+\node at (996.41pt,820.7461pt)[]{\textbf{\Large M}};
+\node at (1009.41pt,795.3945pt)[below right,color=black]{\textit{\guillemotleft self: ExchangeCalculusSemantics\guillemotright }};
+\node at (1090.5545pt,820.7461pt)[below right,color=black]{ExchangeSemantics};
+\draw[pstyle1] (980.41pt,891.3945pt) arc (180:270:5pt) -- (985.41pt,886.3945pt) -- (1350.8086pt,886.3945pt) arc (270:360:5pt) -- (1355.8086pt,891.3945pt) -- (1355.8086pt,942.0977pt) arc (0:90:5pt) -- (1350.8086pt,947.0977pt) -- (985.41pt,947.0977pt) arc (90:180:5pt) -- (980.41pt,942.0977pt) -- cycle;
+\draw[pstyle5] (996.41pt,916.7461pt) ellipse (12pt and 12pt);
+\node at (996.41pt,916.7461pt)[]{\textbf{\Large M}};
+\node at (1009.41pt,891.3945pt)[below right,color=black]{\textit{\guillemotleft self: ExchangeCalculusSemantics\guillemotright }};
+\node at (1013.5593pt,916.7461pt)[below right,color=black]{FieldCalculusByExchangeSemantics};
+\draw[pstyle9] (678.29pt,1217.2845pt) ..controls (757.16pt,1216.5745pt) and (832.8707pt,1215.8971pt) .. (917.0207pt,1215.1371pt);
+\draw[pstyle9] (935.02pt,1214.9745pt) -- (916.9665pt,1209.1373pt) -- (917.0749pt,1221.1368pt) -- (935.02pt,1214.9745pt) -- cycle;
+\draw[pstyle10] (769.0831pt,112.8862pt) ..controls (813.2931pt,123.6062pt) and (839.19pt,136.3845pt) .. (875.41pt,162.8945pt) ..controls (1064.12pt,300.9945pt) and (1140.5pt,597.7045pt) .. (1160.92pt,694.0145pt);
+\draw[pstyle9] (751.59pt,108.6445pt) -- (767.6692pt,118.7173pt) -- (770.497pt,107.0552pt) -- (751.59pt,108.6445pt) -- cycle;
+\draw[pstyle10] (832.7196pt,305.9893pt) ..controls (854.4196pt,318.1593pt) and (858.6pt,324.3845pt) .. (875.41pt,342.8945pt) ..controls (1005.13pt,485.7445pt) and (803.52pt,632.0345pt) .. (935.41pt,772.8945pt) ..controls (948.03pt,786.3745pt) and (963.37pt,796.6045pt) .. (980.08pt,804.3045pt);
+\draw[pstyle9] (817.02pt,297.1845pt) -- (829.7846pt,311.2225pt) -- (835.6545pt,300.7561pt) -- (817.02pt,297.1845pt) -- cycle;
+\draw[pstyle10] (733.1136pt,513.7563pt) ..controls (791.9336pt,542.8563pt) and (834.43pt,574.1045pt) .. (875.41pt,625.8945pt) ..controls (944.43pt,713.1345pt) and (855.28pt,791.7245pt) .. (935.41pt,868.8945pt) ..controls (948.34pt,881.3545pt) and (963.62pt,890.9545pt) .. (980.05pt,898.3145pt);
+\draw[pstyle9] (716.98pt,505.7745pt) -- (730.453pt,519.1341pt) -- (735.7741pt,508.3784pt) -- (716.98pt,505.7745pt) -- cycle;
+\draw[pstyle9] (851.59pt,845.6045pt) ..controls (859.81pt,851.0745pt) and (867.76pt,856.8345pt) .. (875.41pt,862.8945pt) ..controls (916.31pt,895.3445pt) and (904.12pt,922.0945pt) .. (935.41pt,963.8945pt) ..controls (991.82pt,1039.2645pt) and (1054.9305pt,1104.7898pt) .. (1104.2005pt,1152.9698pt);
+\draw[pstyle9] (1117.07pt,1165.5545pt) -- (1108.3954pt,1148.6799pt) -- (1100.0056pt,1157.2596pt) -- (1117.07pt,1165.5545pt) -- cycle;
+\draw[pstyle9] (121.11pt,801.8645pt) ..controls (89.53pt,821.6045pt) and (62.46pt,847.2345pt) .. (43.41pt,880.3945pt) ..controls (6pt,945.5245pt) and (6pt,984.2645pt) .. (43.41pt,1049.3945pt) ..controls (98.46pt,1145.2445pt) and (198.7724pt,1184.1988pt) .. (300.8124pt,1202.4888pt);
+\draw[pstyle9] (318.53pt,1205.6645pt) -- (301.871pt,1196.5829pt) -- (299.7538pt,1208.3946pt) -- (318.53pt,1205.6645pt) -- cycle;
+\draw[pstyle9] (875.59pt,787.2845pt) ..controls (911.71pt,791.4545pt) and (929.2785pt,793.4825pt) .. (962.3185pt,797.2925pt);
+\draw[pstyle9] (980.2pt,799.3545pt) -- (963.0058pt,791.332pt) -- (961.6312pt,803.253pt) -- (980.2pt,799.3545pt) -- cycle;
+\draw[pstyle9] (875.59pt,733.1845pt) ..controls (911.71pt,732.1545pt) and (929.1674pt,731.6719pt) .. (962.2074pt,730.7219pt);
+\draw[pstyle9] (980.2pt,730.2045pt) -- (962.035pt,724.7244pt) -- (962.3799pt,736.7194pt) -- (980.2pt,730.2045pt) -- cycle;
+\draw[pstyle9] (846.24pt,845.8645pt) ..controls (876.32pt,853.9345pt) and (906.36pt,861.7245pt) .. (935.41pt,868.8945pt) ..controls (959.32pt,874.7945pt) and (967.146pt,876.7631pt) .. (992.046pt,882.1431pt);
+\draw[pstyle9] (1009.64pt,885.9445pt) -- (993.3131pt,876.2784pt) -- (990.7788pt,888.0078pt) -- (1009.64pt,885.9445pt) -- cycle;
+\draw[pstyle9] (498.41pt,880.4745pt) ..controls (498.41pt,868.9145pt) and (498.41pt,869.3545pt) .. (498.41pt,857.7945pt);
+\draw[pstyle9] (498.41pt,845.7945pt) -- (494.41pt,851.7945pt) -- (498.41pt,857.7945pt) -- (502.41pt,851.7945pt) -- (498.41pt,845.7945pt) -- cycle;
 \end{tikzpicture}

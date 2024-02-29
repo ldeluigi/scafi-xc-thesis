@@ -5,9 +5,16 @@ left to right direction
 package foundation {
 
 
-    interface AggregateFoundation
+    interface AggregateFoundation {
+        {abstract} {field} + <<type>> AggregateValue[T] subtypeOf() SafeIterable[T]
+        ...
+    }
 
-    metaclass DeviceAwareAggregateFoundation <<self: AggregateFoundation>>
+    metaclass DeviceAwareAggregateFoundation <<self: AggregateFoundation>> {
+        {abstract} {field} + <<type>> DeviceId
+        ...
+    }
+
     DeviceAwareAggregateFoundation --|> AggregateFoundation
 }
 
@@ -40,13 +47,24 @@ package semantics.exchange {
         {abstract} {field} + <<given>> convert[T]: Conversion[T, AggregateValue[T]]
         {abstract} {method} # br[T](cond: Boolean)(th: => T)(el: => T): T
         {abstract} {method} # xc[T](init: AggregateValue[T])(\n\
-      f: AggregateValue[T] => (AggregateValue[T], AggregateValue[T]),\n\
-  ): AggregateValue[T]
+            f: AggregateValue[T] => (AggregateValue[T], AggregateValue[T]),\n\
+        ): AggregateValue[T]
     }
+
     ExchangeCalculusSemantics -|> AggregateFoundation
     ExchangeCalculusSemantics -|> DeviceAwareAggregateFoundation
     ExchangeCalculusSemantics --|> ExchangeSemantics
     ExchangeCalculusSemantics --|> BranchingExchangeSemantics
     ExchangeCalculusSemantics --|> FieldCalculusByExchangeSemantics
+
+    interface NValuesOps<NV[_], DeviceId> {
+        {abstract} {method} + <<extension: NV[T]>> default: T
+        {abstract} {method} + <<extension: NV[T]>> values: MapView[DeviceId, T]
+        {abstract} {method} + <<extension: NV[T]>> set(id: DeviceId, value: T): NV[T]
+        {abstract} {method} + <<extension: NV[T]>> get(id: DeviceId): T
+        {method} + <<extension: NV[T]>> apply(id: DeviceId): T
+    }
+
+    NValuesOps -o ExchangeCalculusSemantics
 }
 @enduml

@@ -273,6 +273,14 @@ Anonymous classes make it possible to instantiate a trait or abstract class by p
 %
 Just like in Java, traits, classes, and singleton objects can be nested and can access each other's private members.
 
+If the definition of something depends on another from a different package, it is possible to use the \texttt{import} keyword to import the needed definitions.
+%
+\texttt{import} statements can be put at the beginning of a file, or inside a block, and can be used to import a single definition, a group of definitions, or all definitions from a package.
+%
+Additionally, Scala supports import aliases to avoid name clashes.
+%
+Since Scala 3, import aliases have a dedicated syntax, following the pattern \texttt{import A as B}, where \texttt{A} is the fully qualified original name and \texttt{B} is the alias.
+
 An advanced example of trait usage can be found in \cref{lst:scala3-service-oriented-design}\footnote{\url{https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html}}, which shows how to use traits in a service-oriented way, a design pattern that promotes the use of traits to define services and their dependencies and to compose services into a single class\cite{service-oriented-design}.
 %
 In the mentioned example, some advanced features of Scala are involved, such as abstract type members, nested traits, and \textit{self-type annotations}.
@@ -432,6 +440,8 @@ The \texttt{extension} keyword is used to define an \textit{extension method}, w
 If not passed explicitly, the compiler searches for \textit{given instances} to satisfy \textit{context parameters} performing \textit{term inference}.
 %
 Starting with Scala 3, context parameters can be anonymous, and given instances can be abstract.
+%
+To retrieve the value of an anonymous context parameter of type \texttt{T} Scala 3 provides the \texttt{summon[T]: T} method, that replaces Scala 2's \texttt{implicitly[T]} method.
 
 \textit{Context bounds} in the form \texttt{T: Type} are syntactic sugar for context parameters with a more concise syntax, that gets desugared by the compiler to a context parameter of type \texttt{Type[T]}, as shown in .
 %

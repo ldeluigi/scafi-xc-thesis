@@ -158,36 +158,80 @@ The twist is that libraries are instead defined as singleton objects, able to be
 %
 The disadvantage of this design would have been the different invocation syntax for library constructs versus core syntax constructs such as \texttt{nbr} and \texttt{rep}.
 %
-This disadvantage has been overcome by defining a facade library for every core syntax, hiding the \texttt{language.\_} prefix necessary for invoking core syntax constructs, with the small cost of having to write a facade library for every future syntax developed by researchers.
+This disadvantage has been overcome by defining a facade library for every core syntax, hiding the \quotes{\texttt{language.}} prefix necessary for invoking core syntax constructs, with the small cost of having to write a facade library for every future syntax developed by researchers.
 %
-A diagram of the final model for the foundation is shown in \cref{fig:final-design-foundation-diagram}.
-
-TODO go on
+An \ac{UML} diagram of the final model for the foundation is shown in \cref{fig:final-design-foundation-diagram}.
 
 \begin{figure}
     \centering
     \caption{Final design: \ac{UML} diagram of the \texttt{AggregateFoundation}.}
     \label{fig:final-design-foundation-diagram}
+    \bigskip
     \resizebox{\linewidth}{!}{
         \input{diagrams/final-design-foundation/Final Design Foundation.latex}
     }
 \end{figure}
 
+\Cref{fig:final-design-exchange-calculus-semantics-diagram} shows the \ac{UML} diagram of the \texttt{ExchangeCalculusSemantics} mixin composition, which is the only semantics implemented for the scope of this project.
 
 \begin{figure}
     \centering
     \caption{Final design: \ac{UML} diagram of the \texttt{ExchangeCalculusSemantics} mixin composition.}
     \label{fig:final-design-exchange-calculus-semantics-diagram}
+    \bigskip
     \resizebox{\linewidth}{!}{
         \input{diagrams/final-design-semantics/Final Design Semantics.latex}
     }
 \end{figure}
 
+Thanks to this design, the gradient construct, also known as \texttt{distanceTo}, can be defined to work with any aggregate semantics that supports the field calculus syntax, and thanks to Scala context bounds it can also be defined to work with any numeric type that supports an upper bound, such as \texttt{Double}.
+%
+The resulting code for the \texttt{distanceTo} construct is shown in \cref{lst:distance-to}.
+%
+The provided snippet demonstrates how this design effectively achieves the goals pursued by the other design prototypes:
+\begin{itemize}
+    \item invocation of library and core constructs without the \texttt{.} operator;
+    \item declaration of library dependencies with top-level imports, that hide transitive dependencies;
+    \item generic definition of the constructs for high reusability;
+    \item clean declaration of the core syntax dependencies, using a \quotes{\texttt{language}} context parameter and intersection types;
+    \item possibility to resolve naming conflicts with import aliases;
+\end{itemize}
+
+\lstinputlisting[float, language=Scala, caption={Final design: \texttt{distanceTo} construct implementation in the \texttt{GradientLibrary}.}, label={lst:distance-to}]{listings/distance-to.scala}
+
+TODO maybe talk about the final design more
 
 \section{The simulator}
 
-TODO The simulator
+The simulator module serves both as a tool for developers to test their programs in a controlled environment and as a fundamental component for the acceptance tests.
+%
+For the scope of this project, the simulator has been designed to be as simple as possible, providing a minimal set of functionalities that are enough to test the \ac{DSL} and the libraries developed for it.
+%
+As a result, the simulator is deterministic, with discrete time, and models neighborhoods as a map from device identifiers to a set of device identifiers.
+%
+Nevertheless, the simulator implements basic real-world network phenomena such as message loss and delay, as well as customizable message retention time and device reboot/failures.
+%
+Inside tests, a \textit{deterministic} simulator allows control of every aspect of the aforementioned features through the use of policies, implementing the strategy pattern.
+%
+In addition to that, in manual tests, a \textit{random} simulator could be used.
+%
+The random simulator allows the generation of randomized device networks and randomized policies to simulate an environment closer to the internet.
+%
+This is particularly useful to test the self-healing, seld-organizing properties of aggregate programs.
+%
+Tests can be reproduced deterministically even in the random simulator thanks to the \texttt{seed} parameter that controls the generation of pseudo-random numbers.
+%
+The resulting \ac{UML} diagram of the simulator is shown in \cref{fig:simulator-uml}.
 
+\begin{figure}
+    \centering
+    \caption{\ac{UML} diagram of the \texttt{simulator} module.}
+    \label{fig:simulator-uml}
+    \bigskip
+    \resizebox{\linewidth}{!}{
+        \input{diagrams/simulator/Simulator.latex}
+    }
+\end{figure}
 
 \section{Scalable unit test design for the API}
 

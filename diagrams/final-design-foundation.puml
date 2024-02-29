@@ -5,15 +5,15 @@ package commons {
 
     interface SafeIterable<covariant(A)> {
         {abstract} {method} # iterator: Iterator[A]
-        {method} + toIterable: Iterable[A]
+        {abstract} {method} + toIterable: Iterable[A]
         {method} + fold[A1 supertypeOf() A](z: A1)(op: (A1, A1) => A1): A1
         ..
         {method} ...
     }
 
     interface Aggregate<F[A] subtypeOf() SafeIterable[A]> {
-        {method} + <<extension: F[A]>> withoutSelf: SafeIterable[A]
-        {method} + <<extension: F[A]>> onlySelf: A
+        {abstract} {method} + <<extension: F[A]>> withoutSelf: SafeIterable[A]
+        {abstract} {method} + <<extension: F[A]>> onlySelf: A
     }
 
     Aggregate ..> SafeIterable
