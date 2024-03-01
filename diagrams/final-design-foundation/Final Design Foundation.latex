@@ -8,7 +8,7 @@
 \definecolor{plantucolor0006}{RGB}{179,141,34}
 \definecolor{plantucolor0007}{RGB}{132,190,132}
 \definecolor{plantucolor0008}{RGB}{3,128,72}
-\definecolor{plantucolor0009}{RGB}{204,204,204}
+\definecolor{plantucolor0009}{RGB}{169,220,223}
 \begin{tikzpicture}[yscale=-1
 ,pstyle0/.style={color=black,line width=1.5pt}
 ,pstyle1/.style={color=plantucolor0002,fill=plantucolor0001,line width=0.5pt}
@@ -89,10 +89,10 @@
 \draw[pstyle8] (177.25pt,385.125pt) ellipse (3pt and 3pt);
 \node at (187.25pt,370.9492pt)[below right,color=black]{\textit{\guillemotleft given\guillemotright  liftable: Liftable[AggregateValue]}};
 \draw[pstyle1] (151.25pt,55.8945pt) arc (180:270:5pt) -- (156.25pt,50.8945pt) -- (665.7397pt,50.8945pt) arc (270:360:5pt) -- (670.7397pt,55.8945pt) -- (670.7397pt,216.0039pt) arc (0:90:5pt) -- (665.7397pt,221.0039pt) -- (156.25pt,221.0039pt) arc (90:180:5pt) -- (151.25pt,216.0039pt) -- cycle;
-\draw[color=plantucolor0002,fill=plantucolor0009,line width=1.0pt] (243.8261pt,81.2461pt) ellipse (12pt and 12pt);
-\node at (243.8261pt,81.2461pt)[]{\textbf{\Large M}};
+\draw[color=plantucolor0002,fill=plantucolor0009,line width=1.0pt] (239.4752pt,81.2461pt) ellipse (12pt and 12pt);
+\node at (239.4752pt,81.2461pt)[]{\textbf{\Large A}};
 \node at (288.7537pt,55.8945pt)[below right,color=black]{\textit{\guillemotleft self: AggregateFoundation\guillemotright }};
-\node at (265.8261pt,81.2461pt)[below right,color=black]{DeviceAwareAggregateFoundation};
+\node at (261.4752pt,81.2461pt)[below right,color=black]{\textit{DeviceAwareAggregateFoundation}};
 \draw[pstyle4] (152.25pt,111.5977pt) -- (669.7397pt,111.5977pt);
 \draw[pstyle8] (162.25pt,129.7734pt) ellipse (3pt and 3pt);
 \node at (172.25pt,115.5977pt)[below right,color=black]{\textit{\guillemotleft type\guillemotright  DeviceId}};

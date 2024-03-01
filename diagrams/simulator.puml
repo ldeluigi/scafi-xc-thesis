@@ -13,10 +13,13 @@ package simulator {
         {abstract} {method} + tick(): Unit
     }
 
-    class DeterministicSimulator extends DiscreteSimulator
+    class DeterministicSimulator extends DiscreteSimulator {
+        ...
+    }
 
     class RandomSimulator extends DiscreteSimulator {
         {field} - delegate: DeterministicSimulator
+        ...
     }
     RandomSimulator o- DeterministicSimulator
 }

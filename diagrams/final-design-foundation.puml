@@ -39,7 +39,7 @@ package foundation {
     AggregateFoundation o-- Liftable
     AggregateFoundation ..> SafeIterable
 
-    metaclass DeviceAwareAggregateFoundation <<self: AggregateFoundation>> {
+    abstract class DeviceAwareAggregateFoundation <<self: AggregateFoundation>> {
         {abstract} {field} + <<type>> DeviceId
         {abstract} {field} + <<given>> idEquality: CanEqual[DeviceId, DeviceId]
         {abstract} {field} + self: DeviceId

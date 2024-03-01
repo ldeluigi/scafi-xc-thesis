@@ -30,7 +30,8 @@ package engine {
             {abstract} {method} + create(network: N): C
         }
 
-        ContextFactory ..left..> Context
+        ContextFactory ..right..> Context
+        ContextFactory ..up..> Network
     }
 
     Engine ..down..> Context

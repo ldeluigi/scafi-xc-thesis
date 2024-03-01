@@ -10,7 +10,7 @@ package foundation {
         ...
     }
 
-    metaclass DeviceAwareAggregateFoundation <<self: AggregateFoundation>> {
+    abstract class DeviceAwareAggregateFoundation <<self: AggregateFoundation>> {
         {abstract} {field} + <<type>> DeviceId
         ...
     }
@@ -19,17 +19,17 @@ package foundation {
 }
 
 package syntax {
-    metaclass BranchingSyntax <<self: AggregateFoundation>>{
+    abstract class BranchingSyntax <<self: AggregateFoundation>>{
         {abstract} {method} + branch[T](cond: Boolean)(th: => T)(el: => T): T
     }
 
-    metaclass ExchangeCalculusSyntax <<self: AggregateFoundation>> {
+    abstract class ExchangeCalculusSyntax <<self: AggregateFoundation>> {
         {abstract} {method} + exchange[T](initial: AggregateValue[T])(\n\
             f: AggregateValue[T] => RetSend[AggregateValue[T]],\n\
         ): AggregateValue[T]
     }
 
-    metaclass FieldCalculusSyntax <<self: AggregateFoundation>> {
+    abstract class FieldCalculusSyntax <<self: AggregateFoundation>> {
         {abstract} {method} + nbr[A](expr: A): AggregateValue[A]
         {abstract} {method} + rep[A](init: A)(f: A => A): A
         {abstract} {method} + share[A](init: A)(f: AggregateValue[A] => A): A
@@ -38,9 +38,9 @@ package syntax {
 
 package semantics.exchange {
     package syntaxes {
-        metaclass BranchingExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.BranchingSyntax
-        metaclass ExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.ExchangeCalculusSyntax
-        metaclass FieldCalculusByExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.FieldCalculusSyntax
+        abstract class BranchingExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.BranchingSyntax
+        abstract class ExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.ExchangeCalculusSyntax
+        abstract class FieldCalculusByExchangeSemantics <<self: ExchangeCalculusSemantics>> implements syntax.FieldCalculusSyntax
     }
     interface ExchangeCalculusSemantics {
         {abstract} {field} + <<given>> nvalues: NValuesOps[AggregateValue, DeviceId]
@@ -53,9 +53,9 @@ package semantics.exchange {
 
     ExchangeCalculusSemantics -|> AggregateFoundation
     ExchangeCalculusSemantics -|> DeviceAwareAggregateFoundation
-    ExchangeCalculusSemantics --|> ExchangeSemantics
-    ExchangeCalculusSemantics --|> BranchingExchangeSemantics
-    ExchangeCalculusSemantics --|> FieldCalculusByExchangeSemantics
+    ExchangeCalculusSemantics <--|> ExchangeSemantics
+    ExchangeCalculusSemantics <--|> BranchingExchangeSemantics
+    ExchangeCalculusSemantics <--|> FieldCalculusByExchangeSemantics
 
     interface NValuesOps<NV[_], DeviceId> {
         {abstract} {method} + <<extension: NV[T]>> default: T

@@ -1,4 +1,6 @@
-def exchange[T](initial: AggregateValue[T])(f: AggregateValue[T] => RetSend[AggregateValue[T]]): AggregateValue[T]
+def exchange[T](initial: AggregateValue[T])(
+    f: AggregateValue[T] => RetSend[AggregateValue[T]]
+): AggregateValue[T]
 
 import RetSend.{ *, given } // necessary to enable some of the styles below
 

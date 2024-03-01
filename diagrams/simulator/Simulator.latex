@@ -18,7 +18,7 @@
 ,pstyle7/.style={color=plantucolor0002,fill=plantucolor0007,line width=1.0pt}
 ,pstyle9/.style={color=plantucolor0002,line width=1.0pt}
 ]
-\draw[pstyle0] (8.5pt,6.8945pt) -- (102.7923pt,6.8945pt) arc(270:360:3.75pt)  -- (112.2923pt,38.2461pt) -- (642.5pt,38.2461pt) arc(270:360:2.5pt)  -- (645pt,467.3945pt) arc(0:90:2.5pt)  -- (8.5pt,469.8945pt) arc(90:180:2.5pt)  -- (6pt,9.3945pt) arc(180:270:2.5pt) ;
+\draw[pstyle0] (8.5pt,6.8945pt) -- (102.7923pt,6.8945pt) arc(270:360:3.75pt)  -- (112.2923pt,38.2461pt) -- (642.5pt,38.2461pt) arc(270:360:2.5pt)  -- (645pt,492.3945pt) arc(0:90:2.5pt)  -- (8.5pt,494.8945pt) arc(90:180:2.5pt)  -- (6pt,9.3945pt) arc(180:270:2.5pt) ;
 \draw[pstyle0] (6pt,38.2461pt) -- (112.2923pt,38.2461pt);
 \node at (10pt,8.8945pt)[below right,color=black]{\textbf{simulator}};
 \draw[pstyle1] (102pt,55.8945pt) arc (180:270:5pt) -- (107pt,50.8945pt) -- (543.3976pt,50.8945pt) arc (270:360:5pt) -- (548.3976pt,55.8945pt) -- (548.3976pt,190.6523pt) arc (0:90:5pt) -- (543.3976pt,195.6523pt) -- (107pt,195.6523pt) arc (90:180:5pt) -- (102pt,190.6523pt) -- cycle;
@@ -49,23 +49,26 @@
 \draw[pstyle4] (63pt,291.2461pt) -- (586.899pt,291.2461pt);
 \draw[color=plantucolor0005,fill=plantucolor0006,line width=1.0pt] (73pt,309.4219pt) ellipse (3pt and 3pt);
 \node at (83pt,295.2461pt)[below right,color=black]{\textit{tick(): Unit}};
-\draw[pstyle1] (383.5pt,406.8945pt) arc (180:270:5pt) -- (388.5pt,401.8945pt) -- (623.5609pt,401.8945pt) arc (270:360:5pt) -- (628.5609pt,406.8945pt) -- (628.5609pt,432.2461pt) arc (0:90:5pt) -- (623.5609pt,437.2461pt) -- (388.5pt,437.2461pt) arc (90:180:5pt) -- (383.5pt,432.2461pt) -- cycle;
-\draw[pstyle7] (399.5pt,419.5703pt) ellipse (12pt and 12pt);
-\node at (399.5pt,419.5703pt)[]{\textbf{\Large C}};
-\node at (414.5pt,406.8945pt)[below right,color=black]{DeterministicSimulator};
-\draw[pstyle1] (22pt,389.8945pt) arc (180:270:5pt) -- (27pt,384.8945pt) -- (343.223pt,384.8945pt) arc (270:360:5pt) -- (348.223pt,389.8945pt) -- (348.223pt,448.5977pt) arc (0:90:5pt) -- (343.223pt,453.5977pt) -- (27pt,453.5977pt) arc (90:180:5pt) -- (22pt,448.5977pt) -- cycle;
+\draw[pstyle1] (383.5pt,402.3945pt) arc (180:270:5pt) -- (388.5pt,397.3945pt) -- (623.5609pt,397.3945pt) arc (270:360:5pt) -- (628.5609pt,402.3945pt) -- (628.5609pt,461.0977pt) arc (0:90:5pt) -- (623.5609pt,466.0977pt) -- (388.5pt,466.0977pt) arc (90:180:5pt) -- (383.5pt,461.0977pt) -- cycle;
+\draw[pstyle7] (399.5pt,415.0703pt) ellipse (12pt and 12pt);
+\node at (399.5pt,415.0703pt)[]{\textbf{\Large C}};
+\node at (414.5pt,402.3945pt)[below right,color=black]{DeterministicSimulator};
+\draw[pstyle4] (384.5pt,432.7461pt) -- (627.5609pt,432.7461pt);
+\node at (389.5pt,436.7461pt)[below right,color=black]{...};
+\draw[pstyle1] (22pt,389.8945pt) arc (180:270:5pt) -- (27pt,384.8945pt) -- (343.223pt,384.8945pt) arc (270:360:5pt) -- (348.223pt,389.8945pt) -- (348.223pt,473.9492pt) arc (0:90:5pt) -- (343.223pt,478.9492pt) -- (27pt,478.9492pt) arc (90:180:5pt) -- (22pt,473.9492pt) -- cycle;
 \draw[pstyle7] (97.1861pt,402.5703pt) ellipse (12pt and 12pt);
 \node at (97.1861pt,402.5703pt)[]{\textbf{\Large C}};
 \node at (119.1861pt,389.8945pt)[below right,color=black]{RandomSimulator};
 \draw[pstyle4] (23pt,420.2461pt) -- (347.223pt,420.2461pt);
 \draw[color=plantucolor0008,line width=1.0pt] (30pt,435.4219pt) rectangle (36pt,441.4219pt);
 \node at (43pt,424.2461pt)[below right,color=black]{delegate: DeterministicSimulator};
+\node at (43pt,449.5977pt)[below right,color=black]{...};
 \draw[pstyle9] (325pt,214.2845pt) ..controls (325pt,234.9545pt) and (325pt,238.5245pt) .. (325pt,255.6945pt);
 \draw[pstyle9] (325pt,196.2845pt) -- (319pt,214.2845pt) -- (331pt,214.2845pt) -- (325pt,196.2845pt) -- cycle;
-\draw[pstyle9] (387.765pt,335.4329pt) ..controls (422.955pt,360.1229pt) and (454.49pt,382.2545pt) .. (482.14pt,401.6545pt);
-\draw[pstyle9] (373.03pt,325.0945pt) -- (384.3188pt,340.3445pt) -- (391.2111pt,330.5212pt) -- (373.03pt,325.0945pt) -- cycle;
-\draw[pstyle9] (274.5183pt,337.1885pt) ..controls (254.2683pt,355.5585pt) and (242.6pt,366.1445pt) .. (222.32pt,384.5345pt);
-\draw[pstyle9] (287.85pt,325.0945pt) -- (270.4869pt,332.7446pt) -- (278.5496pt,341.6325pt) -- (287.85pt,325.0945pt) -- cycle;
-\draw[pstyle9] (360.32pt,419.3945pt) ..controls (371.92pt,419.3945pt) and (371.52pt,419.3945pt) .. (383.12pt,419.3945pt);
-\draw[pstyle9] (348.32pt,419.3945pt) -- (354.32pt,423.3945pt) -- (360.32pt,419.3945pt) -- (354.32pt,415.3945pt) -- (348.32pt,419.3945pt) -- cycle;
+\draw[pstyle9] (383.0758pt,336.1542pt) ..controls (411.3158pt,357.9242pt) and (433.67pt,375.1445pt) .. (461.96pt,396.9545pt);
+\draw[pstyle9] (368.82pt,325.1645pt) -- (379.4126pt,340.9061pt) -- (386.739pt,331.4023pt) -- (368.82pt,325.1645pt) -- cycle;
+\draw[pstyle9] (278.3607pt,337.871pt) ..controls (260.4807pt,355.691pt) and (251.01pt,365.1245pt) .. (231.54pt,384.5245pt);
+\draw[pstyle9] (291.11pt,325.1645pt) -- (274.1252pt,333.6213pt) -- (282.5962pt,342.1208pt) -- (291.11pt,325.1645pt) -- cycle;
+\draw[pstyle9] (360.32pt,431.8945pt) ..controls (371.92pt,431.8945pt) and (371.52pt,431.8945pt) .. (383.12pt,431.8945pt);
+\draw[pstyle9] (348.32pt,431.8945pt) -- (354.32pt,435.8945pt) -- (360.32pt,431.8945pt) -- (354.32pt,427.8945pt) -- (348.32pt,431.8945pt) -- cycle;
 \end{tikzpicture}

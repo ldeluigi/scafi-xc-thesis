@@ -54,7 +54,7 @@ In the example, the source of the \texttt{Liftable} and \texttt{Foldable} type c
 
 \lstinputlisting[float, language=Scala, caption={Prototype 1 - Aggregate Foundation and helper type classes.}, label={lst:prototype-1-aggregate-foundation}]{listings/prototype-1-aggregate-foundation.scala}
 
-By defining an abstract type member \texttt{AggregateValue[T]}, semantics like \ac{XC} can override it to model any kind of specific interface, such as \textit{NValues}, on top of which they can provide any additional behavior and syntax.
+By defining an abstract type member \texttt{AggregateValue[T]}, semantics like \ac{XC} can override it to model any kind of specific interface, such as \textit{NValues}, on top of which they can provide any additional behavior and syntax, following the pattern of \textit{family polimorphism}.
 %
 Implicitly, this design abandons the \quotes{field-transparent} semantics of the \texttt{foooldhood*} methods of ScaFi in favor of having explicit \textit{field} types, similarly to FCPP (\cref{chap:state-of-the-art->sec:fcpp}) and the \ac{XC} \ac{DSL} experiment (\cref{chap:state-of-the-art->sec:xc-experiment}).
 %
@@ -200,7 +200,7 @@ The provided snippet demonstrates how this design effectively achieves the goals
     \item reuse of all the libraries and programs dependent on a set of syntaxes by re-implementing them through the next generation of aggregate programming calculi;
 \end{itemize}
 
-\lstinputlisting[float, language=Scala, caption={Final design - \texttt{distanceTo} construct implementation in the \texttt{GradientLibrary}.}, label={lst:distance-to}]{listings/distance-to.scala}
+\lstinputlisting[float, language=Scala, caption={Final design - \texttt{distanceTo} implementation in the \texttt{GradientLibrary}.}, label={lst:distance-to}]{listings/distance-to.scala}
 
 \subsection{Design of the Exchange Calculus semantics implementation} \label{chap:design->sec:final-dsl->subsec:exchange-calculus-semantics-design}
 
@@ -240,7 +240,7 @@ The signature of the \texttt{xc} method has been simplified to simplify its impl
 
 The concrete implementation of the \ac{XC} operational semantics is discussed partly in the next section, and partly in \cref{chap:implementation->sec:xc-ops}.
 
-\subsection{The Engine} \label{chap:design->sec:final-dsl->subsec:the-engine}
+\subsection{The Engine} \label{chap:design->sec:final-dsl->subsec:engine}
 
 An \texttt{Engine} has been designed to be able to execute aggregate programs that use an instance of the \ac{XC} semantics trait as a context parameter.
 %

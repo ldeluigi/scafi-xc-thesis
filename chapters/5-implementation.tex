@@ -4,10 +4,48 @@
 \label{chap:implementation}
 %----------------------------------------------------------------------------------------
 
+This chapter documents the implementation details of the models and libraries designed, as well as additional tools and extensions developed as research experiments and proof of concepts.
+%
+In particular, the chapter covers the implementation of an experimental \texttt{FoldhoodLibrary}, that demonstrates the expressiveness of the \this design by implementing an \ac{API} for \texttt{foldhood} and \texttt{foldhoodPlus} similar to the original ScaFi, and the prototype of a different implementation of the \texttt{AggregateFoundation} trait, which adds compile time assertions on the user code to prevent common mistakes and improve the quality of aggregate programs, at the expense of more complicated signatures of library methods.
+%
+The chapter also covers the integration of \this with the Alchemist simulator, which enables graphical and more realistic simulations, as well as additional proof of the functionality of \this.
+
 \section{Implementation of the XC operational semantics} \label{chap:implementation->sec:xc-ops}
+
+The implementation of the operational semantics as described in paper\cite{xc} follows the design of \cref{chap:design->sec:final-dsl->subsec:exchange-calculus-semantics-design} by defining a concrete class that inherits from \texttt{ExchangeCalculusSemantics}.
+%
+Given that the same class serves as context for the execution of aggregate programs' rounds, following the engine design of \cref{chap:design->sec:final-dsl->subsec:engine}, it implements the \texttt{Context} interface too.
+%
+The name \texttt{BasicExchangeCalculusContext} because it is meant to provide a simple yet readable and reliable implementation, without pursuing premature optimizations or additional features.
+%
+A more advanced implementation could be developed in the future, maybe specifically tailored to some destination platform or network implementation.
+%
+In order to maximize the reusability of its code, the logic and behavior that compose the operational semantics has been broken down into several mixin layers, with their dependencies declared through self-type annotations and abstract members.
+%
+These mixin layers have been organized into two packages based on their reusability: \texttt{context.common} with the most general and reusable mixins, and \texttt{context.exchange} with the mixins that are specific to the exchange calculus, as shown in \cref{fig:context-mixins-common,fig:context-mixins-exchange}.
+
+\begin{figure}
+    \centering
+    \caption{Exchange Calculus context mixins: \ac{UML} diagram of the mixin layers in package \texttt{common}, stripped of transitive dependencies.}
+    \label{fig:context-mixins-common}
+    \bigskip
+    \resizebox{\linewidth}{!}{
+        \input{diagrams/context-mixins/Context Mixins - Common.latex}
+    }
+\end{figure}
+
+\begin{figure}
+    \centering
+    \caption{Exchange Calculus context mixins: \ac{UML} diagram of the mixin layers in package \texttt{exchange}, stripped of transitive dependencies.}
+    \label{fig:context-mixins-exchange}
+    \bigskip
+    \resizebox{\linewidth}{!}{
+        \input{diagrams/context-mixins/Context Mixins - Exchange.latex}
+    }
+\end{figure}
 
 \section{The \texttt{FoldhoodLibrary}}
 
 \section{Context-based constraints on the aggregate foundation trait}
 
-\section{Integration with Aclhemist}
+\section{Integration with the Alchemist simulator}

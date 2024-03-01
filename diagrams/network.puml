@@ -1,6 +1,5 @@
 @startuml Network
 !include style.iuml
-left to right direction
 
 package commons {
     class MapWithDefault<K, V> {
@@ -18,9 +17,9 @@ package engine {
             {abstract} {method} + send(e: Export[DeviceId, Token, Value]): Unit
             {abstract} {method} + receive(): Import[DeviceId, Token, Value]
         }
-        Network .> Export
-        Network .> Import
-        Export .> MapWithDefault
+        Network .down.> Export
+        Network .up.> Import
+        Export .down.> MapWithDefault
     }
 }
 @enduml

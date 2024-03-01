@@ -153,7 +153,7 @@ In the examples, $\underline{senseDist}$ is a network-based sensor that returns 
 %
 \texttt{distanceTo} computes the minimum distance from a source determined by a boolean expression, which is a \textit{gradient} with value $0$ in all devices where $src$ is true, and the minimum distance from the source in all other devices connected to a source device, or else $Infinity$.
 
-\lstinputlisting[float,language=XC,label={lst:xc-program}, caption={Implementation of a network-wide gradient, called \texttt{distanceTo}, in \ac{XC}.}]{listings/xc-gradient-distance.xc}
+\lstinputlisting[float,language=XC,label={lst:xc-program}, caption={Implementation of a network-wide gradient, called \texttt{distanceTo}, using the \ac{XC} language.}]{listings/xc-gradient-distance.xc}
 
 \subsection{Alignment}\label{chap:background->sec:xc->subsec:alignment}
 
@@ -493,9 +493,9 @@ TODO insert example as listing
 
 \paragraph{Higher-kinded types} allow to define types and methods that work with generic types regardless of the actual type arguments, only requiring a fixed arity of type parameters.
 %
-Scala types are partitioned in kinds, based on the arity of their type parameters.
+Scala types are partitioned into kinds, based on the top type of which it is a subtype, such as \texttt{Any}, \texttt{[+X] =>> Any}, \texttt{[X, +Y] =>> Any}.
 %
-Higher-kinded types, also called type constructors, have an arity greater than zero, such as \texttt{List}, \texttt{Option}, and \texttt{Map}.
+Higher-kinded types are types whose kind counts more than zero type arrows, such as \texttt{List} of kind \texttt{[+X] =>> Any}, \texttt{Option} of kind \texttt{[+X] =>> Any}, and \texttt{Map} of kind \texttt{[X, +Y] =>> Any}, but potentially even a type whose kind is \texttt{[X] => [Y] => Any}, such as a type class for a type constructor.
 %
 Scala 3 adds support for \textit{kind polymorphism}, which allows to define type parameters that accept types of any kind, through the special syntax \texttt{T <: AnyKind}.
 

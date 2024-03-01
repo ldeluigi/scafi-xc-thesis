@@ -1,0 +1,112 @@
+@startuml Context Mixins - Common
+!include style.iuml
+
+interface Context<DeviceId, Token, Value> {
+    {abstract} {field} + inboundMessages: Import[DeviceId, Token, Value]
+    {abstract} {field} + outboundMessages: Export[DeviceId, Token, Value]
+}
+
+package common {
+    interface MessageSemantics {
+        {abstract} {field} + <<type>> Envelope
+        {abstract} {method} # open[T](a: Envelope): T
+        {abstract} {method} # close[T](a: T): Envelope
+    }
+    abstract class BasicMessageSemantics implements MessageSemantics {
+        {field} + <<type>> Envelope = Any
+        {method} # open[T](a: Envelope): T
+        {method} # close[T](a: T): Envelope
+    }
+
+
+    class InvocationCoordinate {
+        {field} + key: String
+        {field} + index: Int
+    }
+
+    abstract class StackSemantics <<this: MessageSemantics>> {
+        {method} # currentPath: IndexedSeqView[InvocationCoordinate]
+        {method} # scope[T](key: String)(body: () => T): T
+    }
+
+    StackSemantics ..> MessageSemantics
+    StackSemantics o-- InvocationCoordinate
+
+    abstract class InboundMessageSemantics <<this: StackSemantics & MessageSemantics & Context[DeviceId, InvocationCoordinate, Envelope]>> {
+        {abstract} {field} + <<type>> DeviceId
+        {abstract} {field} # self: DeviceId
+        {method} # unalignedDevices: Set[DeviceId]
+        {method} # alignedDevices: Set[DeviceId]
+        {method} # alignedMessages: Map[DeviceId, Envelope]
+    }
+
+    InboundMessageSemantics .up.|> Context: partially
+    InboundMessageSemantics ..> StackSemantics
+    ' InboundMessageSemantics ..> MessageSemantics
+
+    abstract class OutboundMessageSemantics <<this: StackSemantics & MessageSemantics & Context[DeviceId, InvocationCoordinate, Envelope]>> {
+        {abstract} {field} + <<type>> DeviceId
+        {method} + outboundMessages: Export[DeviceId, InvocationCoordinate, Envelope]
+        {method} # sendMessages[T](messages: MapView[DeviceId, T], default: T): Unit
+        {abstract} # unalignedDevices: Set[DeviceId]
+    }
+    OutboundMessageSemantics ..|> Context: partially
+    OutboundMessageSemantics ..> StackSemantics
+    ' OutboundMessageSemantics ..> MessageSemantics
+}
+
+@enduml
+
+@startuml Context Mixins - Exchange
+!include style.iuml
+interface ExchangeCalculusSemantics {
+    {abstract} {field} + <<given>> nvalues: NValuesOps[AggregateValue, DeviceId]
+    {abstract} {field} + <<given>> convert[T]: Conversion[T, AggregateValue[T]]
+    {abstract} {method} # br[T](cond: Boolean)(th: => T)(el: => T): T
+    {abstract} {method} # xc[T](init: AggregateValue[T])(\n\
+        f: AggregateValue[T] => (AggregateValue[T], AggregateValue[T]),\n\
+    ): AggregateValue[T]
+}
+package common {
+    abstract class InboundMessageSemantics {
+        ...
+    }
+
+    abstract class OutboundMessageSemantics {
+        ...
+    }
+}
+package exchange {
+    abstract class NValuesSemantics <<this: ExchangeCalculusSemantics>> {
+        {field} + <<type>> AggregateValue[T] = NValues[T]
+        {field} + <<given>> nvalues: NValuesOps[AggregateValue, DeviceId]
+        {field} + <<given>> liftable: Liftable[AggregateValue]
+        {field} + <<given>> convert[T]: Conversion[T, AggregateValue[T]]
+        {field} + <<given>> aggregate: Aggregate[AggregateValue]
+        {method} + device: AggregateValue[DeviceId]
+        {abstract} {method} # alignedDevices: Set[DeviceId]
+    }
+    class NValues<covariant T> {
+        {field} + default: T
+        {field} + unalignedValues: Map[DeviceId, T]
+        {method} + alignedValues: Map[DeviceId, T]
+        {method} + apply(device: DeviceId): T
+        {method} + iterator: Iterator[T]
+    }
+    NValues --+ NValuesSemantics
+    NValuesSemantics ..|> ExchangeCalculusSemantics: partially
+
+    abstract class ConstructsSemantics <<this: ExchangeCalculusSemantics & ... >> {
+        {method} # br[T](cond: Boolean)(th: => T)(el: => T): T
+        {method} # xc[T](init: AggregateValue[T])(\n\
+            f: AggregateValue[T] => (AggregateValue[T], AggregateValue[T]),\n\
+        ): AggregateValue[T]
+    }
+    ConstructsSemantics ..|> ExchangeCalculusSemantics: partially
+    ConstructsSemantics ..> NValuesSemantics
+    ' ConstructsSemantics ..> MessageSemantics
+    ' ConstructsSemantics ..> StackSemantics
+    ConstructsSemantics .up.> InboundMessageSemantics
+    ConstructsSemantics .up.> OutboundMessageSemantics
+}
+@enduml
