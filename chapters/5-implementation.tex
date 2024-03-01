@@ -44,8 +44,47 @@ These mixin layers have been organized into two packages based on their reusabil
     }
 \end{figure}
 
+TODO explain how the stuff works
+
+\section{The build system}
+
+Following the requirements listed in \cref{chap:analysis->sec:requirement-analysis}, the chosen build system for the project is \ac{SBT}, in particular version \texttt{1.9.8}.
+%
+The build tool has been customized with the following plugins:
+\begin{itemize}
+    \item \texttt{sbt-scalafix} to lint the code with \textit{scalafix}, further explained in \cref{chap:evaluation->sec:code-style};
+    \item \texttt{sbt-scalafmt} to lint the code with \textit{scalafmt}, further explained in \cref{chap:evaluation->sec:code-style};
+    \item \texttt{sbt-scalajs} and \texttt{bt-scalajs-crossproject} to cross-build the project for \textit{JavaScript} with \textit{scala-js};
+    \item \texttt{sbt-scala-native} and \texttt{sbt-scala-native-crossproject} to cross-build the project for \textit{native} with \textit{scala-native}.
+\end{itemize}
+%
+In addition to that, the Dotty compiler has been customized with flags that enhance the quality of the code, such as the aforementioned \textit{explicit nulls} and \textit{multiversal equality}, but also enforcement for indentation over curly braces style, warnings as errors, safe initialization checks, warnings on value discards, and more.
+
 \section{The \texttt{FoldhoodLibrary}}
+
+As a proof of concept of the expressiveness of the \this design, an experimental library has been developed, called \texttt{FoldhoodLibrary}, which provides an \ac{API} for the \texttt{foldhood} and \texttt{foldhoodPlus} constructs as defined in the original ScaFi library.
+%
+The library works for any aggregate context that supports the \texttt{FieldCalculusSyntax}, and implements \texttt{foldhood}, \texttt{foldhoodPlus}, \texttt{nbr}, and \texttt{nbrRange} for contexts that also support \texttt{DistanceSensor}.
+%
+The resulting \ac{API} can be seen used in \cref{lst:foldhood-library-usage},
+where \texttt{nbr} is not the same as the one defined in \texttt{FielCalculusLibrary} but has a different signature, that takes a lazy expression of type \texttt{=> T} and returns a \texttt{T}.
+%
+When evaluating a foldhood, the expression is evaluated as is and the values passed to \texttt{nbr} are recorded and returned in order, then shared with neighbors.
+%
+Then, for each aligned neighbor, the same expression is re-evaluated, this time substituting the \texttt{nbr} return values with the ones coming from neighbors, in the right order to match the expression.
+%
+If the context implements the \texttt{DistanceSensor} trait, \texttt{nbrRange} can be invoked to return the distance from the current node to the neighbor evaluated in the foldhood.
+%
+The only difference between \texttt{foldhood} and \texttt{foldhoodPlus} is that the former does not include the expression value of the current node in the folding result, while the latter does.
+%
+The example of \cref{lst:foldhood-library-usage} demonstrates that \texttt{nbr} can be used with arguments of any type, as long as they type check in the foldhood expression.
+
+\lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{FoldhoodLibrary}.}, label={lst:foldhood-library-usage}]{listings/foldhood-usage.scala}
 
 \section{Context-based constraints on the aggregate foundation trait}
 
+TODO write
+
 \section{Integration with the Alchemist simulator}
+
+TODO write

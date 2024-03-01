@@ -161,7 +161,7 @@ A program can execute multiple exchanges in a single round, and \ac{XC} ensures 
 %
 The corresponding exchange expressions are those that are found in the same position in the \ac{AST} and the same stack frame, thus ensuring correct alignment in case of branches, function calls, and recursion\cite{xc}.
 %
-As a consequence, the evaluation of an aggregate program implicitly builds a tree representation, which all aligned devices, as well as the device itself in the next rounds, replicate.
+As a consequence, the evaluation of an aggregate program implicitly builds a tree representation, called \textit{value tree}, that all aligned devices, as well as the device itself in the next rounds, replicate and then exchange with each other.
 
 Conditionals such as $if (cond) {e_1} else {e_2}$ interfere with alignment because only the \texttt{exchange} operations in the same position within the AST and stack frame align\cite{xc}.
 %
