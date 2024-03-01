@@ -1,8 +1,23 @@
 @startuml Simulator
 !include style.iuml
-left to right direction
 
 package simulator {
+    interface Simulator<Id, Result, C subtypeOf Context[Id, ?, ?]> {
+        {abstract} {field} + program: C ?=> Result
+        {abstract} {field} + devices: Iterable[Id]
+        {abstract} {field} + deviceNeighborhood: Map[Id, Set[Id]]
+        {abstract} {field} + results: Map[Id, Result]
+    }
 
+    interface DiscreteSimulator<Id, Result, C subtypeOf Context[Id, ?, ?]> extends Simulator {
+        {abstract} {method} + tick(): Unit
+    }
+
+    class DeterministicSimulator extends DiscreteSimulator
+
+    class RandomSimulator extends DiscreteSimulator {
+        {field} - delegate: DeterministicSimulator
+    }
+    RandomSimulator o- DeterministicSimulator
 }
 @enduml
