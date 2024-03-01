@@ -1,0 +1,39 @@
+@startuml Engine
+!include style.iuml
+
+package engine {
+    package network {
+        interface Network<DeviceId, Token, Value> {
+            {abstract} {method} + localId(): DeviceId
+            {abstract} {method} + send(e: Export[DeviceId, Token, Value]): Unit
+            {abstract} {method} + receive(): Import[DeviceId, Token, Value]
+        }
+    }
+
+    class Engine<DeviceId, Result, Token, Value, N subtypeOf Network[DeviceId, Token, Value], C subtypeOf Context[DeviceId, Token, Value]> {
+        {field} - net: N
+        {field} - factory: ContextFactory[N, C]
+        {field} - program: C ?=> Result
+        {method} + cycle(): Result
+        {method} ...
+    }
+
+    Engine o-up- Network
+
+    package context {
+        interface Context<DeviceId, Token, Value> {
+            {abstract} {field} + inboundMessages: Import[DeviceId, Token, Value]
+            {abstract} {field} + outboundMessages: Export[DeviceId, Token, Value]
+        }
+
+        interface ContextFactory<contravariant N subtypeOf Network, covariant C supertypeOf Context> {
+            {abstract} {method} + create(network: N): C
+        }
+
+        ContextFactory ..left..> Context
+    }
+
+    Engine ..down..> Context
+    ContextFactory ..left..o Engine
+}
+@enduml

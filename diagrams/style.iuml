@@ -1,17 +1,11 @@
 @startuml style
+'settings
 hide empty members
-
-!unquoted procedure subtypeOf()
-""&#60;&#58;""
-!endprocedure
-
-!unquoted procedure supertypeOf()
-""&#62;&#58;""
-!endprocedure
-
-!unquoted procedure covariant(A)
-&#43;A
-!endprocedure
-
 skinparam defaultFontSize 20
+
+'macros
+!subtypeOf = '""&#60;&#58;""'
+!supertypeOf = '""&#62;&#58;""'
+!covariant = '&#43;'
+!contravariant = '&#45;'
 @enduml

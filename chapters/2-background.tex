@@ -505,11 +505,14 @@ TODO insert example as listing
 %
 For instance, \texttt{[X, Y] =>> Map[Y, X]} is a binary type constructor that maps arguments \texttt{X} and \texttt{Y} to the type \texttt{Map[Y, X]}.
 
+\paragraph{Context functions} are functions that accept only context parameters as input. Starting with Scala 3, context functions can be treated as values thanks to context function types, which can be distinguished from normal function types by the presence of the \texttt{?=>} operator in place of the \texttt{=>} operator.
+
 \paragraph{Match types} are conditional type aliases that allow the definition of a type as the result of a pattern match on a type, available since Scala 3.
 %
 An example of match types can be found in \cref{lst:scala3-match-types}.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-match-types}, caption={Example of match types in Scala 3.}]{listings/scala3-match-type.scala}
+
 
 \subsection{Explicit nulls and the Scala 3 type hierarchy} \label{chap:background->sec:scala3->subsec:type-hierarchy} \label{chap:background->sec:scala3->subsec:explicit-nulls}
 

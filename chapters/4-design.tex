@@ -10,6 +10,8 @@ In the first part, four design prototypes have been developed in order to choose
 More on that can be found in \cref{chap:design->sec:dsl}
 
 In the second part, the final version of the \ac{DSL} has been designed, taking the best features from the prototypes and integrating them into a new core \ac{DSL} for \this.
+%
+An execution context for aggregate programs made with \this has been designed and called \quotes{engine}.
 
 In the third and final part, the design process concerned the simulator and the testing suites, also designed to scale with future extensions of the \ac{DSL}, as well as to be used as a reference for the \textit{program developer} and the \textit{library developer}, and to be as readable and understandable as possible, effectively working as acceptance tests.
 
@@ -50,7 +52,7 @@ The \texttt{AggregateFoundation} trait also defines a set of \textit{abstract ex
 %
 In the example, the source of the \texttt{Liftable} and \texttt{Foldable} type classes is included for completeness, but they are not part of the \texttt{AggregateFoundation} source file as they are located in the \texttt{commons} module.
 
-\lstinputlisting[float, language=Scala, caption={Prototype 1: Aggregate Foundation and helper type classes.}, label={lst:prototype-1-aggregate-foundation}]{listings/prototype-1-aggregate-foundation.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1 - Aggregate Foundation and helper type classes.}, label={lst:prototype-1-aggregate-foundation}]{listings/prototype-1-aggregate-foundation.scala}
 
 By defining an abstract type member \texttt{AggregateValue[T]}, semantics like \ac{XC} can override it to model any kind of specific interface, such as \textit{NValues}, on top of which they can provide any additional behavior and syntax.
 %
@@ -84,9 +86,9 @@ This allows libraries to be singleton objects, imported where needed with a top-
 %
 One hidden feature of this design is the possibility to hide, by default, transitive library dependencies, something that ScaFi could not allow because it used a mixin composition where every library was a trait that mixed in other traits, thus exposing all the dependencies of the mixed-in traits.
 
-\lstinputlisting[float, language=Scala, caption={Prototype 1: Syntax definitions.}, label={lst:prototype-1-syntaxes}]{listings/prototype-1-syntaxes.scala}
-\lstinputlisting[float, language=Scala, caption={Prototype 1: Exchange Calculus Semantics.}, label={lst:prototype-1-exchange-calculus-semantics}]{listings/prototype-1-exchange-calculus-semantics.scala}
-\lstinputlisting[float, language=Scala, caption={Prototype 1: Syntax implementations in terms of the exchange semantics.}, label={lst:prototype-1-syntaxes-impl}]{listings/prototype-1-syntaxes-impl.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1 - Syntax definitions.}, label={lst:prototype-1-syntaxes}]{listings/prototype-1-syntaxes.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1 - Exchange Calculus Semantics.}, label={lst:prototype-1-exchange-calculus-semantics}]{listings/prototype-1-exchange-calculus-semantics.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1 - Syntax implementations in terms of the exchange semantics.}, label={lst:prototype-1-syntaxes-impl}]{listings/prototype-1-syntaxes-impl.scala}
 
 Even though this design proves to be very flexible and extensible, it has a few drawbacks.
 %
@@ -94,8 +96,8 @@ The most important one is the impossibility of invoking an extension method with
 %
 The next prototypes focus on overcoming this limitation at any cost, even if it means losing some of the flexibility and clarity of the design, in order to provide empirical evidence of the trade-offs between the different design choices.
 
-\lstinputlisting[float, language=Scala, caption={Prototype 1: Example usage by an aggregate program developer.}, label={lst:prototype-1-usage}]{listings/prototype-1-usage.scala}
-\lstinputlisting[float, language=Scala, caption={Prototype 1: Example usage by a library developer.}, label={lst:prototype-1-usage-lib}]{listings/prototype-1-usage-lib.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1 - Example usage by an aggregate program developer.}, label={lst:prototype-1-usage}]{listings/prototype-1-usage.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 1 - Example usage by a library developer.}, label={lst:prototype-1-usage-lib}]{listings/prototype-1-usage-lib.scala}
 
 
 \subsection{Prototype 2: Context parameter in constructors} \label{chap:design->sec:dsl->subsec:prototype-2-implicit-parameter-in-constructors}
@@ -112,8 +114,8 @@ This forced each semantics, library, and syntax to have a generic type construct
 %
 \cref{lst:prototype-2-usage-lib} also shows how this design, with the additional cost of a static \texttt{import} for dependencies methods and given instance, allows to invoke constructs such as \texttt{branch} or \texttt{distanceTo} with having to use the \texttt{.} operator and the same applies to user programs.
 
-\lstinputlisting[float, language=Scala, caption={Prototype 2: \ac{FC} syntax definition.}, label={lst:prototype-2-syntax}]{listings/prototype-2-syntax.scala}
-\lstinputlisting[float, language=Scala, caption={Prototype 2: Example usage by a library developer.}, label={lst:prototype-2-usage-lib}]{listings/prototype-2-usage-lib.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 2 - \ac{FC} syntax definition.}, label={lst:prototype-2-syntax}]{listings/prototype-2-syntax.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 2 - Example usage by a library developer.}, label={lst:prototype-2-usage-lib}]{listings/prototype-2-usage-lib.scala}
 
 Having to explicitly import the methods from dependencies inside every library of programs, added to the necessity of instantiating libraries, makes this design very cumbersome to use.
 %
@@ -132,7 +134,7 @@ Even though the issue of library dependencies is solved, syntax dependencies are
 %
 In addition to that, \texttt{AggregateFoundation} still needs the generic aggregate value type constructor parameter to make syntax dependencies compatible with each other.
 
-\lstinputlisting[float, language=Scala, caption={Prototype 3: Example usage by a library developer.}, label={lst:prototype-3-usage-lib}]{listings/prototype-3-usage-lib.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 3 - Example usage by a library developer.}, label={lst:prototype-3-usage-lib}]{listings/prototype-3-usage-lib.scala}
 
 The last prototype represents a return to the original mixin-oriented design used in ScaFi and its purpose is closer to a comparison baseline rather than a design alternative, but it's still useful for the last design phase where the best features of all the prototypes will be cherry-picked and combined.
 
@@ -146,7 +148,7 @@ Libraries are defined, like in ScaFi, with mixin traits that declare their depen
 
 The main advantage of this design is the possibility to invoke constructs without the \texttt{.} operator, as shown in \cref{lst:prototype-4-usage-lib}, while the main disadvantage is the need to inherit from all the transitive dependencies together in the program class, and having to honor a global construct naming consistency both in all the libraries and in the semantics implementation.
 
-\lstinputlisting[float, language=Scala, caption={Prototype 4: Example usage by a library developer.}, label={lst:prototype-4-usage-lib}]{listings/prototype-4-usage-lib.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 4 - Example usage by a library developer.}, label={lst:prototype-4-usage-lib}]{listings/prototype-4-usage-lib.scala}
 
 \section{Final design of the core DSL} \label{chap:design->sec:final-dsl}
 
@@ -195,11 +197,101 @@ The provided snippet demonstrates how this design effectively achieves the goals
     \item generic definition of the constructs for high reusability;
     \item clean declaration of the core syntax dependencies, using a \quotes{\texttt{language}} context parameter and intersection types;
     \item possibility to resolve naming conflicts with import aliases;
+    \item reuse of all the libraries and programs dependent on a set of syntaxes by re-implementing them through the next generation of aggregate programming calculi;
 \end{itemize}
 
-\lstinputlisting[float, language=Scala, caption={Final design: \texttt{distanceTo} construct implementation in the \texttt{GradientLibrary}.}, label={lst:distance-to}]{listings/distance-to.scala}
+\lstinputlisting[float, language=Scala, caption={Final design - \texttt{distanceTo} construct implementation in the \texttt{GradientLibrary}.}, label={lst:distance-to}]{listings/distance-to.scala}
 
-TODO maybe talk about the final design more
+\subsection{Design of the Exchange Calculus semantics implementation} \label{chap:design->sec:final-dsl->subsec:exchange-calculus-semantics-design}
+
+By abstracting common features of aggregate programming languages such as \ac{FC} and \ac{XC} into the \texttt{AggregateFoundation} trait, the \texttt{ExchangeCalculusSemantics} can focus on the peculiarities of the \ac{XC} semantics, such as NValues and the \texttt{exchange} primitive.
+%
+\texttt{AggregateFoundation} provides an abstract definition of an \texttt{AggregateValue} type, with the only feature to be iterable.
+%
+The reason is that whatever the next aggregate calculus semantics will be, it's expected to provide some kind of notion of field, which should allow iterating over values from neighbors, including self.
+%
+Additionally, \texttt{AggregateFoundation} provides the \ac{API} to exclude the value for self from an \texttt{AggregateValue}, as well as to retrieve the value for self only.
+%
+Referencing self has an important role in aggregate programs, and it was put here to provide all libraries and programs with that feature.
+%
+Finally, \texttt{AggregateFoundation} provides the means to combine and map aggregate values with the \texttt{lift} operator and the \texttt{map} extension method.
+%
+This is a necessary difference from the formal calculi, where aggregate values such as NValues or fields allow to be treated as their underlying generic type, and are transparent when combined or mapped as if they were local values.
+%
+For example, in \ac{XC}, an expression $e$ written to work with local values of type \texttt{T} can be used with an aggregate value of type \texttt{NValues[T]} without any modification.
+%
+In Scala, instead, this is not possible, and operations on local values need to be \textit{lifted} to work on aggregate values too.
+%
+Unary operations have to be lifted too and work as the mapping function \texttt{f: A => B} for the \texttt{map} extension method available on an \texttt{AggregateValue[A]}.
+%
+As mentioned in the previous section, abstracting common features into a common foundation for all the semantics allows the reuse of all the libraries and programs depending on those features, while also retaining the possibility to re-implement differently in a new aggregate calculus semantics.
+
+Given that one could think of an aggregate calculus without explicit device identifiers in the \ac{API}, all the features related to explicit device identifiers in the calculus have been modeled as an optional mixin called \texttt{DeviceAwareAggregateFoundation}.
+%
+The mixin defines an abstract type member \texttt{DeviceId} and the means to compare them with \texttt{==}, that is a given instance of \texttt{CanEqual[DeviceId, DeviceId]}.
+%
+In addition to that, \texttt{DeviceAwareAggregateFoundation} provides two abstract methods, one called \texttt{self} that returns the device identifier of the current device, and another called \texttt{device} that returns an aggregate value of device identifiers, including self, which is always known thanks to the network and it doesn't need to be computed with, for example, a \texttt{nbr(self)} invocation.
+
+Therefore, the \texttt{ExchangeCalculusSemantics} is left only with the definitions of its specific features, which are NValues additional operation on aggregate values, automatic conversion from local values and NValues, the core constructs \texttt{exchange}, here called \texttt{xc}, and \texttt{branch}, called \texttt{br}, to avoid conflicts with their counterparts defined in the implemented syntaxes.
+%
+The signature of the \texttt{xc} method has been simplified to simplify its implementation, written only in its complete form with both the \texttt{return} and \texttt{send} values explicitly passed as a couple, whereas the \texttt{exchange} method of the syntax allows different call signatures to imitate the syntax of the paper\cite{xc}, as shown in \cref{lst:exchange-syntax}.
+
+\lstinputlisting[float, language=Scala, caption={Supported syntaxes for invoking the \texttt{exchange} primitive.}, label={lst:exchange-syntax}]{listings/exchange-syntax.scala}
+
+The concrete implementation of the \ac{XC} operational semantics is discussed partly in the next section, and partly in \cref{chap:implementation->sec:xc-ops}.
+
+\subsection{The Engine} \label{chap:design->sec:final-dsl->subsec:the-engine}
+
+An \texttt{Engine} has been designed to be able to execute aggregate programs that use an instance of the \ac{XC} semantics trait as a context parameter.
+%
+The \texttt{Engine} offers a method called \texttt{cycle} which implements all the steps to be executed in a single round of an aggregate program.
+%
+The steps can be summarized into the following:
+\begin{enumerate}
+    \item instantiation of the semantics, whose implementation is called \texttt{Context}, using information coming from the \texttt{Network}, such as inbound messages and the device identifier;
+    \item execution of the aggregate program, which is a function that takes the \texttt{Context} as a context parameter and returns a \texttt{Result}, which is the result of the evaluation of the aggregate program;
+    \item collection of the \texttt{Export}, which is a bundle containing all the outbound messages;
+    \item sending of the \texttt{Export} to the \texttt{Network}, which will deliver the messages to the intended recipients.
+\end{enumerate}
+%
+A \texttt{Context} is defined as an interface that takes inbound messages as input, called \texttt{Import}, gets altered by the aggregate program round of execution, and produces outbound messages as output, called \texttt{Export}.
+%
+More information about the implementation of a \texttt{Context} for the \ac{XC} semantics can be found in \cref{chap:implementation->sec:xc-ops}.
+%
+An \texttt{Import} is defined as an alias for a map from device identifiers to \textit{value trees}.
+%
+A \texttt{ValueTree} is an \ac{ADT} containing the values exchanged between devices coupled with their path in the \ac{AST} of the aggregate program, as described in the \ac{XC} paper\cite{xc}.
+%
+Here a \texttt{Path} is defined as an alias for a \texttt{List} of generic tokens so that every implementation of a semantic can control which type of token defines a location inside the \ac{AST} of the aggregate program.
+%
+An \texttt{Export} instead is defined as an alias for a \texttt{MapWithDefault}, because it's able to send a dedicated message to a known neighbor and a default message to every other new neighbor of the device.
+%
+The \texttt{Network} is responsible for properly dispatching the messages to the intended recipients and is pictured with \ac{UML} in \cref{fig:engine-network-diagram}.
+
+\begin{figure}
+    \centering
+    \caption{The engine: \ac{UML} diagram of the \texttt{Network} interface.}
+    \label{fig:engine-network-diagram}
+    \bigskip
+    \resizebox{\linewidth}{!}{
+        \input{diagrams/network/Network.latex}
+    }
+\end{figure}
+
+In summary, the \texttt{Engine}, uses a \texttt{ContextFactory} to repeatedly instantiate a new \texttt{Context} for every cycle of the aggregate program execution, executes the program against the context, and finally sends the result to the network.
+%
+An \ac{UML} diagram of the \texttt{Context} and the \texttt{Engine} can be found in \cref{fig:engine-diagram}.
+
+\begin{figure}
+    \centering
+    \caption{The engine: \ac{UML} diagram of the \texttt{Context} interface and the \texttt{Engine} class.}
+    \label{fig:engine-diagram}
+    \bigskip
+    \resizebox{\linewidth}{!}{
+        \input{diagrams/engine/Engine.latex}
+    }
+\end{figure}
+
 
 \section{The simulator}
 

@@ -1,0 +1,26 @@
+@startuml Network
+!include style.iuml
+left to right direction
+
+package commons {
+    class MapWithDefault<K, V> {
+        ...
+    }
+}
+
+package engine {
+    package network {
+        class Import<DeviceId, Token, Value> <<type alias: Map[DeviceId, ValueTree[Token, Value]]>>
+        class Export<DeviceId, Token, Value> <<type alias: MapWithDefault[DeviceId, ValueTree[Token, Value]]>>
+
+        interface Network<DeviceId, Token, Value> {
+            {abstract} {method} + localId(): DeviceId
+            {abstract} {method} + send(e: Export[DeviceId, Token, Value]): Unit
+            {abstract} {method} + receive(): Import[DeviceId, Token, Value]
+        }
+        Network .> Export
+        Network .> Import
+        Export .> MapWithDefault
+    }
+}
+@enduml

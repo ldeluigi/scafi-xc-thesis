@@ -3,7 +3,7 @@
 
 package commons {
 
-    interface SafeIterable<covariant(A)> {
+    interface SafeIterable<covariant A> {
         {abstract} {method} # iterator: Iterator[A]
         {abstract} {method} + toIterable: Iterable[A]
         {method} + fold[A1 supertypeOf() A](z: A1)(op: (A1, A1) => A1): A1
@@ -11,7 +11,7 @@ package commons {
         {method} ...
     }
 
-    interface Aggregate<F[A] subtypeOf() SafeIterable[A]> {
+    interface Aggregate<F[A] subtypeOf SafeIterable[A]> {
         {abstract} {method} + <<extension: F[A]>> withoutSelf: SafeIterable[A]
         {abstract} {method} + <<extension: F[A]>> onlySelf: A
     }
@@ -31,7 +31,7 @@ package commons {
 package foundation {
 
     interface AggregateFoundation {
-        {abstract} {field} + <<type>> AggregateValue[T] subtypeOf() SafeIterable[T]
+        {abstract} {field} + <<type>> AggregateValue[T] subtypeOf SafeIterable[T]
         {abstract} {field} + <<given>> aggregate: Aggregate[AggregateValue]
         {abstract} {field} + <<given>> liftable: Liftable[AggregateValue]
     }

@@ -6,7 +6,7 @@ package foundation {
 
 
     interface AggregateFoundation {
-        {abstract} {field} + <<type>> AggregateValue[T] subtypeOf() SafeIterable[T]
+        {abstract} {field} + <<type>> AggregateValue[T] subtypeOf SafeIterable[T]
         ...
     }
 
