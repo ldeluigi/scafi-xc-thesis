@@ -318,7 +318,7 @@ which are members of a class or trait that define types, and can be used as type
 %
 Abstract type members avoid Scala trait and class sources to grow in size both vertically and horizontally because they can often replace generic type parameters, with all the benefits of member inheritance, such as overriding and composition.
 
-Generic types as well as type members can be constrained with \textit{upper bounds} and \textit{lower bounds}, which are used to restrict the types that can be used as type arguments or type members, respectively.
+Type parameters as well as type members can be constrained with \textit{upper bounds} and \textit{lower bounds}, using the operators \texttt{<:} and \texttt{>:}, respectively, such as in \texttt{Type <: Supertype} and \texttt{Type >: Subtype}.
 %
 Generic types also support type variance control, which is used to specify how the subtyping relationship between two generic types is related to the subtyping relationship between their type arguments.
 %
