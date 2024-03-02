@@ -1,0 +1,14 @@
+@startmindmap Value Tree Example
+!include style.iuml
+top to bottom direction
+* <<>>
+** exchange, 5
+*** branch/true
+**** exchange, "a"
+**** exchange, Some(11)
+***** exchange, 3.22
+***** branch/false
+****** exchange, List(1, 3, 7)
+** branch/false
+*** exchange, 2
+@endmindmap

@@ -22,7 +22,7 @@ A more advanced implementation could be developed in the future, maybe specifica
 %
 In order to maximize the reusability of its code, the logic and behavior that compose the operational semantics has been broken down into several mixin layers, with their dependencies declared through self-type annotations and abstract members.
 %
-These mixin layers have been organized into two packages based on their reusability: \texttt{context.common} with the most general and reusable mixins, and \texttt{context.exchange} with the mixins that are specific to the exchange calculus, as shown in \cref{fig:context-mixins-common,fig:context-mixins-exchange}.
+These mixin layers have been organized into two packages based on their reusability: \texttt{context.common} with the most general and reusable mixins, and \texttt{context.exchange} with the mixins that are specific to the exchange calculus, as shown in \cref{fig:context-mixins-common, fig:context-mixins-exchange}.
 
 \begin{figure}
     \centering
@@ -44,7 +44,54 @@ These mixin layers have been organized into two packages based on their reusabil
     }
 \end{figure}
 
-TODO explain how the stuff works
+
+\subsection{The stack-based semantics implementation}
+
+Without using Scala 3 macros everywhere an aggregate expression is written, the \ac{AST} of an aggregate program is not directly available to the semantics implementation.
+%
+Consequently, the semantics implementation has to track the invocation of its primitives into an explicit stack-like \ac{ADT}, while building the \texttt{Export} value tree using the paths traced by the stack.
+%
+If a primitive invocation is nested inside another, the invocation trace is pushed into the stack, and the nested expression is evaluated, potentially growing the stack but leaving it unchanged at the end of the evaluation, and then the trace is popped from the stack.
+%
+This logic is implemented in the \texttt{scope} method of \texttt{StackSemantics} and is employed by the \texttt{xc} implementation of \texttt{exchange.ConstructsSemantics}.
+%
+For instance, the program in \cref{lst:value-tree-example}, at the first execution round with the \texttt{BasicExchangeCalculusContext}, would produce the value tree in \cref{fig:value-tree-example}.
+
+\lstinputlisting[float, language=Scala, caption={Example of aggregate program that produces the value tree in \cref{fig:value-tree-example}.}, label={lst:value-tree-example}]{listings/value-tree-program.scala}
+
+\begin{figure}
+    \centering
+    \caption{Example of value tree produced by the program in \cref{lst:value-tree-example}.}
+    \label{fig:value-tree-example}
+    \bigskip
+    \resizebox{0.5\linewidth}{!}{
+        \input{diagrams/value-tree/Value Tree Example.latex}
+    }
+\end{figure}
+
+Alignment is implemented by comparing the current stack with the neighbor's value trees: if a path prefix is in common, the device is aligned with the given neighbor.
+%
+In order to distinguish \texttt{exchange} invocations that are not part of the same conditional branch, it is necessary that the \texttt{branch} construct is invoked in place of Scala's \texttt{if}, and that the \texttt{branch} construct is implemented to push a branch identifier into the stack using the scope method, thus misaligning devices who took different branches.
+%
+A known limitation and pitfall of this solution, besides making programmers understand the need to use \texttt{branch} instead of \texttt{if}, is boolean short-circuiting, which behaves similarly to the \texttt{if} construct, in the sense that it can happen to skip the evaluation of some exchange calls without tracing the conditional branch in the stack.
+%
+When that happens, the resulting behavior is unpredictable and will probably lead to runtime errors.
+
+\texttt{InboundMessagesSemantics} is responsible for providing the set of currently aligned devices as well as retrieving the values corresponding to the current traced path from their value trees.
+%
+\texttt{OutboundMessagesSemantics} is responsible for building the export value tree using the current path and the values passed to the \texttt{sendMessages} method.
+%
+Once the program round has completed, and the \texttt{Engine} asks for the \texttt{Export} value tree, the sent messages are reorganized into a different value tree for every known neighbor, plus the current device, because memory is modeled as a self-message, and a default value tree for every new neighbor that appears during sleep time.
+%
+This is the reason why the \texttt{Export} is an alias for a \texttt{MapWithDefault} while the \texttt{Import} is an alias for a \texttt{Map}, with both \ac{ADT} immutable.
+
+Inside a value tree, values of different types are stored together under a common type, and they need to be converted back to their original types when extracted from the tree.
+%
+For this reason, \texttt{MessageSemantics} offers two methods, \texttt{open} and \texttt{close}, responsible for the conversion from and to the common type, defined with an abstract type member called \texttt{Envelope}.
+%
+In a real-world distributed system, an \texttt{Envelope} could be a sequence of bytes, containing the serialized stream from shared objects.
+%
+For the scope of \this, all the simulations are executed using the \texttt{MessageSemantics.Basic} implementation, which simply casts the values to and from \texttt{Any}, which works because the simulations are run in a single JVM, and the \texttt{Any} type is the root of the Scala type hierarchy.
 
 \section{The build system}
 
@@ -81,9 +128,30 @@ The example of \cref{lst:foldhood-library-usage} demonstrates that \texttt{nbr} 
 
 \lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{FoldhoodLibrary}.}, label={lst:foldhood-library-usage}]{listings/foldhood-usage.scala}
 
-\section{Context-based constraints on the aggregate foundation trait}
 
-TODO write
+\section{Context-based constraints on shared values}
+
+This proof of concept has been implemented on a different feature branch of the repository, as it represents a very impactful change on the entire framework.
+%
+The idea is to use context bounds on every method that is supposed to share values with neighbors or self, such as \texttt{exchange}, \texttt{nbr}, \texttt{share}, \texttt{distanceTo}, and so on.
+%
+Through these context bounds, the types able to be shared can be restricted by a set of rules, that, if not satisfied, won't provide the context parameter needed to invoke the method.
+%
+The type class used as bound is called \texttt{Shareable}, and its counterpart negating it is named \texttt{NotShareable}, as shown in \cref{lst:shareable-type-classes}.
+%
+By default, in order to allow libraries that abstract over the semantics implementation to share at the very least primitive types and classes marked as \texttt{Serializable}, a global given instance of \texttt{Shareable} is provided for subtypes of \texttt{AnyVal} or \texttt{Serializable}.
+%
+Given that the \texttt{Shareable} type class is marked as \texttt{open} and has a public constructor, semantics and their implementations can extend the set of types that satisfy the constraints, by providing additional given instances of the type class, and optionally adding ad-hoc behavior to the type class with extensions.
+%
+As a side-effect, the \texttt{Shareable} could potentially be instantiated manually to force any type to be shareable, probably resulting in a runtime error during the actual serialization phase that would have occurred anyway without this whole feature enabled.
+%
+Nevertheless, in a typical scenario, the constraint works as expected, as shown in \cref{lst:shareable-type-classes-usage}, where the \texttt{Shareable} constraint is violated by the attempt to share a value of type \texttt{AggregateValue[Int]}, while it's marked as \texttt{NotShareable} by the \texttt{AggregateFoundation}.
+%
+In the same snipped, the new signature of the \texttt{nbr} method with the context bound shows how signatures get affected by this change, in case it was merged and applied to the main branch.
+
+\lstinputlisting[float, language=Scala, caption={Definition of the \texttt{Shareable} and \texttt{NotShareable} type classes.}, label={lst:shareable-type-classes}]{listings/context-based-constraints-definition.scala}
+
+\lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{Shareable} type class, that demonstrates a violation of the constraint.}, label={lst:shareable-type-classes-usage}]{listings/context-based-csontraints-violation.scala}
 
 \section{Integration with the Alchemist simulator}
 
