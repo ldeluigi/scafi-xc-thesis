@@ -24,6 +24,7 @@ For the scope of the project, \ac{XC} is the only semantics implemented, so the 
 %
 Unit tests for libraries always include a sample program using the subject under test, and during the test cases, the program is executed in a test environment and inspected, both for the expected results and for the expected value tree produced by the test context.
 
+
 \section{Acceptance tests}
 
 Acceptance tests are an important validation tool for the project, as they are the only way to ensure that the libraries are working as expected in simulated scenarios.
@@ -34,11 +35,13 @@ The most important acceptance test currently present is the \texttt{GradientWith
 %
 The gradient is expected to be recalculated after the obstacle appears, and the test checks that the devices adapt to the new environment.
 
+
 \section{Continuous Integration} \label{chap:evaluation->sec:continuous-integration}
 
 Both unit and acceptance tests are run automatically by the continuous integration pipeline, built with \textit{GitHub Actions}\footnote{\url{https://github.com/features/actions}} and hosted by GitHub\footnote{\url{https://github.com/ldeluigi/scafi-xc/actions}}.
 %
 The pipeline is invoked on every push to the repository, and it runs the tests on the latest version of the codebase, as well as on every push on open pull requests, given that \this is meant to be open source, under the \textit{Apache License 2.0}.
+
 
 \section{Code Style} \label{chap:evaluation->sec:code-style}
 

@@ -128,7 +128,7 @@ This prototype design shares some similarities with the previous one, but it has
 %
 In this design, libraries are singleton objects, where each method takes a context parameter for the semantics and a context parameter for every syntax needed as a dependency, as shown in \cref{lst:prototype-3-usage-lib}.
 %
-Alternatively, a library method can instantiate its syntax dependencies and only take a context parameter for the semantics, as shown in \cref{lst:prototype-3-usage-lib}.
+Alternatively, a library method can instantiate its syntax dependencies and only take a context parameter for the semantics, in a similar way to the previous prototype.
 %
 Even though the issue of library dependencies is solved, syntax dependencies are still cumbersome to use and still require static imports inside the body of the methods to invoke the constructs without the \texttt{.} operator.
 %
@@ -188,7 +188,7 @@ An \ac{UML} diagram of the final model for the foundation is shown in \cref{fig:
 
 Thanks to this design, the gradient construct, also known as \texttt{distanceTo}, can be defined to work with any aggregate semantics that supports the field calculus syntax, and thanks to Scala context bounds it can also be defined to work with any numeric type that supports an upper bound, such as \texttt{Double}.
 %
-The resulting code for the \texttt{distanceTo} construct is shown in \cref{lst:distance-to}, which resembles the syntax of the prototype \ac{DSL} of \cref{lst:lst:gradient-distance-xc-scala2-dsl}.
+The resulting code for the \texttt{distanceTo} construct is shown in \cref{lst:distance-to}, which resembles the syntax of the prototype \ac{DSL} of \cref{lst:gradient-distance-xc-scala2-dsl}.
 %
 The provided snippet demonstrates how this design effectively achieves the goals pursued by the other design prototypes:
 \begin{itemize}
@@ -226,11 +226,11 @@ Unary operations have to be lifted too and work as the mapping function \texttt{
 %
 As mentioned in the previous section, abstracting common features into a common foundation for all the semantics allows the reuse of all the libraries and programs depending on those features, while also retaining the possibility to re-implement differently in a new aggregate calculus semantics.
 
-Given that one could think of an aggregate calculus without explicit device identifiers in the \ac{API}, all the features related to explicit device identifiers in the calculus have been modeled as an optional mixin called \texttt{DeviceAwareAggregateFoundation}.
+To allow the definition, in the future, of an aggregate calculus without explicit device identifiers exposed in the \ac{API}, all the features related to explicit device identifiers in the calculus have been grouped and modeled as an optional mixin called \texttt{DeviceAwareAggregateFoundation}.
 %
 The mixin defines an abstract type member \texttt{DeviceId} and the means to compare them with \texttt{==}, that is a given instance of \texttt{CanEqual[DeviceId, DeviceId]}.
 %
-In addition to that, \texttt{DeviceAwareAggregateFoundation} provides two abstract methods, one called \texttt{self} that returns the device identifier of the current device, and another called \texttt{device} that returns an aggregate value of device identifiers, including self, which is always known thanks to the network and it doesn't need to be computed with, for example, a \texttt{nbr(self)} invocation.
+In addition to that, it provides two abstract methods, one called \texttt{self} that returns the device identifier of the current device, and another called \texttt{device} that returns an aggregate value of device identifiers, including self, which is always known thanks to the network and it doesn't need to be computed with, for example, a \texttt{nbr(self)} invocation.
 
 Therefore, the \texttt{ExchangeCalculusSemantics} is left only with the definitions of its specific features, which are NValues additional operation on aggregate values, automatic conversion from local values and NValues, the core constructs \texttt{exchange}, here called \texttt{xc}, and \texttt{branch}, called \texttt{br}, to avoid conflicts with their counterparts defined in the implemented syntaxes.
 %
@@ -264,7 +264,7 @@ A \texttt{ValueTree} is an \ac{ADT} containing the values exchanged between devi
 %
 Here a \texttt{Path} is defined as an alias for a \texttt{List} of generic tokens so that every implementation of a semantic can control which type of token defines a location inside the \ac{AST} of the aggregate program.
 %
-An \texttt{Export} instead is defined as an alias for a \texttt{MapWithDefault}, because it is able to send a dedicated message to a known neighbor and a default message to every other new neighbor of the device.
+An \texttt{Export} instead is defined as an alias for a \texttt{MapWithDefault}, because it can send a dedicated message to a known neighbor and a default message to every other new neighbor of the device.
 %
 The \texttt{Network} is responsible for properly dispatching the messages to the intended recipients and is pictured with \ac{UML} in \cref{fig:engine-network-diagram}.
 
