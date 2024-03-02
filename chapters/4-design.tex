@@ -25,7 +25,7 @@ Prototipation has been necessary to explore the design space and to understand t
 %
 For each of the four prototypes, a brief description of the design choices and the programming experience is provided, followed by the final design described in \cref{chap:design->sec:final-dsl}.
 %
-Each prototype is named after the Scala 3 feature it's mainly based on, and each aims to separate the definition of the syntax from the definition of the semantics, and separate the definition of the semantics from the actual implementation.
+Each prototype is named after the Scala 3 feature it is mainly based on, and each aims to separate the definition of the syntax from the definition of the semantics, and separate the definition of the semantics from the actual implementation.
 %
 This way, more than one semantic can be defined for the same syntax, and more than one implementation can be defined for the same semantic, allowing for more flexible customization and composition.
 %
@@ -48,7 +48,7 @@ For brevity, only the most relevant advantages and disadvantages are highlighted
 
 In this design, an \texttt{AggregateFoundation} base trait defines a common syntax for all the aggregate programming foundations, such as the existence of a type called \texttt{AggregateValue[T]} that represents a collection of values coming from neighboring devices, including self.
 %
-The \texttt{AggregateFoundation} trait also defines a set of \textit{abstract extension methods} that provide basic functionalities for aggregate values, such as \textit{lifting} for composition and mapping, \textit{folding} for reduction, methods for retrieving the value for the current device or exclude the current device, mimicking the functionalities of the \texttt{foldhood} and \texttt{fooldhoodPlus} of ScaFi, as shown in \cref{lst:prototype-1-aggregate-foundation}.
+The \texttt{AggregateFoundation} trait also defines a set of \textit{abstract extension methods} that provide basic functionalities for aggregate values, such as \textit{lifting} for composition and mapping, \textit{folding} for reduction, methods for retrieving the value for the current device or exclude the current device, mimicking the functionalities of the \texttt{foldhood} and \texttt{foldhoodPlus} of ScaFi, as shown in \cref{lst:prototype-1-aggregate-foundation}.
 %
 In the example, the source of the \texttt{Liftable} and \texttt{Foldable} type classes is included for completeness, but they are not part of the \texttt{AggregateFoundation} source file as they are located in the \texttt{commons} module.
 
@@ -136,7 +136,7 @@ In addition to that, \texttt{AggregateFoundation} still needs the generic aggreg
 
 \lstinputlisting[float, language=Scala, caption={Prototype 3 - Example usage by a library developer.}, label={lst:prototype-3-usage-lib}]{listings/prototype-3-usage-lib.scala}
 
-The last prototype represents a return to the original mixin-oriented design used in ScaFi and its purpose is closer to a comparison baseline rather than a design alternative, but it's still useful for the last design phase where the best features of all the prototypes will be cherry-picked and combined.
+The last prototype represents a return to the original mixin-oriented design used in ScaFi and its purpose is closer to a comparison baseline rather than a design alternative, but it is still useful for the last design phase where the best features of all the prototypes will be cherry-picked and combined.
 
 \subsection{Prototype 4: Mixin composition} \label{chap:design->sec:dsl->subsec:prototype-4-mixin-composition}
 
@@ -188,7 +188,7 @@ An \ac{UML} diagram of the final model for the foundation is shown in \cref{fig:
 
 Thanks to this design, the gradient construct, also known as \texttt{distanceTo}, can be defined to work with any aggregate semantics that supports the field calculus syntax, and thanks to Scala context bounds it can also be defined to work with any numeric type that supports an upper bound, such as \texttt{Double}.
 %
-The resulting code for the \texttt{distanceTo} construct is shown in \cref{lst:distance-to}.
+The resulting code for the \texttt{distanceTo} construct is shown in \cref{lst:distance-to}, which resembles the syntax of the prototype \ac{DSL} of \cref{lst:lst:gradient-distance-xc-scala2-dsl}.
 %
 The provided snippet demonstrates how this design effectively achieves the goals pursued by the other design prototypes:
 \begin{itemize}
@@ -208,9 +208,9 @@ By abstracting common features of aggregate programming languages such as \ac{FC
 %
 \texttt{AggregateFoundation} provides an abstract definition of an \texttt{AggregateValue} type, with the only feature to be iterable.
 %
-The reason is that whatever the next aggregate calculus semantics will be, it's expected to provide some kind of notion of field, which should allow iterating over values from neighbors, including self.
+The reason is that whatever the next aggregate calculus semantics will be, it is expected to provide some kind of notion of field, which should allow iterating over values from neighbors, including self.
 %
-Additionally, \texttt{AggregateFoundation} provides the \ac{API} to exclude the value for self from an \texttt{AggregateValue}, as well as to retrieve the value for self only.
+Additionally, \texttt{AggregateFoundation} provides the \ac{API} to exclude the value for self from an \texttt{AggregateValue}, as well as to retrieve the value for self only, using extensions method inspired by the \ac{XC} \ac{DSL} experiment of \cref{chap:state-of-the-art->sec:xc-experiment}.
 %
 Referencing self has an important role in aggregate programs, and it was put here to provide all libraries and programs with that feature.
 %
@@ -264,7 +264,7 @@ A \texttt{ValueTree} is an \ac{ADT} containing the values exchanged between devi
 %
 Here a \texttt{Path} is defined as an alias for a \texttt{List} of generic tokens so that every implementation of a semantic can control which type of token defines a location inside the \ac{AST} of the aggregate program.
 %
-An \texttt{Export} instead is defined as an alias for a \texttt{MapWithDefault}, because it's able to send a dedicated message to a known neighbor and a default message to every other new neighbor of the device.
+An \texttt{Export} instead is defined as an alias for a \texttt{MapWithDefault}, because it is able to send a dedicated message to a known neighbor and a default message to every other new neighbor of the device.
 %
 The \texttt{Network} is responsible for properly dispatching the messages to the intended recipients and is pictured with \ac{UML} in \cref{fig:engine-network-diagram}.
 
@@ -314,7 +314,7 @@ In addition to that, in manual tests, a \textit{random} simulator could be used.
 %
 The random simulator allows the generation of randomized device networks and randomized policies to simulate an environment closer to the internet, following a set of given parameters for the probability distributions used in the implementation.
 %
-This is particularly useful to test the self-healing, seld-organizing properties of aggregate programs.
+This is particularly useful to test the self-healing, self-organizing properties of aggregate programs.
 %
 Tests can be reproduced deterministically even in the random simulator thanks to the \texttt{seed} parameter that controls the generation of pseudo-random numbers.
 %

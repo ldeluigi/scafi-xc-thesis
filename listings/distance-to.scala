@@ -10,7 +10,7 @@ import Numeric.Implicits.*
 object GradientLibrary:
   def distanceEstimate[N: Numeric: UpperBounded]
   (using language: AggregateFoundation)(
-      neighboursEstimates: language.AggregateValue[N],
+      neighboursEstimates: language.AggregateValue[N], // path dependent type
       distances: language.AggregateValue[N],
   ): N = lift(neighboursEstimates, distances)(_ + _).withoutSelf.min
 

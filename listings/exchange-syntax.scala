@@ -10,6 +10,6 @@ exchange(0)(value => retsend(f(value)))
 
 // To send and return potentially different values:
 exchange(0)(value => (f(value), f2(value)))
-exchange(0)(value => ret (f(value)) send f2(value))
+exchange(0)(value => ret (f(value)) send f2(value)) // infix style
 exchange(0)(value => ret(f(value)).send(f2(value)))
 exchange(0)(value => RetSend(f(value), f2(value)))

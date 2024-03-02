@@ -145,13 +145,13 @@ Given that the \texttt{Shareable} type class is marked as \texttt{open} and has 
 %
 As a side-effect, the \texttt{Shareable} could potentially be instantiated manually to force any type to be shareable, probably resulting in a runtime error during the actual serialization phase that would have occurred anyway without this whole feature enabled.
 %
-Nevertheless, in a typical scenario, the constraint works as expected, as shown in \cref{lst:shareable-type-classes-usage}, where the \texttt{Shareable} constraint is violated by the attempt to share a value of type \texttt{AggregateValue[Int]}, while it's marked as \texttt{NotShareable} by the \texttt{AggregateFoundation}.
+Nevertheless, in a typical scenario, the constraint works as expected, as shown in \cref{lst:shareable-type-classes-usage}, where the \texttt{Shareable} constraint is violated by the attempt to share a value of type \texttt{AggregateValue[Int]}, while it is marked as \texttt{NotShareable} by the \texttt{AggregateFoundation}.
 %
 In the same snipped, the new signature of the \texttt{nbr} method with the context bound shows how signatures get affected by this change, in case it was merged and applied to the main branch.
 
 \lstinputlisting[float, language=Scala, caption={Definition of the \texttt{Shareable} and \texttt{NotShareable} type classes.}, label={lst:shareable-type-classes}]{listings/context-based-constraints-definition.scala}
 
-\lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{Shareable} type class, that demonstrates a violation of the constraint.}, label={lst:shareable-type-classes-usage}]{listings/context-based-csontraints-violation.scala}
+\lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{Shareable} type class, that demonstrates a violation of the constraint.}, label={lst:shareable-type-classes-usage}]{listings/context-based-constraints-violation.scala}
 
 \section{Integration with the Alchemist simulator}
 

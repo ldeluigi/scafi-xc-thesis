@@ -6,17 +6,46 @@
 
 \section{Programming experience evaluation}
 
-
+TODO
 
 \section{Unit tests}
 
-Given that the expected behavior of the libraries \ac{API} strictly relates to the chosen semantics that implements the necessary syntaxes, the unit tests for the libraries are tied to the semantics they are tested with.
+The unit test framework used for the project is ScalaTest, a popular testing framework for Scala.
+%
+All the unit tests are defined as traits or classes that depend on a common trait called \texttt{UnitTest}, which provides a common testing \ac{DSL} called \texttt{AnyFlatSpec}, enhanced with the \texttt{ShouldMatchers} trait and other utilities, that make the test assertions look like natural spoken language.
+%
+Unit tests cover the \texttt{common}, \texttt{core}, and \texttt{simulator} modules.
+%
+\texttt{UnitTest} is also the base for the \texttt{AcceptanceTest} class of the \texttt{tests} module, to have a consistent testing style across the whole project.
+
+Given that the expected behavior of the aggregate programming libraries \ac{API} strictly relates to the chosen semantics that implements the necessary syntaxes, the unit tests for the libraries are tied to the semantics they are tested with.
 %
 For the scope of the project, \ac{XC} is the only semantics implemented, so the libraries are tested against it.
 %
+Unit tests for libraries always include a sample program using the subject under test, and during the test cases, the program is executed in a test environment and inspected, both for the expected results and for the expected value tree produced by the test context.
 
 \section{Acceptance tests}
 
-TODO Acceptance test design using the simulator
+Acceptance tests are an important validation tool for the project, as they are the only way to ensure that the libraries are working as expected in simulated scenarios.
+%
+The tests are aimed to be as readable as possible, using the unit test \ac{DSL}, but also hiding all the complexity of the simulation setup and execution.
+%
+The most important acceptance test currently present is the \texttt{GradientWithObstacleTest}, which is a simulation of a bi-dimensional grid network of devices that compute a gradient from a source, with an obstacle in the middle of the grid that appears halfway through the simulation.
+%
+The gradient is expected to be recalculated after the obstacle appears, and the test checks that the devices adapt to the new environment.
+
+\section{Continuous Integration} \label{chap:evaluation->sec:continuous-integration}
+
+Both unit and acceptance tests are run automatically by the continuous integration pipeline, built with \textit{GitHub Actions}\footnote{\url{https://github.com/features/actions}} and hosted by GitHub\footnote{\url{https://github.com/ldeluigi/scafi-xc/actions}}.
+%
+The pipeline is invoked on every push to the repository, and it runs the tests on the latest version of the codebase, as well as on every push on open pull requests, given that \this is meant to be open source, under the \textit{Apache License 2.0}.
 
 \section{Code Style} \label{chap:evaluation->sec:code-style}
+
+Having a consistent and \quotes{clean} coding style across the entire project contributes to the maintainability and readability of the codebase.
+%
+For this reason, automatic code formatting and linting tools are used to enforce a consistent style across the project.
+%
+The tools put in place are \textit{scalafmt} and \textit{scalafix}, each with their own configuration file and rule sets, specific for Scala 3.
+%
+The code style is enforced by two dedicated phases of the continuous integration pipeline, described in \cref{chap:evaluation->sec:continuous-integration}.
