@@ -32,7 +32,7 @@ package common {
     StackSemantics ..> MessageSemantics
     StackSemantics o-- InvocationCoordinate
 
-    abstract class InboundMessageSemantics <<this: StackSemantics & MessageSemantics & Context[DeviceId, InvocationCoordinate, Envelope]>> {
+    abstract class InboundMessageSemantics <<this: StackSemantics & MessageSemantics & Context[...]>> {
         {abstract} {field} + <<type>> DeviceId
         {abstract} {field} # self: DeviceId
         {method} # unalignedDevices: Set[DeviceId]
@@ -44,7 +44,7 @@ package common {
     InboundMessageSemantics ..> StackSemantics
     ' InboundMessageSemantics ..> MessageSemantics
 
-    abstract class OutboundMessageSemantics <<this: StackSemantics & MessageSemantics & Context[DeviceId, InvocationCoordinate, Envelope]>> {
+    abstract class OutboundMessageSemantics <<this: StackSemantics & MessageSemantics & Context[...]>> {
         {abstract} {field} + <<type>> DeviceId
         {method} + outboundMessages: Export[DeviceId, InvocationCoordinate, Envelope]
         {method} # sendMessages[T](messages: MapView[DeviceId, T], default: T): Unit

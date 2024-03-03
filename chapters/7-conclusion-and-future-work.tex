@@ -4,4 +4,54 @@
 \label{chap:conclusion-and-future-work}
 %----------------------------------------------------------------------------------------
 
-TODO
+\this is intended to be the core of a new ScaFi framework based on the Exchange Calculus, written with Scala 3.
+%
+The requirements for \this, including optional ones, have all been satisfied, so the final result can be considered a success.
+
+Given that the implementation covers only some of the many modules and features of the original ScaFi framework, there is still a lot of room for future work.
+%
+The concrete implementations provided in this work aim for simplicity, readability, correctness, and reusability, leaving the concern about performance and efficiency as future work.
+%
+Additionally, the provided simulator offers a very restricted set of features if compared to the original ScaFi simulator, so it could be improved to support more complex scenarios and to provide one or more graphical interfaces for the user to interact with the simulation.
+%
+The following paragraphs provide a list of possible future developments for \this.
+
+\paragraph{Performance and efficiency improvements} The current implementation of the context and the simulator is not optimized for performance, so it could be improved to be more efficient.
+%
+For example, the context leverages the \texttt{Map} data structure to represent \texttt{ValueTree}s, even though it is not the most efficient data structure for this purpose, while the simulator uses standard maps for the representation of the network.
+
+\paragraph{Complete re-implementation of the core module} The \texttt{core} module is the most important module of the ScaFi framework, as it contains the basic building blocks for the development of aggregate programs.
+%
+In \this, it has been implemented only partially, as only a very restricted subset of the standard library has been ported.
+%
+Specifically, the only advanced construct implemented is the gradient.
+%
+An almost necessary future development would be the rewriting of the remaining libraries.
+
+\paragraph{A more complete simulator} The current simulator is very basic and does not support many of the features of the original ScaFi simulator.
+%
+Additionally, it only supports discrete time and could be improved or entirely reimplemented to provide a more complete set of features.
+%
+Among these, it could provide support for graphical user interfaces, as done by the original ScaFi simulator.
+
+\paragraph{Support for real-world distributed systems} The original ScaFi allowed the deployment of aggregate programs on real-world distributed systems with the \texttt{spala} and \texttt{distributed} modules, which \this entirely lacks.
+%
+Implementing such support is a necessary step for \this to be considered a complete replacement for the original ScaFi, as well as a framework for the programming of real-world collective adaptive systems.
+
+\paragraph{Experimental developments with aggregate programming} Thanks to the reusability and the modularity of the new core module, it is possible to extend it with new, experimental libraries and semantics in the scope of research projects, towards which \this is designed.
+
+\paragraph{Adding more acceptance tests} Most of the reliability of the framework comes from the functionality and readability of its tests.
+%
+In particular, acceptance tests are designed to be proofreadable by experts in the field, and they are the most important tests for the framework.
+%
+Nevertheless, only a few acceptance tests are currently present, so adding more of them would be a good way to improve the reliability of the framework.
+
+\paragraph{Improvement of the Alchemist incarnation} The integration with the Alchemist simulator is still just a prototype.
+%
+A more complete implementation would enable more interesting simulation scenarios, such as the simulation of situated agents, with sensors and actuators actively managed by the aggregate program.
+
+\paragraph{Survey evaluation of the framework} A survey evaluation of the framework could be conducted to assess the usability and effectiveness of the framework in the development of aggregate programs.
+%
+Additionally, it could provide conclusive results regarding the impact of the Context-based constraints on shared values discussed in \cref{chap:implementation->sec:context-based-constraints}.
+%
+Whether or not the proposed changes to the core represent a valid improvement is still an open question, and a survey evaluation of the proposal could provide a definitive answer.

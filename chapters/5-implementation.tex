@@ -6,6 +6,8 @@
 
 This chapter documents the implementation details of the models and libraries designed, as well as additional tools and extensions developed as research experiments and proof of concepts.
 %
+The implementation of the \texttt{core} and \texttt{simulator} modules has no external, third-party dependencies apart from the Scala standard library, thus satisfying the requirement \textit{T.7} from \cref{chap:analysis->sec:requirement-analysis}.
+%
 In particular, the chapter covers the implementation of an experimental \texttt{FoldhoodLibrary}, that demonstrates the expressiveness of the \this design by implementing an \ac{API} for \texttt{foldhood} and \texttt{foldhoodPlus} similar to the original ScaFi, and the prototype of a different implementation of the \texttt{AggregateFoundation} trait, which adds compile time assertions on the user code to prevent common mistakes and improve the quality of aggregate programs, at the expense of more complicated signatures of library methods, following requirement \textit{F.8} from \cref{chap:analysis->sec:requirement-analysis}.
 %
 The chapter also covers the integration of \this with the Alchemist simulator (requirement \textit{F.4} from \cref{chap:analysis->sec:requirement-analysis}), which enables graphical and more realistic simulations, as well as additional proof of the functionality of \this.
@@ -107,7 +109,7 @@ The build tool has been customized with the following plugins:
 %
 In addition to that, the Dotty compiler has been customized with flags that enhance the quality of the code, such as the aforementioned \textit{explicit nulls} and \textit{multiversal equality}, but also enforcement for indentation over curly braces style, warnings as errors, safe initialization checks, warnings on value discards, and more (requirement \textit{T.2} from \cref{chap:analysis->sec:requirement-analysis}).
 
-\section{The \texttt{FoldhoodLibrary}} \label{chap:implementation->sec:foldhood-library}
+\section{The \quotes{FoldhoodLibrary}} \label{chap:implementation->sec:foldhood-library}
 
 As a proof of concept of the expressiveness of the \this design, an experimental library has been developed, called \texttt{FoldhoodLibrary}, which provides an \ac{API} for the \texttt{foldhood} and \texttt{foldhoodPlus} constructs as defined in the original ScaFi library, representing in a way an internal \ac{DSL} written in terms of another.
 %
@@ -129,7 +131,7 @@ The example of \cref{lst:foldhood-library-usage} demonstrates that \texttt{nbr} 
 \lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{FoldhoodLibrary}.}, label={lst:foldhood-library-usage}]{listings/foldhood-usage.scala}
 
 
-\section{Context-based constraints on shared values}
+\section{Context-based constraints on shared values} \label{chap:implementation->sec:context-based-constraints}
 
 This proof of concept has been implemented on a different feature branch of the repository, as it represents a very impactful change on the entire framework.
 %
