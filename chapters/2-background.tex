@@ -436,7 +436,7 @@ If not passed explicitly, the compiler searches for \textit{given instances} to 
 %
 Starting with Scala 3, context parameters can be anonymous, and given instances can be abstract.
 %
-To retrieve the value of an anonymous context parameter of type \texttt{T} Scala 3 provides the \texttt{summon[T]: T} method, that replaces Scala 2's \texttt{implicitly[T]} method.
+To retrieve the value of an anonymous context parameter of type \texttt{T} Scala 3 provides the \texttt{summon[T]: T} method, which replaces Scala 2's \texttt{implicitly[T]} method.
 
 \textit{Context bounds} in the form \texttt{T: Type} are syntactic sugar for context parameters with a more concise syntax, that gets desugared by the compiler to a context parameter of type \texttt{Type[T]}, as shown in .
 %
@@ -476,15 +476,13 @@ A usage example of a variant annotation is present in \cref{lst:scala3-sum-types
 %
 Type aliases can be parameterized and can be recursive.
 %
-Their syntax is the same for defining type members, using the \texttt{type} keyword, as shown in
+Their syntax is the same for defining type members, using the \texttt{type} keyword, as shown in \cref{lst:scala3-opaque-type-alias}.
 %
 Opaque type aliases are a new feature of Scala 3 that allows defining a type alias that is not interchangeable with its underlying type, hiding it from consumers.
 
-TODO insert example as listing
+\lstinputlisting[float,language=Scala,label={lst:scala3-opaque-type-alias}, caption={Example of opaque type alias and covariant override in Scala 3.}]{listings/scala3-opaque-type-alias.scala}
 
-\paragraph{Covariant and contravariant overrides} allow to override a method defined in a superclass with a method that has a more specific return type or a more general parameter type, respectively.
-
-TODO insert example as listing
+\paragraph{Covariant overrides} allow to override a method defined in a superclass with a method that has a more specific return type, as shown in \cref{lst:scala3-opaque-type-alias}.
 
 \paragraph{Higher-kinded types} allow to define types and methods that work with generic types regardless of the actual type arguments, only requiring a fixed arity of type parameters.
 %

@@ -293,9 +293,34 @@ An \ac{UML} diagram of the \texttt{Context} and the \texttt{Engine} can be found
 \end{figure}
 
 
-\section{Network based sensors}
+\section{Network-based sensors} \label{chap:design->sec:network-based-sensors}
 
-TODO write
+In general, sensors and actuators are not part of the \ac{DSL} of \this.
+%
+In ScaFi, sensors are modeled as a key-value dictionary, from \texttt{String} to \texttt{Any}, that casts the value to the expected type.
+%
+To improve the type safety and to have less error-prone sensor access, in this design sensor and actuator design and implementation are left to the user, that can provide them in three main ways:
+\begin{enumerate}
+    \item by implementing an external library that interacts with the sensor and actuator hardware, which gets invoked by the aggregate program;
+    \item by extending the \texttt{Context} implementation with additional, type-safe sensor and actuator methods, invoked in the aggregate program in the form \texttt{ctx.sensorName()} or \texttt{summon[ContextImpl].sensorName()};
+    \item by both extending the \texttt{Context} and implementing an external library as its facade, to provide an \ac{API} with static method signatures that can be invoked in the aggregate program, in line with the style of the \ac{DSL}.
+\end{enumerate}
+%
+This design choice has been made to keep the \ac{DSL} as simple as possible and to allow the user to choose the best way to interact with the sensor and actuator hardware, as well as to allow the user to choose the best way to model the sensor and actuator data, which can be very different from one application to another.
+%
+Nevertheless, network-based sensors, which are sensors whose measured values differ for every visible neighbor, represent a special case.
+%
+These sensors must either be implemented following the second or the third way of the list above, because a measurement must return an \texttt{AggregateValue[T]} where \texttt{T} is the type of the measurement and the aggregate value contains a measurement for every visible neighbor, including self.
+
+The standard library included in the \texttt{core} module provides a network-based sensor called \texttt{DistanceSensor}, due to its importance in common aggregate programs.
+%
+In ScaFi, the corresponding construct is called \texttt{nbrRange}.
+%
+If an aggregate context implements the \texttt{DistanceSensor[N: Numeric]} trait, \texttt{senseDistance: N} is available to be invoked in the aggregate program, and it returns an \texttt{AggregateValue[N]} containing the distance to every visible neighbor, including self.
+%
+The availability of the distance sensor in the context enables the invocation of library constructs based on that, such as the \texttt{sensorDistanceTo} of the \texttt{GradientLibrary} which uses the sensors as metric for the distance to the neighbors.
+%
+The distance sensor is generic on the type of the measurement, as long as it is a numeric type, to allow for different configurations, such as measuring with floats, integers, or custom types that provide a \texttt{Numeric} given instance.
 
 
 \section{The simulator}
