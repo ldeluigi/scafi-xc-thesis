@@ -438,10 +438,11 @@ Starting with Scala 3, context parameters can be anonymous, and given instances 
 %
 To retrieve the value of an anonymous context parameter of type \texttt{T} Scala 3 provides the \texttt{summon[T]: T} method, which replaces Scala 2's \texttt{implicitly[T]} method.
 
-\textit{Context bounds} in the form \texttt{T: Type} are syntactic sugar for context parameters with a more concise syntax, that gets desugared by the compiler to a context parameter of type \texttt{Type[T]}, as shown in .
+\textit{Context bounds} in the form \texttt{T: Type} are syntactic sugar for context parameters with a more concise syntax, that gets desugared by the compiler to a context parameter of type \texttt{Type[T]}.
+%
+For example, in \cref{lst:distance-to}, \texttt{N:Numeric:UpperBounded} is desugared to two new context parameters in the form \texttt{(using Numeric[N], UpperBounded[N])}.
 %
 An abstract class like \texttt{Type[T]} meant to be used to add behavior to any closed data type without sub-typing is called a \textit{type class}.
-TODO add examples of context bounds desugar
 
 Given instances can be imported and exported using the \texttt{import} and \texttt{export} keywords, but starting with Scala 3, \textit{given imports} and \textit{given exports} require the \texttt{given} keyword, even in the cases where a wildcard is used, making more clear where givens in the current scope are coming from.
 %

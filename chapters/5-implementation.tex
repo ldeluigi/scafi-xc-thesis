@@ -6,17 +6,17 @@
 
 This chapter documents the implementation details of the models and libraries designed, as well as additional tools and extensions developed as research experiments and proof of concepts.
 %
-In particular, the chapter covers the implementation of an experimental \texttt{FoldhoodLibrary}, that demonstrates the expressiveness of the \this design by implementing an \ac{API} for \texttt{foldhood} and \texttt{foldhoodPlus} similar to the original ScaFi, and the prototype of a different implementation of the \texttt{AggregateFoundation} trait, which adds compile time assertions on the user code to prevent common mistakes and improve the quality of aggregate programs, at the expense of more complicated signatures of library methods.
+In particular, the chapter covers the implementation of an experimental \texttt{FoldhoodLibrary}, that demonstrates the expressiveness of the \this design by implementing an \ac{API} for \texttt{foldhood} and \texttt{foldhoodPlus} similar to the original ScaFi, and the prototype of a different implementation of the \texttt{AggregateFoundation} trait, which adds compile time assertions on the user code to prevent common mistakes and improve the quality of aggregate programs, at the expense of more complicated signatures of library methods, following requirement \textit{F.8} from \cref{chap:analysis->sec:requirement-analysis}.
 %
-The chapter also covers the integration of \this with the Alchemist simulator, which enables graphical and more realistic simulations, as well as additional proof of the functionality of \this.
+The chapter also covers the integration of \this with the Alchemist simulator (requirement \textit{F.4} from \cref{chap:analysis->sec:requirement-analysis}), which enables graphical and more realistic simulations, as well as additional proof of the functionality of \this.
 
 \section{Implementation of the XC operational semantics} \label{chap:implementation->sec:xc-ops}
 
 The implementation of the operational semantics as described in paper\cite{xc} follows the design of \cref{chap:design->sec:final-dsl->subsec:exchange-calculus-semantics-design} by defining a concrete class that inherits from \texttt{ExchangeCalculusSemantics}.
 %
 Given that the same class serves as context for the execution of aggregate programs' rounds, following the engine design of \cref{chap:design->sec:final-dsl->subsec:engine}, it implements the \texttt{Context} interface too.
-%
-The name \texttt{BasicExchangeCalculusContext} because it is meant to provide a simple yet readable and reliable implementation, without pursuing premature optimizations or additional features.
+
+The implementation is named \texttt{BasicExchangeCalculusContext}, because it is meant to provide a simple yet readable and reliable implementation, without pursuing premature optimizations or additional features.
 %
 A more advanced implementation could be developed in the future, maybe specifically tailored to some destination platform or network implementation.
 %
@@ -95,17 +95,17 @@ For the scope of \this, all the simulations are executed using the \texttt{Messa
 
 \section{The build system}
 
-Following the requirements listed in \cref{chap:analysis->sec:requirement-analysis}, the chosen build system for the project is \ac{SBT}, in particular version \texttt{1.9.8}.
+Following the requirements listed in \cref{chap:analysis->sec:requirement-analysis}, the chosen build system for the project is \ac{SBT}, in particular version \texttt{1.9.8}, following requirement \textit{T.3} from \cref{chap:analysis->sec:requirement-analysis}.
 %
 The build tool has been customized with the following plugins:
 \begin{itemize}
-    \item \texttt{sbt-scalafix} to lint the code with \textit{scalafix}, further explained in \cref{chap:evaluation->sec:code-style};
-    \item \texttt{sbt-scalafmt} to lint the code with \textit{scalafmt}, further explained in \cref{chap:evaluation->sec:code-style};
-    \item \texttt{sbt-scalajs} and \texttt{bt-scalajs-crossproject} to cross-build the project for \textit{JavaScript} with \textit{scala-js};
-    \item \texttt{sbt-scala-native} and \texttt{sbt-scala-native-crossproject} to cross-build the project for \textit{native} with \textit{scala-native}.
+    \item \texttt{sbt-scalafix} to lint the code with \textit{scalafix}, further explained in \cref{chap:evaluation->sec:code-style}, following requirement \textit{T.6} from \cref{chap:analysis->sec:requirement-analysis};
+    \item \texttt{sbt-scalafmt} to lint the code with \textit{scalafmt}, further explained in \cref{chap:evaluation->sec:code-style}, following requirement \textit{T.6} from \cref{chap:analysis->sec:requirement-analysis};
+    \item \texttt{sbt-scalajs} and \texttt{bt-scalajs-crossproject} to cross-build the project for \textit{JavaScript} with \textit{scala-js}, following requirement \textit{T.4} from \cref{chap:analysis->sec:requirement-analysis};
+    \item \texttt{sbt-scala-native} and \texttt{sbt-scala-native-crossproject} to cross-build the project for \textit{native} with \textit{scala-native}, following requirement \textit{T.5} from \cref{chap:analysis->sec:requirement-analysis}.
 \end{itemize}
 %
-In addition to that, the Dotty compiler has been customized with flags that enhance the quality of the code, such as the aforementioned \textit{explicit nulls} and \textit{multiversal equality}, but also enforcement for indentation over curly braces style, warnings as errors, safe initialization checks, warnings on value discards, and more.
+In addition to that, the Dotty compiler has been customized with flags that enhance the quality of the code, such as the aforementioned \textit{explicit nulls} and \textit{multiversal equality}, but also enforcement for indentation over curly braces style, warnings as errors, safe initialization checks, warnings on value discards, and more (requirement \textit{T.2} from \cref{chap:analysis->sec:requirement-analysis}).
 
 \section{The \texttt{FoldhoodLibrary}}
 
@@ -156,4 +156,30 @@ In the same snipped, the new signature of the \texttt{nbr} method with the conte
 
 \section{Integration with the Alchemist simulator}
 
-TODO write
+As stated in the GitHub repo\footnote{\url{https://github.com/AlchemistSimulator/Alchemist}}, Alchemist is a simulator for pervasive, aggregate, and nature-inspired computing.
+%
+Originally, Alchemist was conceived as a chemical-oriented multi-compartment stochastic simulation engine, generic enough that could be adapted to simulate a wide range of systems, even if unrelated to the chemistry domain\cite{alchemist}.
+%
+The integration with Alchemist enables a whole new simulation experience, thanks to the graphical interface and the ability to simulate most of the relevant properties of real-world \ac{CAS}.
+%
+Integrating with the simulator consists, in practice, of implementing an \textit{incarnation}, which is a set of classes that bridge the Alchemist models of molecule, reactions, and concentration with the desired models of the simulation.
+%
+Inside an Alchemist simulation of a network of devices, each device is represented as a \texttt{Node}, and the incarnation implementation adds to each node an implementation of a \texttt{Network}, an engine instance, and a reference to the aggregate program to simulate.
+%
+Each node has visibility over its neighbors and takes care to send outbound messages to the right recipients when invoked, after the execution round.
+%
+During each of the rounds, the engine will invoke the aggregate program using \textit{Java reflections}, because the program's fully qualified name is passed as a string through the configuration file written in \textit{yaml}, such as the one in \cref{lst:alchemist-demo-configuration}.
+%
+If the provided configuration is run with the program of \cref{lst:alchemist-demo-program}, the expected output will be similar to the snapshot of \cref{fig:alchemist-simulation}.
+
+\lstinputlisting[float, style=yaml, caption={Example of Alchemist configuration file.}, label={lst:alchemist-demo-configuration}]{listings/alchemist-demo.yml}
+
+\lstinputlisting[float, language=Scala, caption={Example of aggregate program that can be run with the Alchemist simulator.}, label={lst:alchemist-demo-program}]{listings/alchemist-demo.scala}
+
+\begin{figure}
+    \centering
+    \caption{Snapshot of the Alchemist simulation of the program in \cref{lst:alchemist-demo-program}, with the configuration in \cref{lst:alchemist-demo-configuration}.}
+    \label{fig:alchemist-simulation}
+    \bigskip
+    \includegraphics[width=\linewidth]{figures/alchemist-demo.png}
+\end{figure}

@@ -6,16 +6,14 @@
 The design of \this has been divided into three main phases.
 %
 In the first part, four design prototypes have been developed in order to choose the best user experience for three key users, the \textit{program developer}, the \textit{library developer}, and finally \textit{a new foundation researcher}, which represents a novelty in the use cases of an aggregate programming library.
-%
-More on that can be found in \cref{chap:design->sec:dsl}
 
 In the second part, the final version of the \ac{DSL} has been designed, taking the best features from the prototypes and integrating them into a new core \ac{DSL} for \this.
 %
 An execution context for aggregate programs made with \this has been designed and called \quotes{engine}.
 
-In the third and final part, the design process concerned the simulator and the testing suites, also designed to scale with future extensions of the \ac{DSL}, as well as to be used as a reference for the \textit{program developer} and the \textit{library developer}, and to be as readable and understandable as possible, effectively working as acceptance tests.
+In the third and final part, the design process concerned the execution engine and the simulator.
 
-TODO link design process to requirements from the analysis chapter
+The first and second part cover requirements \textit{F.1}, \textit{F.3}, \textit{F.6}, \textit{F.7}, and \textit{T.1}, while the third covers requirement \textit{F.5} from \cref{chap:analysis->sec:requirement-analysis}.
 
 \section{Designing a scalable internal Domain Specific Language} \label{chap:design->sec:dsl}
 
