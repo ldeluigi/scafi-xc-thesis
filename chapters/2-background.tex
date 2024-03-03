@@ -3,53 +3,52 @@
 \chapter{Background}
 \label{chap:background}
 %----------------------------------------------------------------------------------------
-This chapter describes the two main driving factors for a complete re-design of ScaFi, which are the \ac{XC} and Scala 3.
+This chapter discusses the two main driving factors that led to a major re-design of ScaFi, which are the introduction of the \ac{XC} and the release of Scala 3.
 %
 On one hand, \ac{XC} opens the way for considerable design improvements given the simpler set of foundational constructs it requires, consisting of the single primitive \texttt{exchange}, from which the entire language takes its name.
 %
 Additionally, it provides new opportunities for aggregate program developers, enabled by the expressiveness of \ac{XC}, regarding, in particular, the possibility of sending differentiated messages to neighbors using the \texttt{exchange} primitive\cite{xc}.
 %
-On the other hand, Scala 3 introduces significant breaking language changes and improvements from Scala 2, nevertheless featuring binary retro-compatibility.
+On the other hand, Scala 3 introduces significant language changes and improvements from Scala 2 while maintaining binary retro-compatibility.
 %
-This promotes the rewriting of Scala 2 libraries in a way that exploits the new language features while providing cross-builds to Scala 2 enabled by the Scala 3 compiler \quotes{Dotty}\footnote{\url{https://github.com/lampepfl/dotty}}.
+This promotes the rewriting of Scala 2 libraries to leverage new language features while providing cross-builds to Scala 2 through the Scala 3 compiler \quotes{Dotty}\footnote{\url{https://github.com/lampepfl/dotty}}.
 
 \section{The Exchange Calculus}\label{chap:background->sec:xc}
 
 \ac{XC} is a language that formalizes a tiny set of key mechanisms, sufficient to express the overall behavior of a distributed collective adaptive systems in a declarative fashion\cite{xc}.
 %
-\ac{XC} offers both an operational semantics, defining the local interpretation of these mechanisms on each device, and a denotational semantics, which provides an interpretation of these mechanisms at the network level, abstracting away the operational semantics details.
+This language provides two types of semantics, operational and denotational.
 %
-Therefore, operational semantics guides the implementation of \ac{XC} as a framework, while denotational semantics is the sole knowledge base necessary when programming a \ac{CAS} with this language.
+The operational semantics defines the local interpretation of \ac{XC} mechanisms on each device, while the denotational semantics abstracts away the operational semantics details and provides an interpretation of these mechanisms at the network level.
 %
-The \ac{XC} language generalizes over \ac{FC} and is derived from the typed lambda calculus\cite{xc}.
+Therefore, operational semantics guides the implementation of \ac{XC} as a framework, while denotational semantics is the sole knowledge base required when programming a \ac{CAS} using this language.
+%
+Finally, the \ac{XC} language generalizes over \ac{FC} and is derived from the typed lambda calculus\cite{xc}.
 
-The building blocks of \ac{XC} are:
+\ac{XC} is built upon the following fundamental components:
 \begin{itemize}
     \item the basic system model and its assumptions;
     \item the data type for neighboring values, \textit{NValues};
-    \item the only communication primitive, \texttt{exchange};
-    \item the concept of \textit{alignment}.
+    \item the only communication primitive, \texttt{exchange}, which allows sending differentiated messages to neighbors;
+    \item the concept of \textit{alignment}, which enables \textit{functional composition of distribute behavior}\cite{xc}.
 \end{itemize}
 
-For the expressiveness of \ac{XC}, two crucial factors are:
-\begin{itemize}
-    \item the ability, for an \textit{exchange} invocation, to send differentiated messages to neighbors,
-    \item and \textit{alignment}, because it enables \textit{functional composition of distribute behavior}\cite{xc}.
-\end{itemize}
 
 \subsection{System model}
 
-Similarly to \ac{FC}, \ac{XC} targets a system modeled as a collection of devices, generally equipped with sensors and/or actuators, that repeatedly compute execution \textit{rounds} of the \textbf{same program} and exchange asynchronous \textit{messages} with their respective neighbors\cite{xc}.
+Similarly to \ac{FC}, \ac{XC} targets a system modeled as a collection of devices generally equipped with sensors and/or actuators.
 %
-In this environment, a device can fail, reboot, experience network outages, and dynamically change neighbors.
+These devices repeatedly compute execution \textit{rounds} of the \textbf{same program} and exchange asynchronous \textit{messages} with their respective neighbors\cite{xc}.
 %
-At each execution round, a device independently gathers a local context, consisting of inbound messages from neighbors, sensors data, and memory of its previous round of execution, if any, and then \textit{atomically executes} the \ac{XC} program common for all the devices, acting on its local context\cite{xc}.
+In this environment, devices can experience failures, reboots, network outages, and dynamic neighborhood changes.
+%
+At each execution round, a device independently gathers a local context, consisting of inbound messages from neighbors, sensors data, and memory of its previous round of execution, if any, and then it \textit{atomically executes} the \ac{XC} program acting on its local context\cite{xc}.
 %
 The program can result in an output, that comprises side effects such as actuation, as well as, implicitly, the messages to send to neighbors for coordination\cite{xc}.
 %
 At the end of each round, a device begins waiting for an arbitrary time lapse, during which the device is considered \quotes{sleeping}.
 %
-After the sleep time, the device \quotes{wakes up} and begins the next execution round\cite{xc}.
+Once the sleep time is over, the device \quotes{wakes up} and starts the next execution round\cite{xc}.
 %
 During sleep, a device must still collect inbound messages and apply two policies: \textit{last-message buffering} and \textit{last-message dropping}.
 
@@ -63,21 +62,23 @@ This implies a notion of identity of devices, which is a way to recognize a neig
 
 \paragraph{Communication between devices} defined in \ac{XC} is agnostic of the message exchange medium, channel, network topology, or discovery mechanisms.
 %
-Messages in such a model are subject to classic distributed systems communication properties, such as unpredictable delays and drops\cite{xc}.
+Messages in such a model are subject to traditional distributed systems communication properties, such as unpredictable delays and drops\cite{xc}.
 %
-Additionally, for \ac{XC} and its implementations, a device memory of its previous execution round result can be considered a self-message at all effects.
+In addition, for \ac{XC} and its implementations, a device memory of its previous execution round result can be treated as a self-message effectively.
 %
-This consideration models a reboot, which in practice is a memory loss, to a self-message drop, thus simplifying the device model in the operational semantics.
+In this perspective, a device reboot, which in practice consists of a complete loss of memory, is modeled as a self-message drop, thereby simplifying the communication model in the operational semantics.
 
 \subsection{NValues} \label{chap:background->sec:xc->subsec:nvalues}
 
-\ac{XC} features two kind of values, \textit{local values} and \textit{neighbouring values} (NValues or nvalues).
+\ac{XC} features two kinds of values: \textit{local values} and \textit{neighboring values} (NValues or nvalues).
 %
 Local values $l$ refer to all the traditional types \texttt{A} like integer, float, list, and so on.
 %
-NValues, instead, are a map $\underline{\mathbf{w}}$ from device identifiers $\delta_i$ to local values $l_i$, with a default local value $l$, written $l[\delta_1 \mapsto l_1, ..., \delta_n \mapsto l_n]$\cite{xc}.
+NValues, instead, are a map $\underline{\mathbf{w}}$ from device identifiers $\delta_i$ to local values $l_i$, where the default local value $l$ is denoted with $l[\delta_1 \mapsto l_1, ..., \delta_n \mapsto l_n]$\cite{xc}.
 
-NValues refer to values coming from neighbors, which, in highly decoupled distributed systems, almost always consist of a subset of all devices, for example, because all other devices are out of reach in a spacial-dependent neighboring relationship.
+NValues refer to values coming from neighbors, which, in highly decoupled distributed systems, almost always consist of a subset of all devices.
+%
+This scenario may occur when other devices are out of reach in a spacial-dependent neighboring relationship.
 %
 The default value is used when evaluating a NValue $\underline{\mathbf{w}} = l[\delta_1 \mapsto l_1, ..., \delta_n \mapsto l_n]$ for a given $\delta_i$ with $\delta_i$ not present in $\underline{\mathbf{w}}$.
 %
@@ -91,7 +92,7 @@ After the computation, $\delta_2$ sends out the messages represented by $\underl
 %
 For instance, $7$ is sent to $\delta_1$, $1$ to $\delta_4$, and $0$ to all other neighbors, such as $\delta_3$.
 %
-Evaluation of a nvalue for a given $\delta'$ can be noted as $\underline{\mathbf{w}}(\delta')$ and its result is the local value $l'$ if $\delta' \mapsto l'$ is in $\underline{\mathbf{w}}$, or else the default value $l$ of $\underline{\mathbf{w}}$.
+Evaluation of a nvalue for a given $\delta'$ can be noted as $\underline{\mathbf{w}}(\delta')$ and its result is the local value $l'$ if $\delta' \mapsto l'$ is in $\underline{\mathbf{w}}$, or the default value $l$ of $\underline{\mathbf{w}}$.
 %
 For $\underline{\mathbf{w'}}$, $\underline{\mathbf{w'}}(\delta_1)$ is $7$, and $\underline{\mathbf{w'}}(\delta_3)$ is 0.
 %
@@ -99,9 +100,11 @@ Another notation used in the paper is $\underline{A}$, to indicate the type of a
 
 NValues generalize local values, in the sense that a local value $l$ with type $A$ can be automatically converted to a nvalue $l[]$ with type $\underline{A}$, with $l$ as the default value for every device\cite{xc}.
 %
-This simplifies the formalization of \ac{XC}, where local values and nvalues are treated uniformly\cite{xc}.
+This approach simplifies the formalization of \ac{XC}, where local values and nvalues are treated uniformly\cite{xc}.
 %
-The same principle can be applied to functions, which can be implicitly lifted to operate on nvalues, by applying them on the content of the maps pointwise, using the default values where necessary\cite{xc}.
+The same principle can be applied to functions,  whereby they can be implicitly \quotes{lifted} to operate on NValues.
+%
+This can be achieved by applying said functions pointwise on the content of the maps, using the default values where required\cite{xc}.
 %
 For example, given $\underline{\mathbf{w_1}} = 1[\delta_1 \mapsto 2, \delta_3 \mapsto 4]$ and $\underline{\mathbf{w_2}} = 3[\delta_1 \mapsto 5, \delta_2 \mapsto 6]$, $\underline{\mathbf{w_3}} = \underline{\mathbf{w_1}} + \underline{\mathbf{w_2}} = 4[\delta_1 \mapsto 7, \delta_2 \mapsto 7, \delta_3 \mapsto 7]$.
 %
@@ -111,7 +114,7 @@ NValues can be folded over, using the built-in function $nfold(f : (A, B) \right
 %
 For example, given a device $\delta_1$ performing a $nfold$ operation on $\underline{\mathbf{w}} = 3[\delta_1 \mapsto 10, \delta_2 \mapsto 1, \delta_3 \mapsto 2]$ while the current set of its neighbors is $\{\delta_3, \delta_4\}$, then $nfold(+, \underline{\mathbf{w}}, 1) = 6$.
 %
-Given that nvalues are agnostic to the ordering of elements, i.e. the ordering of device identifiers in the map, $f$ is assumed to be associative and commutative\cite{xc}.
+Given that nvalues are agnostic to the ordering of elements, i.e., the ordering of device identifiers in the map, $f$ is assumed to be associative and commutative\cite{xc}.
 
 \begin{figure}
     \centering
@@ -147,41 +150,54 @@ There, $mux(cond, e_1, e_2)$ is a conditional expression that first evaluates $c
 %
 \texttt{mux} is useful to avoid breaking the alignment of the network by using conditionals, as explained in \cref{chap:background->sec:xc->subsec:alignment}.
 %
-In the examples, $\underline{senseDist}$ is a network-based sensor that returns the nvalue containing the distances to neighbors, abstracting over the way the device obtains the measurements, with $Infinity$ as its default value used for all other devices.
+In the examples provided, $\underline{senseDist}$ is a network-based sensor that returns the nvalue containing the distances to neighbors, abstracting over the way the device obtains the measurements, with $Infinity$ as its default value used for all other devices.
 %
 \texttt{distanceEstimate} computes the minimum distance from a source using the distance sensor and the neighbors estimate $\underline{\mathbf{n}}$ of their minimum distance from the same source.
 %
-\texttt{distanceTo} computes the minimum distance from a source determined by a boolean expression, which is a \textit{gradient} with value $0$ in all devices where $src$ is true, and the minimum distance from the source in all other devices connected to a source device, or else $Infinity$.
+\texttt{distanceTo} computes the minimum distance from a source determined by a boolean expression $src$, which is represented as a \textit{gradient} with value:
+\begin{itemize}
+    \item $0$ in all the devices where $src$ is true;
+    \item the distance from the closest source in all the devices where $src$ is false that are connected to at least one source;
+    \item $Infinity$ otherwise.
+\end{itemize}
 
 \lstinputlisting[float,language=XC,label={lst:xc-program}, caption={Implementation of a network-wide gradient, called \texttt{distanceTo}, using the \ac{XC} language.}]{listings/xc-gradient-distance.xc}
 
 \subsection{Alignment}\label{chap:background->sec:xc->subsec:alignment}
 
-A program can execute multiple exchanges in a single round, and \ac{XC} ensures that messages are dispatched to corresponding exchange expressions, using the concept of \textit{alignment}.
+A program can execute multiple exchanges in a single round and \ac{XC} ensures that messages are dispatched to corresponding exchange expressions using the concept of \textit{alignment}.
 %
-The corresponding exchange expressions are those that are found in the same position in the \ac{AST} and the same stack frame, thus ensuring correct alignment in case of branches, function calls, and recursion\cite{xc}.
+The corresponding exchange expressions are those that are located in the same position within the \ac{AST} and same stack frame, thus ensuring correct alignment in case of branches, function calls, and recursion\cite{xc}.
 %
-As a consequence, the evaluation of an aggregate program implicitly builds a tree representation, called \textit{value tree}, that all aligned devices, as well as the device itself in the next rounds, replicate and then exchange with each other.
+As a consequence, the evaluation of an aggregate program implicitly builds a tree representation, called \textit{value tree}.
+%
+All the aligned devices replicate and then exchange the value tree with each other, including the device itself in the next rounds.
 
-Conditionals such as $if (cond) {e_1} else {e_2}$ interfere with alignment because only the \texttt{exchange} operations in the same position within the AST and stack frame align\cite{xc}.
+Conditionals such as $if (cond) {e_1} else {e_2}$ interfere with alignment because only the \texttt{exchange} operations in the same position within the \ac{AST} and stack frame align\cite{xc}.
 %
-As a consequence, \texttt{exchange} only aligns across devices that take the same branch of all the conditionals that are parent of the \texttt{exchange} operation in the AST.
+As a consequence, \texttt{exchange} only aligns across devices that take the same branch of all the conditionals that are the parent or the ancestor of the \texttt{exchange} operation in the \ac{AST}.
 
 Alignment controls the evaluation of sub-expressions, in particular the evaluation of expressions involving nvalues, because in such expressions only aligned neighbors are considered.
 %
-As a result, every \texttt{if} expression splits the network into two non-communicating sub-networks, each evaluating a different branch based on the condition\cite{xc}.
+As a result, every \texttt{if} expression splits the network into two non-communicating sub-networks, with each device evaluating a different branch based on the condition\cite{xc}.
 %
-Isolated sub-networks in this regard are also called \textit{sub-domains}, or simply \textit{domains}.
+These isolated sub-networks are also referred to as \textit{sub-domains} or simply \textit{domains}.
 
 \subsection{Formalization of XC}
 
 \ac{XC} is formalized in the paper\cite{xc} in its syntax, operational semantics, and denotational semantics.
 %
-The language takes inspiration from \ac{ML}, and as such is a standard functional language with a classic Hindley-Milner type system, whose formalization makes \ac{XC} type sound and deterministic once extended with \textit{value-tree} typing and \textit{configuration} typing\cite{xc}.
+The language takes inspiration from \ac{ML} and is a standard functional language with a classic Hindley-Milner type system.
+%
+Its formalization makes \ac{XC} type sound and deterministic once extended with \textit{value-tree} typing and \textit{configuration} typing\cite{xc}.
 
 \subsection{Implementing FC primitives with exchange}
 
-With the implementation of \ac{FC} primitives and expressiveness using \ac{XC}, the \ac{XC} inherits all the results found in literature that hold for \ac{FC}, such as eventual recovery and stabilization after transient changes\cite{self-stabilisation-in-fc}, independence from the density of devices\cite{density-independence-in-fc}, real-time error tolerance and convergence\cite{real-time-error-tolerance-in-fc}, and the list continues\cite{xc}.
+Since \ac{FC} primitives and expressiveness can be implemented through \ac{XC}, \ac{XC} inherits all the findings reported in the literature that hold for \ac{FC}.
+%
+These include eventual recovery and stabilization after transient changes\cite{self-stabilisation-in-fc}, independence from the density of devices\cite{density-independence-in-fc}, real-time error tolerance, and convergence\cite{real-time-error-tolerance-in-fc}.
+%
+Furthermore, the list of benefits extends beyond these\cite{xc}.
 %
 Additionally, \ac{XC} opens the possibilities for writing programs not expressible with \ac{FC}, thanks to the expressiveness of the \texttt{exchange} primitive which allows sending differentiated messages to neighbors.
 %
@@ -189,9 +205,9 @@ In \ac{FC}, the concept of \textit{field}, also called \textit{neighboring value
 %
 This preserves the behavior of programs written in \ac{FC} but interpreted within \ac{XC}\cite{xc}.
 
-\ac{FC} presents three main primitives to implement with \ac{XC}:
+\ac{FC} presents three main primitives, all implementable through \ac{XC}:
 \begin{itemize}
-    \item \texttt{nbr}, used to access the neighbors values\cite{from-dc-to-fc-and-ap};
+    \item \texttt{nbr}, used to access the neighbors' values\cite{from-dc-to-fc-and-ap};
     \item \texttt{rep}, used to compute a new value of an expression based on the result of the same expression in the previous round\cite{from-dc-to-fc-and-ap};
     \item \texttt{share}, used to efficiently access neighbors' values while computing a new value from the previous result with a single primitive\cite{share-operator}.
 \end{itemize}
@@ -204,78 +220,80 @@ The \texttt{share} primitive can be implemented as: $$share(e_i: A)\{(\underline
 
 \section{Scala 3}\label{chap:background->sec:scala3}
 
-Scala 3 is the latest major release of the Scala language, a high-level programming language that combines object-oriented and functional programming paradigms.
-%
 Scala is a statically typed, general-purpose programming language designed to express common programming patterns in a concise, elegant, and type-safe way.
 %
-Scala 3 is compiled using the \textit{Dotty} compiler\footnote{\url{https://github.com/lampepfl/dotty}}, which is based on the \ac{DOT} calculus\cite{dot}, while Scala 2 is compiled using the \textit{scalac} compiler\footnote{\url{https://github.com/scala/scala}}.
+Scala 3 is the latest major release of the Scala language, a high-level programming language that combines object-oriented and functional programming paradigms.
 %
-This section provides an overview of the main features of Scala 3, which are relevant for the re-design of ScaFi, while also highlighting the differences between Scala 2 and Scala 3.
+It is compiled using the \textit{Dotty} compiler\footnote{\url{https://github.com/lampepfl/dotty}}, which is based on the \ac{DOT} calculus\cite{dot}, while Scala 2 is compiled using the \textit{scalac} compiler\footnote{\url{https://github.com/scala/scala}}.
+%
+This section provides an overview of the main features of Scala 3, that are relevant for the re-design of ScaFi while also highlighting the differences between Scala 2 and Scala 3.
 
 \subsection{General considerations on Scala 3}
 
 Even though Scala 3 introduces breaking changes in the syntax from Scala 2, most of the code written in Scala 2 can be compiled with Dotty and is also binary compatible with Scala 2.
 %
-This possibility has been exploited by the Scala community to avoid reimplementing a new standard library for Scala 3, using the Scala 2 standard library instead, rewritten to be cross-compiled for both Scala 2 and Scala 3.
+The Scala community has exploited this possibility to avoid reimplementing a new standard library for Scala 3, using the Scala 2 standard library instead, rewritten to be cross-compiled for both Scala 2 and Scala 3.
 
-Originally, Scala 2 and Scala 3 compile to \ac{JVM} bytecode, but Scala 3 also supports the \ac{JS} and \textit{LLVM} backends, which are used to compile Scala code to JavaScript and native code, respectively, thanks to community-driven projects\footnote{Scala.js at \url{https://scala-js.org}}\footnote{Scala Native at \url{https://scala-native.org}}\cite{scala-js}.
+Natively, Scala 2 and Scala 3 compile to \ac{JVM} bytecode, but Scala 3 also supports the \ac{JS} and \textit{LLVM} backends, which are used to compile Scala code to JavaScript and native code, respectively.
 %
-The provided support for cross-platform distribution, together with the popularity of Scala for distributed systems development\cite{scala-popularity} and the flexibility of the upgraded language features for advanced internal \ac{DSL} design, makes Scala 3 a great choice for a new ScaFi implementation based on \ac{XC}.
+These compiler backends exist thanks to community-driven projects\footnote{Scala.js at \url{https://scala-js.org}}\footnote{Scala Native at \url{https://scala-native.org}}\cite{scala-js}.
+%
+The provided support for cross-platform distribution, together with the popularity of Scala for distributed systems development\cite{scala-popularity} and the flexibility of the upgraded language features for advanced internal \ac{DSL} design, makes Scala 3 a valuable choice for a new ScaFi implementation based on \ac{XC}.
 
 \subsection{Values in Scala}
 
-In Scala, every value has a type, following the type hierarchy explained in \cref{chap:background->sec:scala3->subsec:type-hierarchy}.
+In Scala, every value has a type, which follows the type hierarchy explained in \Cref{chap:background->sec:scala3->subsec:type-hierarchy}.
 %
-When declaring a new variable or field as a container of a value, the type can be explicitly declared, or it can be inferred by the compiler.
+When declaring a new variable or field as a container of a value, the type can either be explicitly declared or inferred by the compiler.
 %
-Every declaration of a variable or field must be preceded by the \texttt{val} keyword for an immutable value, or the \texttt{var} keyword for a mutable value.
+Every declaration of a variable or field must be preceded by the \texttt{val} keyword for an immutable value or the \texttt{var} keyword for a mutable value.
 %
-Immutable values cannot be reassigned, while mutable values can be reassigned, but the type of the value cannot be changed.
+Immutable values cannot be reassigned, while mutable values can be reassigned, but their type cannot be changed.
 %
-\texttt{val} doesn't guarantee that the value itself is immutable, but only that the reference to the value cannot be changed.
+It is worth noting that \texttt{val} does not guarantee that the value itself is immutable, but only that the reference to the value cannot be changed.
 
 
 \subsection{New control syntax and significant indentation}
 
-Scala 3 introduced a new syntax for control expressions, as well as new rules that allow the indentation alone to replace the use of curly braces.
+Scala 3 introduces a new syntax for control expressions, as well as new rules that allow the indentation alone to replace the use of curly braces.
 %
 Both these changes are aimed at making the code more readable and concise, sometimes noticeably closer to the natural language.
 %
-For example, in \cref{lst:scala2-with-braces}, the \texttt{if} expression is written with the traditional syntax, while in \cref{lst:scala3-without-braces} the same expression is written using the new syntax.
+For instance, in \cref{lst:scala2-with-braces}, the \texttt{if} expression is written with the traditional syntax, while in \cref{lst:scala3-without-braces} the same expression is written using the new syntax.
 %
-The same is true of the \texttt{for} expression, the \texttt{while} loop, and the \texttt{match} expression.
+The same is true for the \texttt{for} expression, the \texttt{while} loop, and the \texttt{match} expression.
 
 \lstinputlisting[float,language=Scala,label={lst:scala2-with-braces}, caption={Examples of syntax using braces in Scala 2.}]{listings/scala2-with-braces.scala}
 \lstinputlisting[float,language=Scala,label={lst:scala3-without-braces}, caption={Examples of syntax avoiding braces in Scala 3.}]{listings/scala3-without-braces.scala}
 
-In cases where a code block consists of many lines that make it a bit hard to follow indentation, the new syntax can be combined with \texttt{end} statements, as shown in \cref{lst:scala3-with-end}.
+In cases where a code block consists of many lines that make it difficult to follow the indentation, the new syntax can be augmented with \texttt{end} statements, as demonstrated in \cref{lst:scala3-with-end}.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-with-end}, caption={Example of syntax using \texttt{end} statements in Scala 3.}]{listings/scala3-without-braces-with-end.scala}
 
 
 \subsection{Traits and classes}
 
-Traits are a powerful feature of Scala that replaces Java's interfaces and abstract classes and were first introduced as a mechanism to organize behavior into small, modular units\cite{traits}.
+Traits are a powerful feature that replaces Java's interfaces and abstract classes and were first introduced as a mechanism to organize behavior into small, modular units\cite{traits}.
 %
-In Scala, traits can be used both to define interfaces and to provide partial implementations, composable and mixable into classes when a concrete implementation is needed.
+In Scala, traits can be used to define interfaces and to provide partial implementations and can be composed and mixed into other traits or classes.
 %
 With Scala 3, traits are now able to have parameters like classes do, enhancing their expressiveness.
 %
-Additionally, Scala 3 introduces new rules for instantiation of classes that allow to avoid the use of the \texttt{new} keyword, as shown in \cref{lst:scala3-without-braces}.
+Furthermore, Scala 3 introduces new rules for the instantiation of classes that enable the avoidance of the \texttt{new} keyword, as shown in \Cref{lst:scala3-without-braces}.
 %
-This feature is called \textit{universal apply methods} and is enabled by the generation of \texttt{apply} methods for classes done by the compiler when the user does not provide one.
+This feature is called \textit{universal apply methods} and is implemented by the generation of \texttt{apply} methods for classes when the user does not provide one, during the compilation.
 %
-This feature is enabled by a special role given to methods named \texttt{apply}, which in Scala can be invoked without the need to specify the method name.
+Another enabling factor is the special role given to methods named \texttt{apply}, which in Scala can be invoked without the need to specify the method name.
 %
-When combined with companion objects, described in \cref{chap:background->sec:scala3->subsec:singleton-objects}, it is often possible to replace auxiliary constructor in classes with multiple \texttt{apply} methods in the companion object, which is a common pattern in Scala.
+When combined with companion objects, described in \cref{chap:background->sec:scala3->subsec:singleton-objects}, it is often possible to replace auxiliary constructors in classes with multiple \texttt{apply} methods in the companion object, which is a typical pattern in Scala.
 %
-Anonymous classes make it possible to instantiate a trait or abstract class by providing a concrete implementation of abstract methods on the fly.
+Anonymous classes can also be used to instantiate a trait or abstract class by providing a concrete implementation of abstract methods on the fly.
 %
-Just like in Java, traits, classes, and singleton objects can be nested and can access each other's private members.
+In addition, traits, classes, and singleton objects can be nested, and they can access each other's private members, just like in Java.
 
 If the definition of something depends on another from a different package, it is possible to use the \texttt{import} keyword to import the needed definitions.
 %
-\texttt{import} statements can be put at the beginning of a file, or inside a block, and can be used to import a single definition, a group of definitions, or all definitions from a package.
+\texttt{import} statements can be put at the beginning of a file or inside a block and can be used to import a single definition, a group of definitions, or all definitions from a package.
 %
 Additionally, Scala supports import aliases to avoid name clashes.
 %
@@ -283,9 +301,11 @@ Since Scala 3, import aliases have a dedicated syntax, following the pattern \te
 
 An advanced example of trait usage can be found in \cref{lst:scala3-service-oriented-design}\footnote{\url{https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html}}, which shows how to use traits in a service-oriented way, a design pattern that promotes the use of traits to define services and their dependencies and to compose services into a single class\cite{service-oriented-design}.
 %
-In the mentioned example, some advanced features of Scala are involved, such as abstract type members, nested traits, and \textit{self-type annotations}.
+In the mentioned example, some advanced features of Scala are presented, such as abstract type members, nested traits, and \textit{self-type annotations}.
 %
-The \textit{self-type annotation} is a way to declare that a trait must be mixed into a class that extends another trait, and it is used to express dependencies between traits without using inheritance, allowing the composition of traits to be more flexible and less coupled, and delaying the choice of trait order to the class that mixes them.
+The \textit{self-type annotation} is a way to declare that a trait must be mixed into a class that extends another trait, and it is used to express dependencies between traits without resorting to inheritance.
+%
+Self-type annotations allow the composition of traits to be more flexible and less coupled and delay the choice of trait order of linearization to the class that mixes them.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-service-oriented-design}, caption={Advanced example of usage of traits, know as service-oriented design. The code was taken from the Scala 3 book.}]{listings/scala3-service-oriented-design.scala}
 
