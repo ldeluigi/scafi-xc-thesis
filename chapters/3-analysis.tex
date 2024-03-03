@@ -110,9 +110,36 @@ The rest of the modules, providing various \ac{GUI} implementations, demos, as w
     \label{fig:scafi-project-org}
 \end{figure}
 
+Inside the \texttt{core} package of the \texttt{core} module, a \texttt{Core} trait serves as the root of the family of traits, defining a set of abstract type members and traits, such as \texttt{Context}, that represents the context of the aggregate program execution.
+%
+A trait \texttt{Language} defines a \texttt{Constructs} trait with the core syntax of \ac{FC}, such as \texttt{rep}, \texttt{nbr}, and \texttt{foldhood}, plus additional utilities such as \texttt{mid(): ID} for retrieving the device own id and \texttt{sense[A](name: CNAME): A} for sensing a value from the environment.
+%
+The \texttt{RichLanguage} trait extends \texttt{Language} with additional constructs, such as \texttt{branch}, \texttt{foldhoodPlus}, and \texttt{maxHood}.
+%
+Finally, the \texttt{Semantics} trait implements the \ac{FC} constructs, the value tree building, and the foldhood context semantics, further detailed in \cref{chap:analysis->sec:scafi-analysis->subsec:foldhood-semantics}.
+%
+In addition to that, the \texttt{core} module contains other packages, such as \texttt{lib} with standard libraries, and the utilities to provide a fully-fledged aggregate program execution environment called \textit{incarnation}.
+%
+The \texttt{distributed} and \texttt{spala} modules enable ScaFi to run on real-world distributed applications by leveraging integration with the \textit{Akka framework}\footnote{\url{https://akka.io}} and with other supportive libraries such as \textit{Java Swing} and the \textit{Play Framework}\footnote{\url{https://www.playframework.com}}.
+%
+Finally, the \texttt{simulator} and affiliated modules provide an advanced simulation suite featuring spacial and temporal simulation and multiple \ac{GUI} options, including a tridimensional renderer.
 
 To use a library component in ScaFi, the user must mix in the library trait with the \texttt{AggregateProgram} base class, as shown in \cref{lst:using-libraries-in-scafi}.
+%
+As a consequence, all the transitive dependencies of the mixed-in libraries are visible in the scope of the program, so libraries must be written in a way that avoids conflicts with other libraries.
 
 \lstinputlisting[float, language=Scala, caption={Using a library component in ScaFi.}, label={lst:using-libraries-in-scafi}]{listings/scafi-using-libraries.scala}
 
-TODO go on
+After defining a program as a method named \texttt{main} within the \texttt{AggregateProgram} extension, the user can run the program on the simulator through the \texttt{Launcher}, an extension to Scala's \texttt{App} that provides a \texttt{launch} method to start the simulation with one of the available \acp{GUI}.
+
+\this aims to redesign and implement the \texttt{core} package in such a way that implementing a similarly advanced simulation suite would still be possible, while improving the quality of the code and the user experience.
+
+\subsection{The foldhood semantics in ScaFi} \label{chap:analysis->sec:scafi-analysis->subsec:foldhood-semantics}
+
+Using the concept of a stateful \quotes{virtual machine}, ScaFi tracks at its core the context of the evaluation of expressions inside the aggregate program.
+%
+It tracks nested invocations of core constructs, as well as the scope of the foldhood expressions, which are evaluated for every neighbor of the device, and the result of each evaluation is combined into a single value.
+%
+This design choice avoids the definition of an explicit type for fields, resulting in a clean syntax but leaving the awareness of the underlying field-like nature of the foldhood semantics to the user.
+%
+For instance, the fact that \texttt{nbr{nbr{x}}} does not make sense inside a foldhood is something that the user must be aware of, given that the compiler and the virtual machine do not enforce it.
