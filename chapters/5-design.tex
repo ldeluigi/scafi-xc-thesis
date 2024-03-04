@@ -112,7 +112,7 @@ This forced each semantics, library, and syntax to have a generic type construct
 %
 \Cref{lst:prototype-2-usage-lib} also shows how this design, with the additional cost of a static \texttt{import} for dependencies methods and given instance, allows to invoke constructs such as \texttt{branch} or \texttt{distanceTo} with having to use the \texttt{.} operator and the same applies to user programs.
 
-\lstinputlisting[float, language=Scala, caption={Prototype 2 - \ac{FC} syntax definition.}, label={lst:prototype-2-syntax}]{listings/prototype-2-syntax.scala}
+\lstinputlisting[float, language=Scala, caption={Prototype 2 - Field Calculus syntax definition.}, label={lst:prototype-2-syntax}]{listings/prototype-2-syntax.scala}
 \lstinputlisting[float, language=Scala, caption={Prototype 2 - Example usage by a library developer.}, label={lst:prototype-2-usage-lib}]{listings/prototype-2-usage-lib.scala}
 
 Having to explicitly import the methods from dependencies inside every library of programs, added to the necessity of instantiating libraries, makes this design very cumbersome to use.

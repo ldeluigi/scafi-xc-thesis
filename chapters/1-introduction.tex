@@ -3,25 +3,35 @@
 \chapter{Introduction}
 \label{chap:introduction}
 %----------------------------------------------------------------------------------------
-\acp{CAS} are a particular kind of situated, distributed systems where a collection of individuals, also called agents, exhibits a non-chaotic behavior with \textit{self-*} properties, such as self-organization, self-healing, and self-configuration~\cite{macroprogramming-state-of-the-art}.
+
+The importance of \acp{CAS} engineering is increasing along with the growing prevalence of large-scale cyber-physical systems, driven by the already pervasive \ac{IoT} and edge computing trends~\cite{collective,pervasive}.
 %
-Many of the properties mentioned above cannot be reduced to or derived from an individual perspective on the behavior of one of the agents, but rather are \textit{emergent} from the complex network and dynamic interactions within the system and with the environment~\cite{macroprogramming-state-of-the-art}.
+\acp{CAS} are a particular subcategory of situated, distributed systems in which a collection of individuals, also called agents, exhibits a non-chaotic behavior characterized by \textit{self-*} properties, such as self-organization, self-healing, and self-configuration.
 %
-\acp{CAS} can be considered a subset of \acp{MAS}, and the programming of their behavior as a whole can be referred to as \textit{Macroprogramming}~\cite{macroprogramming-state-of-the-art}.
+Many of the self-* properties cannot be derived from an individual perspective confined to the behavior of a single agent, but rather they are \textit{emergent} from the complex and dynamic network of interactions within the system and with the environment.
+%
+As a consequence, obtaining such properties requires a holistic approach to the design and programming of \acp{CAS}, which is not straightforward to achieve with traditional software engineering techniques.
 
-With the expected diffusion of large-scale cyber-physical systems, pushed by the already pervasive \ac{IoT} and edge computing trends~\cite{scafi}, \acp{CAS} engineering is 
+Topologically, \acp{CAS} can be considered a subset of \acp{MAS}, and the programming of their behavior as a whole can be referred to as \textit{Macroprogramming}~\cite{macroprogramming-state-of-the-art}.
+%
+In the context of macroprogramming, a prominent paradigm is that of \textit{aggregate computing}, where a single program, called the aggregate program, defines the overall behavior of a network of devices or agents~\cite{macroprogramming-state-of-the-art}.
+%
+Aggregate computing provides benefits to development productivity thanks to four main factors~\cite{scafi}: the \textit{macro-level stance}, which abstracts over low-level details about the individual behavior of agents and their communication media, the \textit{compositionality}, promoting the creation of complex behavior by combining simpler ones, the \textit{formality}, allowing theoretical analyses and formal verification of its properties, and the \textit{practicality}, thanks to the availability of tools supporting programming and simulation of \acp{CAS}.
 
-TODO
+Among these tools, an in-depth analysis is dedicated to the \textit{ScaFi}, an aggregate programming framework that comprises an internal \ac{DSL} written in Scala 2 with supporting components for simulation, visualization, and execution of aggregate systems, based on the \ac{FC} formal language and computational model~\cite{scafi}.
+%
+Internal \acp{DSL} are distinguished from external \acp{DSL} by the fact that they are embedded in a host language, such as Scala, and that they exploit the flexibility of their host's syntax to resemble a different language even though they are implemented as libraries.
 
-%NOTE: What are the fundamental characteristics of the aggregate programming tools ScaFi,
-% Protelis, and FCPP?
-%How does the Higher-Order Field Calculus (HFC) serve as the theoretical 
-%foundation for these tools, and how does it provide theoretical consistency and guarantees for
-% aggregate programming?
-%What are the differences between external and internal domain-specific languages, as illustrated 
-%by Protelis and FCPP, respectively?
+Recently, a new formal language and computational model called \ac{XC} has been proposed, extending the expressiveness of \ac{FC} while simplifying its set of primitive constructs~\cite{xc}.
+%
+In the meantime, Scala 2 has been succeeded by Scala 3, which introduces a relevant set of new features and improvements over its predecessor.
+%
+These two novelties have promoted the development of a new ScaFi, entirely redesigned to be formally based on \ac{XC} and to make the best use of its new host language, Scala 3.
+%
+That project is the main subject of this thesis.
+%
+Named \quotes{\this}, it has the ambition to \textit{scale}, meaning to grow with the demand of its user without losing its qualities, such as expressiveness, reusability, maintainability, readability, and performance.
 
-Aggregate computing is a macro-programming paradigm where a single program (called the aggregate program) defines the overall behaviour of a network of devices or agents~\cite{macroprogramming-state-of-the-art}.
 
 \paragraph{Structure of the Thesis}
 
