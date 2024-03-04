@@ -314,7 +314,7 @@ The standard library included in the \texttt{core} module provides a network-bas
 %
 In ScaFi, the corresponding construct is called \texttt{nbrRange}.
 %
-If an aggregate context implements the \texttt{DistanceSensor[N: Numeric]} trait, \texttt{senseDistance: N} is available to be invoked in the aggregate program, and it returns an \texttt{AggregateValue[N]} containing the distance to every visible neighbor, including self.
+If an aggregate context implements the \texttt{DistanceSensor[N: Numeric]} trait, \texttt{senseDistance: N} is available to be invoked in the aggregate program, and it returns a value of type \texttt{AggregateValue[N]} containing the distance to every visible neighbor, including self.
 %
 The availability of the distance sensor in the context enables the invocation of library constructs based on that, such as the \texttt{sensorDistanceTo} of the \texttt{GradientLibrary} which uses the sensors as metric for the distance to the neighbors.
 %

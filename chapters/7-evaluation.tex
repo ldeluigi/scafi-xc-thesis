@@ -4,9 +4,10 @@
 \label{chap:evaluation}
 %----------------------------------------------------------------------------------------
 
-\section{Programming experience evaluation}
+This chapter presents the evaluation techniques employed in the project, as well as the tools used to ensure the quality of the codebase and the correctness of the implementation.
+%
+Mainly, the evaluation consists of passing the test suite, which includes both unit and acceptance tests, while the quality of the code of libraries and programs is partially ensured by the continuous integration pipeline and the code style enforcement tools.
 
-TODO
 
 \section{Unit tests}
 
@@ -14,7 +15,7 @@ The unit test framework used for the project is ScalaTest, a popular testing fra
 %
 All the unit tests are defined as traits or classes that depend on a common trait called \texttt{UnitTest}, which provides a common testing \ac{DSL} called \texttt{AnyFlatSpec}, enhanced with the \texttt{ShouldMatchers} trait and other utilities, that make the test assertions look like natural spoken language.
 %
-Unit tests cover the \texttt{common}, \texttt{core}, and \texttt{simulator} modules.
+Unit tests cover the \texttt{commons}, \texttt{core}, and \texttt{simulator} modules.
 %
 \texttt{UnitTest} is also the base for the \texttt{AcceptanceTest} class of the \texttt{tests} module, to have a consistent testing style across the whole project.
 
@@ -24,6 +25,10 @@ For the scope of the project, \ac{XC} is the only semantics implemented, so the 
 %
 Unit tests for libraries always include a sample program using the subject under test, and during the test cases, the program is executed in a test environment and inspected, both for the expected results and for the expected value tree produced by the test context.
 
+Where possible, unit tests are written as traits, to be mixed in with the actual test classes, to avoid code duplication and to have a common set of tests applied for different implementations of the same \ac{API}, which must adhere to the same behavior.
+%
+Examples of these abstract tests can be found for collections and abstractions of the \texttt{commons} module.
+
 
 \section{Acceptance tests}
 
@@ -31,7 +36,9 @@ Acceptance tests are an important validation tool for the project, as they are t
 %
 The tests are aimed to be as readable as possible, using the unit test \ac{DSL}, but also hiding all the complexity of the simulation setup and execution.
 %
-The most important acceptance test currently present is the \texttt{GradientWithObstacleTest}, which is a simulation of a bi-dimensional grid network of devices that compute a gradient from a source, with an obstacle in the middle of the grid that appears halfway through the simulation.
+The idea is to use acceptance tests both as a validation tool and as a documentation tool, on one side proving the correctness of the implementations and on the other demonstrating the usage and quality of aggregate programs written with the standard libraries.
+
+One of the most important acceptance tests currently present is named\linebreak\texttt{GradientWithObstacleTest}, which is a simulation of a bi-dimensional grid-like network of devices that compute a gradient from a source, with an obstacle in the middle of the grid that appears halfway through the simulation.
 %
 The gradient is expected to be recalculated after the obstacle appears, and the test checks that the devices adapt to the new environment, confirming the self-organizing properties of the aggregate system and the functionality of the library.
 
