@@ -3,14 +3,14 @@
 
 package engine {
     package network {
-        interface Network<DeviceId, Token, Value> {
+        interface Network<DeviceId, Value> {
             {abstract} {method} + localId(): DeviceId
-            {abstract} {method} + send(e: Export[DeviceId, Token, Value]): Unit
-            {abstract} {method} + receive(): Import[DeviceId, Token, Value]
+            {abstract} {method} + send(e: Export[DeviceId, Value]): Unit
+            {abstract} {method} + receive(): Import[DeviceId, Value]
         }
     }
 
-    class Engine<DeviceId, Result, Token, Value, N subtypeOf Network[DeviceId, Token, Value], C subtypeOf Context[DeviceId, Token, Value]> {
+    class Engine<DeviceId, Result, Value, N subtypeOf Network[DeviceId, Value], C subtypeOf Context[DeviceId, Value]> {
         {field} - net: N
         {field} - factory: ContextFactory[N, C]
         {field} - program: C ?=> Result
@@ -21,9 +21,9 @@ package engine {
     Engine o-up- Network
 
     package context {
-        interface Context<DeviceId, Token, Value> {
-            {abstract} {field} + inboundMessages: Import[DeviceId, Token, Value]
-            {abstract} {field} + outboundMessages: Export[DeviceId, Token, Value]
+        interface Context<DeviceId, Value> {
+            {abstract} {field} + inboundMessages: Import[DeviceId, Value]
+            {abstract} {field} + outboundMessages: Export[DeviceId, Value]
         }
 
         interface ContextFactory<contravariant N subtypeOf Network, covariant C supertypeOf Context> {

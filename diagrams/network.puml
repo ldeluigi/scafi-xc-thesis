@@ -9,13 +9,13 @@ package commons {
 
 package engine {
     package network {
-        class Import<DeviceId, Token, Value> <<type alias: Map[DeviceId, ValueTree[Token, Value]]>>
-        class Export<DeviceId, Token, Value> <<type alias: MapWithDefault[DeviceId, ValueTree[Token, Value]]>>
+        class Import<DeviceId, Value> <<type alias: Map[DeviceId, Value]>>
+        class Export<DeviceId, Value> <<type alias: MapWithDefault[DeviceId, Value]>>
 
-        interface Network<DeviceId, Token, Value> {
+        interface Network<DeviceId, Value> {
             {abstract} {method} + localId(): DeviceId
-            {abstract} {method} + send(e: Export[DeviceId, Token, Value]): Unit
-            {abstract} {method} + receive(): Import[DeviceId, Token, Value]
+            {abstract} {method} + send(e: Export[DeviceId, Value]): Unit
+            {abstract} {method} + receive(): Import[DeviceId, Value]
         }
         Network .down.> Export
         Network .up.> Import

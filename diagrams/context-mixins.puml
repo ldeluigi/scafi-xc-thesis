@@ -1,9 +1,9 @@
 @startuml Context Mixins - Common
 !include style.iuml
 
-interface Context<DeviceId, Token, Value> {
-    {abstract} {field} + inboundMessages: Import[DeviceId, Token, Value]
-    {abstract} {field} + outboundMessages: Export[DeviceId, Token, Value]
+interface Context<DeviceId, Value> {
+    {abstract} {field} + inboundMessages: Import[DeviceId, Value]
+    {abstract} {field} + outboundMessages: Export[DeviceId, Value]
 }
 
 package common {
@@ -46,7 +46,7 @@ package common {
 
     abstract class OutboundMessageSemantics <<this: StackSemantics & MessageSemantics & Context[...]>> {
         {abstract} {field} + <<type>> DeviceId
-        {method} + outboundMessages: Export[DeviceId, InvocationCoordinate, Envelope]
+        {method} + outboundMessages: Export[DeviceId, ValueTree[InvocationCoordinate, Envelope]]
         {method} # sendMessages[T](messages: MapView[DeviceId, T], default: T): Unit
         {abstract} # unalignedDevices: Set[DeviceId]
     }
