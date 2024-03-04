@@ -311,91 +311,95 @@ Self-type annotations allow the composition of traits to be more flexible and le
 
 \subsubsection{Object-oriented programming in Scala 3}
 
-In Scala, classes, traits, enums, and objects can all have methods, defined using the \texttt{def} keyword, as seen in \cref{lst:scala3-without-braces}.
+In Scala, methods for classes, traits, enums, and objects can be defined using the \texttt{def} keyword, as shown in \Cref{lst:scala3-without-braces}.
 %
-Abstract methods are methods that do not have a body and must be overridden by concrete subclasses, while concrete methods have a body and can be overridden by subclasses.
+Abstract methods do not have a body and must be overridden by concrete subclasses, while concrete methods have a body and can be overridden by subclasses.
 %
-In Scala, a method with no arguments can be overridden by a field with the same name.
+Moreover, Scala allows a method with no arguments to be overridden by a field with the same name.
 %
-Many features of Scala allow methods to be used as operators, such as the infix notation, which allows to call methods with a single argument without using the dot or parentheses, as shown in \cref{lst:exchange-syntax}.
+Additionally, methods can serve as operators using infix notation, enabling invocation with a single argument without using the dot or parentheses, as demonstrated in \Cref{lst:exchange-syntax}.
 %
-This feature provides great flexibility in the definition of custom operators, and the development of \ac{DSL}s.
+This feature provides flexibility in defining custom operators and developing \ac{DSL}s.
 %
-Since Scala 3, the intent of the definition of custom operators is more explicit thanks to the \texttt{infix} keyword before \texttt{def}.
+Since Scala 3, the \texttt{infix} keyword must precede \texttt{def} to explicitly denote the intent of defining custom operators.
 
 Even though method overloading is still possible, the Java generic type erasure rules apply in Scala too, and must be taken into account when defining overloaded methods.
 %
 In Scala, it is often possible to avoid method overloading by using default arguments, which are arguments that are automatically assigned a value if no value is provided by the caller, as shown in \cref{lst:scala3-extension-methods}.
 %
-Scala 3 improves the default way to handle method invocation ambiguities with method overloading with the \texttt{@targetName} annotation, which allows to specify a unique name of the method once compiled to \ac{JVM} bytecode.
+Scala 3 improves the default way to handle most method invocation ambiguities with the \texttt{@targetName} annotation, allowing the specification of a unique name for the method once compiled to \ac{JVM} bytecode.
 
 Thanks to \textit{automatic eta expansion}, methods can be used in place of function values, and its implementation has been improved in Scala 3 to be almost completely seamless.
 
 One of the most important features of Scala is the ability to define \textit{type members},
 which are members of a class or trait that define types, and can be used as types in the same way as classes or traits, as shown in \cref{chap:background->sec:scala3->subsec:type-system}.
 %
-Abstract type members avoid Scala trait and class sources to grow in size both vertically and horizontally because they can often replace generic type parameters, with all the benefits of member inheritance, such as overriding and composition.
-
-Type parameters as well as type members can be constrained with \textit{upper bounds} and \textit{lower bounds}, using the operators \texttt{<:} and \texttt{>:}, respectively, such as in \texttt{Type <: Supertype} and \texttt{Type >: Subtype}.
+Abstract type members prevent Scala traits' and classes' sources from growing in size both vertically and horizontally, as they can often replace generic type parameters with all the benefits of member inheritance, such as overriding and composition.
 %
-Generic types also support type variance control, which is used to specify how the subtyping relationship between two generic types is related to the subtyping relationship between their type arguments.
+Type parameters, as well as type members, can be constrained with \textit{upper bounds} and \textit{lower bounds}, using the operators \texttt{<:} and \texttt{>:}, respectively, such as in \texttt{Type <: Supertype} and \texttt{Type >: Subtype}.
 %
-In Scala, the variance of a type parameter can be declared with the \texttt{+} and \texttt{-} symbols, which are used to declare a type parameter as covariant or contravariant, respectively, or else the type parameter is invariant by default.
+Additionally, generic types also support type variance control, which is used to specify how the subtyping relationship between two generic types is related to the subtyping relationship between their type arguments as explained in depth in the dedicated section below.
 
 \subsection{Algebraic Data Types}
 
-The union of the object-oriented and the functional programming paradigms within Scala has always promoted the use of algebraic data types, a kind of composite type that resembles mathematical operations between types.
+The union of the object-oriented and the functional programming paradigms within Scala has promoted the use of algebraic data types, a kind of composite type that resembles mathematical operations between types.
 %
 Examples of such types are \textit{sum types}, \textit{product types}, and \textit{intersection types}.
 %
-In Scala, these can be implemented using \textit{sealed traits}, \textit{case classes}, and inheritance, respectively, but from Scala 3 the syntax to define these types has been simplified and clarified, as shown in the following paragraphs.
+In Scala 2 these can be implemented using \textit{sealed traits}, \textit{case classes}, and inheritance, respectively.
+%
+However, since Scala 3, the syntax for defining these types has been simplified and clarified, as elaborated in the following paragraphs.
 
 \subsubsection{Sum types}
 
-Since Scala 2, sum types were enabled by the \texttt{sealed} keyword on traits or abstract classes that prevent inheritance outside the file where the sum type is defined.
+Since Scala 2, sum types were enabled by the \texttt{sealed} modifier on traits or abstract classes, which prevents inheritance outside the file where the sum type is defined.
 %
-This way, it was possible to define a finite set of subtypes to check for in pattern matching.
+This way, it is possible to define a finite set of subtypes to check for in pattern matching.
 %
-Thanks to the possibility of defining a singleton instance with the keyword \texttt{object} that inherits from the sum type, sum types could also be used to implement enumerations.
+Moreover, the ability to define a singleton instance with the \texttt{object} keyword inheriting from the sum type enables the use of sum types for implementing enumerations.
 %
-Starting with Scala 3, the \texttt{enum} keyword has been introduced to simplify the syntax in both these use cases, as shown in \cref{lst:scala3-sum-types}.
+With the introduction of Scala 3, the \texttt{enum} keyword simplifies the syntax in both the mentioned use cases, as shown in \Cref{lst:scala3-sum-types}.
 %
-Additionally, with Scala 3, the \texttt{|} operator can be used for sum type options in type definitions, for matching any pattern of a list in pattern matching, and for defining a discriminated union type of the form \texttt{A | B}.
+Additionally, with Scala 3, the \texttt{|} operator can be used for sum type options in type definitions, for matching any pattern of a list in pattern matching, and for defining discriminated union types of the form \texttt{A | B}.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-sum-types}, caption={Example of sum types in Scala 3.}]{listings/scala3-enums.scala}
 
 \subsubsection{Product types}
 
-Since Scala 2, product types were enabled by the features provided by \textit{case classes}, which are Scala's implementation of the concept of \textit{records} in functional programming.
+Product types, supported since Scala 2, are enabled by the features provided by \textit{case classes}, which are Scala's implementation of the concept of \textit{records} in functional programming.
 %
-Case classes are classes equipped with compiler-generated methods for pattern matching, equality, copying, and printing.
+Case classes are equipped with compiler-generated methods for pattern matching, equality, copying, and printing.
 %
-In case classes, constructor parameters are public immutable fields by default, and the \texttt{copy} method can be used to create a new instance with some fields changed.
+In case classes, constructor parameters are public immutable fields by default, and the \texttt{copy} method can be used to create a new instance with specified fields altered.
 %
 An example of a case class can be found in \cref{lst:scala3-sum-types}.
 
 \subsubsection{Intersection types}
 
-Since Scala 2, it was possible to define a type as the intersection of other types using the \texttt{with} keyword, which is also used for mixin composition.
+Since Scala 2, it is possible to define a type as the intersection of other types using the \texttt{with} keyword, which is also used for mixin composition.
 %
-Mixin composition is the practice of combining multiple traits into a class, resembling multiple inheritance but with the compromise of avoiding the diamond problem through linearization\cite{scala-patterns}.
+Mixin composition is the practice of combining multiple traits into a class, resembling multiple inheritance, but with the compromise of avoiding the diamond problem through linearization\cite{scala-patterns}.
 %
-Mixin composition is used in ScaFi to declare dependencies of programs, as shown in \cref{lst:using-libraries-in-scafi}.
+Mixin composition is employed in ScaFi to declare dependencies of programs, as shown in \Cref{lst:using-libraries-in-scafi}.
 
-Starting with Scala 3, the \texttt{with} keyword is deprecated for type definitions, such as in method arguments, in favor of the \texttt{\&} operator, which is also used for pattern matching, as in \cref{lst:distance-to}, in the \texttt{distanceTo} signature.
+Starting with Scala 3, the \texttt{with} keyword is deprecated for type definitions, such as in method arguments, in favor of the \texttt{\&} operator.
 %
-The \texttt{with} keyword is still used for mixin composition in the definition of traits and classes.
+This operator is also used for pattern matching, as in \cref{lst:distance-to}, within the \texttt{distanceTo} signature.
+%
+Although deprecated for type definitions, the \texttt{with} keyword is still used for mixin composition in the definition of traits and classes.
 
 
 \subsection{Singleton objects} \label{chap:background->sec:scala3->subsec:singleton-objects}
 
-In Scala, the \texttt{object} keyword is used to define a singleton object, which is a class that has only one instance.
+In Scala, the \texttt{object} keyword is used to define singleton objects which are classes with only one instance.
 %
-Singleton objects replace Java's static methods and fields and can be used to define utility methods and constants, as well as to implement the \textit{companion object} pattern, which is a design pattern that promotes the use of a singleton object to hold methods and fields that are not specific to any instance of a class but are still related to the class itself.
+Singleton objects serve as a replacement for Java's static methods and fields and can be used to define utility methods and constants, as well as to implement the \textit{companion object} pattern.
 %
-A class with a companion object can access the private members of the companion object, and vice versa, provided that they have the same name and are defined in the same file.
+This pattern promotes the use of a singleton object to hold methods and fields that are not specific to any instance of a class but are still related to the class itself.
 %
-Singleton objects can be also used to implement traits to create modules, such as factories for collections.
+A class with a companion object can access the private members of the companion object, and vice versa, provided that they share the same name and are defined in the same file.
+%
+Moreover, singleton objects can be used to implement traits to create \textit{modules}, such as factories for collections.
 %
 An example of a singleton object used as a companion of a class can be found in \cref{lst:scala3-singleton-object}.
 
@@ -404,96 +408,100 @@ An example of a singleton object used as a companion of a class can be found in 
 
 \subsection{Functional programming with Scala 3} \label{chap:background->sec:scala3->subsec:functional-programming}
 
-Scala offers many features typical of \ac{FP} languages, such as \textit{lambdas}, higher-order functions, \textit{currying}, algebraic data types, and a standard library of immutable collections.
+Scala offers many features typical of \ac{FP} languages, including \textit{lambdas}, higher-order functions (i.e., functions that accept or return other functions), \textit{currying}, algebraic data types, and a standard library of immutable collections.
 %
-Lambdas, also known as anonymous functions, can be passed as an argument or returned as a result just like any other value.
+Lambdas, also known as anonymous functions, can be treated as any other value, thus passed as arguments, or returned as results.
 %
-A function that accepts or returns another function is called a \textit{higher-order function}.
+In Scala, lambdas are defined using the \texttt{=>} operator, which is also used for defining function types such as \texttt{A => B}, where \texttt{A} denotes the input type and \texttt{B} denotes the output type.
 %
-In Scala, lambdas are defined using the \texttt{=>} operator, which is also used to define function types such as \texttt{A => B}, where \texttt{A} is the input type and \texttt{B} is the output type.
-%
-Sometimes it is possible to write lambdas with a more concise syntax, using the \texttt{\_} placeholder for the input argument, as shown in \cref{lst:foldhood-library-usage}.
+In some cases, it is possible to write lambdas with a more concise syntax, using the \texttt{\_} placeholder for the input argument, as shown in \cref{lst:foldhood-library-usage}.
 
-Starting with Scala 3, function types support new varieties of functions:
+Scala 3 introduces new varieties of function types:
 \begin{itemize}
-    \item \textit{dependent function types}, which are function types where the result type can depend on the function's parameters, such as type members (an example can be found in \cref{lst:distance-to});
-    \item \textit{polymorphic function types}, which are function types that accept type parameters, explained in \cref{chap:background->sec:scala3->subsec:type-system};
-    \item \textit{context function types}, which are function types that accept only context parameters, explained in \cref{chap:background->sec:scala3->subsec:contextual-abstractions}.
+    \item \textit{dependent function types}, where the result type can depend on the function's parameters, such as type members (an example can be found in \cref{lst:distance-to});
+    \item \textit{polymorphic function types}, that accept type parameters, explained in \cref{chap:background->sec:scala3->subsec:type-system};
+    \item \textit{context function types}, that accept only context parameters, explained in \cref{chap:background->sec:scala3->subsec:contextual-abstractions}.
 \end{itemize}
 
-Following the principles of \ac{FP}, domain models should be immutable and deprived of behavior, and behavior should be defined in terms of pure functions, implemented in modules as extension methods, which are methods that can be added to existing types without modifying their source code.
+Following the principles of \ac{FP}, domain models should be immutable and deprived of behavior.
 %
-Starting with Scala 3, extension methods have obtained a dedicated syntax, that avoids the cumbersome use of implicit classes, as shown in \cref{lst:scala3-extension-methods}.
+More specifically, the behavior should be defined in terms of pure functions implemented in modules as extension methods, which are methods that can be added to existing types without modifying their source code.
 %
-Some additional attention is needed when extension method names overlap with class methods, because the compiler will always prioritize the class method, and the extension method will be shadowed.
+Starting with Scala 3, extension methods have obtained a dedicated syntax that avoids the cumbersome use of implicit classes, as shown in \cref{lst:scala3-extension-methods}.
 %
-In those cases it is always possible to invoke the extension explicitly from the instance that provides it, passing the extended instance as the first argument.
+However, some additional attention is needed when extension method names overlap with class methods, as the compiler prioritizes class methods, potentially shadowing conflicting extension methods.
+%
+In such cases, it may be necessary to invoke the extension explicitly from the instance that provides it, passing the extended instance as the first argument.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-extension-methods}, caption={Example of extension methods usage in Scala 3.}]{listings/scala3-extension-methods.scala}
 
-\paragraph{Currying} is the process of transforming a function that takes multiple arguments into a sequence of functions, each taking a subset of the arguments, thus simplifying the function's usage with partial applications.
+\paragraph{Currying} is the process of transforming a function that accepts multiple arguments into a sequence of functions, each taking a subset of the arguments, thus simplifying the function's usage with partial applications.
 %
-An example of currying and partial application of a function can be found in \cref{lst:scala3-currying}.
+An example of currying and partial application of a function is present in \cref{lst:scala3-currying}.
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-currying}, caption={Example of currying and partial application in Scala 3.}]{listings/scala3-currying.scala}
 
 
 \subsection{Contextual Abstractions} \label{chap:background->sec:scala3->subsec:contextual-abstractions}
 
-In Scala, contextual abstractions are a set of features coming from the core idea of \textit{term inference}, which is the ability of the compiler to synthesize a \quotes{canonical} term for a given type.
+In Scala, contextual abstractions derive from the core concept of \textit{term inference}, which is the ability of the compiler to synthesize a \quotes{canonical} term for a given type.
 %
-Examples of features enabled by term inference are \textit{extension methods}, \textit{type classes}, \textit{context parameters}, \textit{context bounds}, and many more.
+Examples of features enabled by term inference are \textit{extension methods}, \textit{type classes}, \textit{context parameters}, and \textit{context bounds}.
 %
-In Scala 2, almost every feature of contextual abstractions was implemented using the \texttt{implicit} keyword, whereas with Scala 3 contextual abstractions have been redesigned to be more explicit on the intent of their usage, with the introduction of new ad-hoc keywords for each use case: \texttt{given}, \texttt{using}, and \texttt{extension}.
+While in Scala 2 almost every feature related to contextual abstractions was enabled by the \texttt{implicit} keyword, Scala 3 contextual abstractions have been redesigned to be more explicit on the intent of their usage, with the introduction of new ad-hoc keywords for each use case: \texttt{given}, \texttt{using}, and \texttt{extension}.
 %
-The \texttt{given} keyword is used to define a \textit{given instance}, which is a value that can be used as a \textit{context parameter} in a method or constructor.
+The \texttt{given} keyword is used to define a \textit{given instance}, which is a value to be passed as a \textit{context parameter} in methods or constructors that require one.
 %
-The \texttt{using} keyword is used to specify a \textit{context parameter}, also called implicit parameter in Scala 2, which is a parameter that is used to require a \textit{given instance} for a method or constructor.
+The \texttt{using} keyword defines such \textit{context parameters}, which are method parameters requiring a \textit{given instance} available in scope and correspond to implicit parameters of Scala 2.
 %
-The \texttt{extension} keyword is used to define an \textit{extension method}, which is a method that can be added to existing types without modifying their source code, as explained in \cref{chap:background->sec:scala3->subsec:functional-programming}.
-%
-If not passed explicitly, the compiler searches for \textit{given instances} to satisfy \textit{context parameters} performing \textit{term inference}.
+If given instances are not passed explicitly as context parameters, the compiler performs \textit{term inference} to search for \textit{given instances} in scope to fulfill \textit{context parameters} at every method invocation.
 %
 Starting with Scala 3, context parameters can be anonymous, and given instances can be abstract.
 %
-To retrieve the value of an anonymous context parameter of type \texttt{T} Scala 3 provides the \texttt{summon[T]: T} method, which replaces Scala 2's \texttt{implicitly[T]} method.
+The \texttt{extension} keyword is now necessary to define \textit{extension methods}, enabling the addition of methods to existing types without altering their source code, as explained in \cref{chap:background->sec:scala3->subsec:functional-programming}.
+%
+To retrieve the value of an anonymous context parameter of type \texttt{T} Scala 3 provides the \texttt{summon[T]: T} method, replacing Scala 2's \texttt{implicitly[T]} method.
 
 \textit{Context bounds} in the form \texttt{T: Type} are syntactic sugar for context parameters with a more concise syntax, that gets desugared by the compiler to a context parameter of type \texttt{Type[T]}.
 %
 For example, in \cref{lst:distance-to}, \texttt{N:Numeric:UpperBounded} is desugared to two new context parameters in the form \texttt{(using Numeric[N], UpperBounded[N])}.
 %
-An abstract class like \texttt{Type[T]} meant to be used to add behavior to any closed data type without sub-typing is called a \textit{type class}.
+An abstract class like \texttt{Type[T]} designed to add behavior to any closed data type without sub-typing is called a \textit{type class}.
 
-Given instances can be imported and exported using the \texttt{import} and \texttt{export} keywords, but starting with Scala 3, \textit{given imports} and \textit{given exports} require the \texttt{given} keyword, even in the cases where a wildcard is used, making more clear where givens in the current scope are coming from.
+Given instances can be imported and exported using the \texttt{import} and \texttt{export} keywords.
 %
-Concrete given instances can be anonymous, in which case the compiler synthesizes a name for them.
+However, in Scala 3, \textit{given imports} and \textit{given exports} require the \texttt{given} keyword, even where a wildcard is used, enhancing clarity regarding their origin within the current scope.
+%
+Moreover, Scala 3 allows for anonymous concrete given instances, for which the compiler synthesizes a name automatically.
 %
 This feature is useful to avoid polluting the namespace with names that are not meant to be used directly by the user, because often given instances are imported by their type instead of by their name.
 
-Starting with Scala 3, implicit conversions are defined by providing given instances of the type \texttt{Conversion[From, To]}, and must be enabled with a compiler flag to avoid warnings when conversion is silently applied before passing an argument to a function call.
+Starting with Scala 3, implicit conversions are defined by providing given instances of the type \texttt{Conversion[From, To]} and must be enabled with a compiler flag to prevent warnings when conversion is silently applied before passing an argument to a function call.
 %
-By default, the scala compiler provides implicit conversions for primitive types, such as \texttt{Int} to \texttt{Long}.
+By default, the Scala compiler provides implicit conversions for primitive types, such as \texttt{Int} to \texttt{Long}.
 
 
 \subsection{The Scala 3 type system} \label{chap:background->sec:scala3->subsec:type-system}
 
-Scala, as a statically typed language, has all the benefits of static typing, such as early error detection, better performance, and better tooling support, while also leveraging its features to feel like a dynamically typed language, such as type inference, type parameters, and type members.
+Scala, being a statically typed language, has all the benefits of early error detection, better performance, and robust tooling support.
 %
-Scala has always supported a strong type inference system, powered by a variant of the Hindley-Milner type system with support for subtyping, as well as generics and type bounds like in Java.
+However, it also provides a flexible environment typical of dynamically typed languages, thanks to features like type inference, type parameters, and type members.
 %
-Additionally, Scala adds many type system features that are not present in Java, such as \textit{type variance}, \textit{type aliases}, \textit{type members}, \textit{covariant and contravariant overriding}, \textit{higher-kinded types}
+Built upon a variant of the Hindley-Milner type system, Scala's type inference system supports subtyping, generics, and type bounds, as Java does.
+%
+Additionally, Scala offers many type system features absent in Java, such as \textit{type variance}, \textit{type aliases}, \textit{type members}, \textit{covariant and contravariant overriding}, \textit{higher-kinded types}
 %
 Furthermore, starting with Scala 3, the type system features \textit{opaque type aliases}, \textit{structural types}, \textit{dependent function types}, improved \textit{type lambdas}, \textit{polymorphic function types}, \textit{context function types}, and \textit{match types}.
-
-In the next paragraphs, the most relevant features of the Scala 3 type system are explained.
-
-\paragraph{Type variance} allows to specify how the subtyping relationship between two generic types is related to the subtyping relationship between their type arguments.
 %
-In Scala, the variance of a type parameter can be declared with the \texttt{+} and \texttt{-} symbols, which are used to declare a type parameter as covariant or contravariant, respectively, or else the type parameter is invariant by default.
+In the following paragraphs, the most relevant features of the Scala 3 type system are explained.
+
+\paragraph{Type variance} allows specifying how the subtyping relationship between two generic types is related to the subtyping relationship between their type arguments.
+%
+In Scala, the variance of a type parameter can be declared with the \texttt{+} and \texttt{-} symbols, which are used to declare a type parameter as covariant or contravariant, respectively, else the type parameter is invariant by default.
 %
 A usage example of a variant annotation is present in \cref{lst:scala3-sum-types}.
 
-\paragraph{Type aliases} are used to define a new name for an existing type, and are often used to provide more descriptive names for types, or to shorten long type names.
+\paragraph{Type aliases} are used to define new names for existing types, which are often more descriptive or shorter than the original names.
 %
 Type aliases can be parameterized and can be recursive.
 %
@@ -503,23 +511,25 @@ Opaque type aliases are a new feature of Scala 3 that allows defining a type ali
 
 \lstinputlisting[float,language=Scala,label={lst:scala3-opaque-type-alias}, caption={Example of opaque type alias and covariant override in Scala 3.}]{listings/scala3-opaque-type-alias.scala}
 
-\paragraph{Covariant overrides} allow to override a method defined in a superclass with a method that has a more specific return type, as shown in \cref{lst:scala3-opaque-type-alias}.
+\paragraph{Covariant overrides} enable the overriding of superclass methods with methods that have more specific return types, as shown in \cref{lst:scala3-opaque-type-alias}.
 
-\paragraph{Higher-kinded types} allow to define types and methods that work with generic types regardless of the actual type arguments, only requiring a fixed arity of type parameters.
+\paragraph{Higher-kinded types} allow the definition of types and methods that work on generic types regardless of their actual type arguments, only requiring a fixed arity of type parameters.
 %
-Scala types are partitioned into kinds, based on the top type of which it is a subtype, such as \texttt{Any}, \texttt{[+X] =>> Any}, \texttt{[X, +Y] =>> Any}.
+Scala types are partitioned into kinds based on the top type of which it is a subtype, such as \texttt{Any}, \texttt{[+X] =>> Any}, \texttt{[X, +Y] =>> Any}.
 %
-Higher-kinded types are types whose kind counts more than zero type arrows, such as \texttt{List} of kind \texttt{[+X] =>> Any}, \texttt{Option} of kind \texttt{[+X] =>> Any}, and \texttt{Map} of kind \texttt{[X, +Y] =>> Any}, but potentially even a type whose kind is \texttt{[X] => [Y] => Any}, such as a type class for a type constructor.
+Higher-kinded types have a kind that counts at least one type arrow, such as \texttt{List} of kind \texttt{[+X] =>> Any}, \texttt{Option} of kind \texttt{[+X] =>> Any}, and \texttt{Map} of kind \texttt{[X, +Y] =>> Any}, but potentially even a type whose kind is \texttt{[X] =>> [Y] =>> Any}, such as a type class for a type constructor.
 %
-Scala 3 adds support for \textit{kind polymorphism}, which allows to define type parameters that accept types of any kind, through the special syntax \texttt{T <: AnyKind}.
+Scala 3 adds support for \textit{kind polymorphism}, allowing the definition of type parameters that accept types of any kind, through the special syntax \texttt{T <: AnyKind}.
 
-\paragraph{Type lambdas} are simply anonymous type constructors, that starting from Scala 3 have a new syntax that allows to define them more concisely, using the type operator \texttt{=>>}.
+\paragraph{Type lambdas} are simply anonymous type constructors, that starting from Scala 3 have a new concise syntax thanks to the type operator \texttt{=>>}.
 %
 For instance, \texttt{[X, Y] =>> Map[Y, X]} is a binary type constructor that maps arguments \texttt{X} and \texttt{Y} to the type \texttt{Map[Y, X]}.
 
-\paragraph{Context functions} are functions that accept only context parameters as input. Starting with Scala 3, context functions can be treated as values thanks to context function types, which can be distinguished from normal function types by the presence of the \texttt{?=>} operator in place of the \texttt{=>} operator.
+\paragraph{Context functions} are functions that accept only context parameters as input.
+%
+Starting with Scala 3, context functions can be treated as values thanks to context function types, which can be distinguished from standard function types by the presence of the \texttt{?=>} operator in place of the \texttt{=>} operator.
 
-\paragraph{Match types} are conditional type aliases that allow the definition of a type as the result of a pattern match on a type, available since Scala 3.
+\paragraph{Match types} are conditional type aliases that allow the definition of a type as the result of a pattern match between types, and are available only in Scala 3.
 %
 An example of match types can be found in \cref{lst:scala3-match-types}.
 
@@ -528,17 +538,21 @@ An example of match types can be found in \cref{lst:scala3-match-types}.
 
 \subsection{Explicit nulls and the Scala 3 type hierarchy} \label{chap:background->sec:scala3->subsec:type-hierarchy} \label{chap:background->sec:scala3->subsec:explicit-nulls}
 
-The Dotty compiler allows to enable some experimental features that change the language in various ways.
+The Dotty compiler offers experimental features that alter the language in various ways.
 %
-Two examples of experimental features relevant to \this are \textit{explicit nulls} and the \textit{multiversal equality}.
-
-Explicit nulls are enabled by the \quotes{\texttt{-Yexplicit-nulls}}, and the effect of this flag is to change the type hierarchy of Scala to make reference types non-nullable.
+Two examples of experimental features relevant to \this are \textit{explicit nulls} and \textit{multiversal equality}.
 %
-With explicit nulls disabled, the type system looks like the one in Java, pictured in \cref{fig:scala-hierarchy-with-explicit-nulls-disabled}, whereas with explicit nulls enabled, the type system looks more like the one in Kotlin, where null safety is part of the language, pictured in \cref{fig:scala-hierarchy-with-explicit-nulls-enabled}.
+Explicit nulls are enabled by the \quotes{\texttt{-Yexplicit-nulls}} flag, which modifies the type hierarchy of Scala making reference types non-nullable.
 %
-To define a nullable value with the option enable, sum types can be used, such as in \texttt{Type | Null}.
+With explicit nulls disabled, the type system looks like the one in Java, pictured in \Cref{fig:scala-hierarchy-with-explicit-nulls-disabled}.
 %
-Scala 3 provides an extension method \texttt{.nn} to convert a nullable value to a non-nullable value, through casting, resulting in \textit{NullPointerException} if the value was \texttt{null} at runtime.
+Conversely, with explicit nulls enabled, the type system resembles Kotlin's, where null safety is a key part of the language, as depicted in \Cref{fig:scala-hierarchy-with-explicit-nulls-enabled}.
+%
+Nullable values with that option enabled can still be defined using sum types, such as in \texttt{Type | Null}.
+%
+Scala 3 provides the extension method \texttt{.nn} to convert a nullable value to a non-nullable one through casting.
+%
+If the value was \texttt{null} at runtime, this forced conversion results in a \textit{NullPointerException}.
 
 \begin{figure}
     \centering
@@ -557,6 +571,8 @@ Scala 3 provides an extension method \texttt{.nn} to convert a nullable value to
 
 \subsection{Multiversal Equality} \label{chap:background->sec:scala3->subsec:multiversal-equality}
 
-Using context parameters of type \texttt{CanEqual[X, Y]}, the Scala 3 compiler with the \quotes{\texttt{-language:strictEquality}} flag enabled forbids universal equality, that allowed comparing any two values of any type, and replaces it with multiversal equality, which allows comparing any two values of any type, but only if the compiler can prove that the types are related by a \texttt{CanEqual} instance.
+The Scala 3 compiler with the \quotes{\texttt{-language:strictEquality}} flag enabled forbids \textit{universal equality}, that allowed comparing any two values regardless of their types using the \texttt{==} operator, which under the hood invoked the \texttt{equals} method.
+%
+With that flag enabled, universal equality is replaced with \textit{multiversal equality}, which allows comparing two values of type \texttt{X} and \texttt{Y} only if a given instance of \texttt{CanEqual[X, Y]} can be found.
 %
 Implementing \texttt{CanEqual[X, Y]} instances can be automated with \textit{type class derivation}, a feature of Scala 3 that allows the compiler to synthesize given instances following rules defined by the user, often based on compositions of algebraic data types.
