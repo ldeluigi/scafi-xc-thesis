@@ -173,7 +173,7 @@ As a consequence, the evaluation of an aggregate program implicitly builds a tre
 %
 All the aligned devices replicate and then exchange the value tree with each other, including the device itself in the next rounds.
 
-Conditionals such as $if (cond) {e_1} else {e_2}$ interfere with alignment because only the \texttt{exchange} operations in the same position within the \ac{AST} and stack frame align~\cite{xc}.
+Conditionals such as $if\;(cond)\;{e_1}\;else\;{e_2}$ interfere with alignment because only the \texttt{exchange} operations in the same position within the \ac{AST} and stack frame align~\cite{xc}.
 %
 As a consequence, \texttt{exchange} only aligns across devices that take the same branch of all the conditionals that are the parent or the ancestor of the \texttt{exchange} operation in the \ac{AST}.
 
