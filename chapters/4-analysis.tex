@@ -26,25 +26,25 @@ During the stakeholder interviews, a comprehensive list of functional and techni
 
 \paragraph{Functional requirements} are the features that the library must provide to the users. The following are the most relevant functional requirements identified:
 \begin{enumerate}[label=\textbf{F.\arabic*}]
-    \item Redesign and implement a new \ac{API} for the \texttt{core} package\Cref{chap:analysis->sec:scafi-analysis};
-    \item Redesign and implement the \texttt{tests} package with acceptance tests, easy to read and understand, and that can be used as examples;
-    \item Use the \ac{XC} as the foundation of the (default) implementation of constructs, while still providing a \ac{FC} based API;
-    \item Develop an \textit{Alchemist incarnation}\footnote{\url{https://github.com/AlchemistSimulator/Alchemist}}~\cite{alchemist}, enabling \this programs to run on the well-tested and widely used Alchemist simulator;
-    \item Develop a minimal, pure Scala 3 simulator to run tests and examples without the need for external dependencies;
-    \item Provide a new API for the \texttt{core} package that allows developers to import arbitrary ScaFi libraries and constructs into their programs without conflicts, in a seamless way;
-    \item Prefer keeping the original, abbreviated names for core constructs like \texttt{nbr} and \texttt{rep}, as they are widely adopted and recognized within the community, promoting consistency and familiarity;
-    \item Conduct experiments with Scala 3 to explore and achieve new compile time features for ScaFi, to enhance code quality and elevate the overall user experience.
+    \item redesign and implement a new \ac{API} for the \texttt{core} package\Cref{chap:analysis->sec:scafi-analysis};
+    \item redesign and implement the \texttt{tests} package with acceptance tests, easy to read and understand, and that can be used as examples;
+    \item use the \ac{XC} as the foundation of the (default) implementation of constructs, while still providing a \ac{FC} based API;
+    \item develop an \textit{Alchemist incarnation}\footnote{\url{https://github.com/AlchemistSimulator/Alchemist}}~\cite{alchemist}, enabling \this programs to run on the well-tested and widely used Alchemist simulator;
+    \item develop a minimal, pure Scala 3 simulator to run tests and examples without the need for external dependencies;
+    \item provide a new API for the \texttt{core} package that allows developers to import arbitrary ScaFi libraries and constructs into their programs without conflicts, in a seamless way;
+    \item prefer keeping the original, abbreviated names for core constructs like \texttt{nbr} and \texttt{rep}, as they are widely adopted and recognized within the community, promoting consistency and familiarity;
+    \item conduct experiments with Scala 3 to explore and achieve new compile time features for ScaFi, to enhance code quality and elevate the overall user experience.
 \end{enumerate}
 
 \paragraph{Technical requirements} are the constraints and guidelines that the library must follow to ensure the quality of code and user experience.
 \begin{enumerate}[label=\textbf{T.\arabic*}]
-    \item Use Scala 3 as the host language to leverage its advanced features and enhancements;
-    \item Enable quality options on the Scala 3 compiler such as explicit nulls (\Cref{chap:background->sec:scala3->subsec:explicit-nulls}) and multiversal equality (\Cref{chap:background->sec:scala3->subsec:multiversal-equality});
-    \item Employ \ac{SBT} as build system;
-    \item Cross-build the project for \textit{scala-js}\footnote{\url{https://www.scala-js.org}};
-    \item Cross-build the project for \textit{scala-native}\footnote{\url{https://scala-native.org}};
-    \item Lint the code with \textit{scalafix}\footnote{\url{https://scalacenter.github.io/scalafix}} and/or \textit{scalafmt}\footnote{\url{https://scalameta.org/scalafmt}};
-    \item Avoid using third-party libraries for the \texttt{core} package dependencies.
+    \item use Scala 3 as the host language to leverage its advanced features and enhancements;
+    \item enable quality options on the Scala 3 compiler such as explicit nulls (\Cref{chap:background->sec:scala3->subsec:explicit-nulls}) and multiversal equality (\Cref{chap:background->sec:scala3->subsec:multiversal-equality});
+    \item employ \ac{SBT} as build system;
+    \item cross-build the project for \textit{scala-js}\footnote{\url{https://www.scala-js.org}};
+    \item cross-build the project for \textit{scala-native}\footnote{\url{https://scala-native.org}};
+    \item lint the code with \textit{scalafix}\footnote{\url{https://scalacenter.github.io/scalafix}} and/or \textit{scalafmt}\footnote{\url{https://scalameta.org/scalafmt}};
+    \item avoid using third-party libraries for the \texttt{core} package dependencies.
 \end{enumerate}
 
 Following the identification of requirements, a comprehensive discussion and prioritization process was undertaken, guided by the \ac{MoSCoW} method.
