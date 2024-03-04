@@ -7,7 +7,7 @@ This chapter discusses the two main driving factors that led to a major re-desig
 %
 On one hand, \ac{XC} opens the way for considerable design improvements given the simpler set of foundational constructs it requires, consisting of the single primitive \texttt{exchange}, from which the entire language takes its name.
 %
-Additionally, it provides new opportunities for aggregate program developers, enabled by the expressiveness of \ac{XC}, regarding, in particular, the possibility of sending differentiated messages to neighbors using the \texttt{exchange} primitive\cite{xc}.
+Additionally, it provides new opportunities for aggregate program developers, enabled by the expressiveness of \ac{XC}, regarding, in particular, the possibility of sending differentiated messages to neighbors using the \texttt{exchange} primitive~\cite{xc}.
 %
 On the other hand, Scala 3 introduces significant language changes and improvements from Scala 2 while maintaining binary retro-compatibility.
 %
@@ -15,7 +15,7 @@ This promotes the rewriting of Scala 2 libraries to leverage new language featur
 
 \section{The Exchange Calculus}\label{chap:background->sec:xc}
 
-\ac{XC} is a language that formalizes a tiny set of key mechanisms, sufficient to express the overall behavior of a distributed collective adaptive systems in a declarative fashion\cite{xc}.
+\ac{XC} is a language that formalizes a tiny set of key mechanisms, sufficient to express the overall behavior of a distributed collective adaptive systems in a declarative fashion~\cite{xc}.
 %
 This language provides two types of semantics, operational and denotational.
 %
@@ -23,14 +23,14 @@ The operational semantics defines the local interpretation of \ac{XC} mechanisms
 %
 Therefore, operational semantics guides the implementation of \ac{XC} as a framework, while denotational semantics is the sole knowledge base required when programming a \ac{CAS} using this language.
 %
-Finally, the \ac{XC} language generalizes over \ac{FC} and is derived from the typed lambda calculus\cite{xc}.
+Finally, the \ac{XC} language generalizes over \ac{FC} and is derived from the typed lambda calculus~\cite{xc}.
 
 \ac{XC} is built upon the following fundamental components:
 \begin{itemize}
     \item the basic system model and its assumptions;
     \item the data type for neighboring values, \textit{NValues};
     \item the only communication primitive, \texttt{exchange}, which allows sending differentiated messages to neighbors;
-    \item the concept of \textit{alignment}, which enables \textit{functional composition of distribute behavior}\cite{xc}.
+    \item the concept of \textit{alignment}, which enables \textit{functional composition of distribute behavior}~\cite{xc}.
 \end{itemize}
 
 
@@ -38,31 +38,31 @@ Finally, the \ac{XC} language generalizes over \ac{FC} and is derived from the t
 
 Similarly to \ac{FC}, \ac{XC} targets a system modeled as a collection of devices generally equipped with sensors and/or actuators.
 %
-These devices repeatedly compute execution \textit{rounds} of the \textbf{same program} and exchange asynchronous \textit{messages} with their respective neighbors\cite{xc}.
+These devices repeatedly compute execution \textit{rounds} of the \textbf{same program} and exchange asynchronous \textit{messages} with their respective neighbors~\cite{xc}.
 %
 In this environment, devices can experience failures, reboots, network outages, and dynamic neighborhood changes.
 %
-At each execution round, a device independently gathers a local context, consisting of inbound messages from neighbors, sensors data, and memory of its previous round of execution, if any, and then it \textit{atomically executes} the \ac{XC} program acting on its local context\cite{xc}.
+At each execution round, a device independently gathers a local context, consisting of inbound messages from neighbors, sensors data, and memory of its previous round of execution, if any, and then it \textit{atomically executes} the \ac{XC} program acting on its local context~\cite{xc}.
 %
-The program can result in an output, that comprises side effects such as actuation, as well as, implicitly, the messages to send to neighbors for coordination\cite{xc}.
+The program can result in an output, that comprises side effects such as actuation, as well as, implicitly, the messages to send to neighbors for coordination~\cite{xc}.
 %
 At the end of each round, a device begins waiting for an arbitrary time lapse, during which the device is considered \quotes{sleeping}.
 %
-Once the sleep time is over, the device \quotes{wakes up} and starts the next execution round\cite{xc}.
+Once the sleep time is over, the device \quotes{wakes up} and starts the next execution round~\cite{xc}.
 %
 During sleep, a device must still collect inbound messages and apply two policies: \textit{last-message buffering} and \textit{last-message dropping}.
 
-\paragraph{Last-message buffering} means that every message received by a device is collected in a buffer and kept until some established criterion determines its \textit{expiration}, even across multiple execution rounds\cite{xc}.
+\paragraph{Last-message buffering} means that every message received by a device is collected in a buffer and kept until some established criterion determines its \textit{expiration}, even across multiple execution rounds~\cite{xc}.
 %
 As a result, the message expiration is also the minimum time that a device takes to realize that a neighbor has disappeared, either because of a failure or a neighbor network change.
 
-\paragraph{Last-message dropping} means that every message received by a device supersedes the last message, still in the buffer, coming from the same device.\cite{xc}
+\paragraph{Last-message dropping} means that every message received by a device supersedes the last message, still in the buffer, coming from the same device.~\cite{xc}
 %
 This implies a notion of identity of devices, which is a way to recognize a neighbor's identity to discard obsolete messages coming from them.
 
 \paragraph{Communication between devices} defined in \ac{XC} is agnostic of the message exchange medium, channel, network topology, or discovery mechanisms.
 %
-Messages in such a model are subject to traditional distributed systems communication properties, such as unpredictable delays and drops\cite{xc}.
+Messages in such a model are subject to traditional distributed systems communication properties, such as unpredictable delays and drops~\cite{xc}.
 %
 In addition, for \ac{XC} and its implementations, a device memory of its previous execution round result can be treated as a self-message effectively.
 %
@@ -74,7 +74,7 @@ In this perspective, a device reboot, which in practice consists of a complete l
 %
 Local values $l$ refer to all the traditional types \texttt{A} like integer, float, list, and so on.
 %
-NValues, instead, are a map $\underline{\mathbf{w}}$ from device identifiers $\delta_i$ to local values $l_i$, where the default local value $l$ is denoted with $l[\delta_1 \mapsto l_1, ..., \delta_n \mapsto l_n]$\cite{xc}.
+NValues, instead, are a map $\underline{\mathbf{w}}$ from device identifiers $\delta_i$ to local values $l_i$, where the default local value $l$ is denoted with $l[\delta_1 \mapsto l_1, ..., \delta_n \mapsto l_n]$~\cite{xc}.
 
 NValues refer to values coming from neighbors, which, in highly decoupled distributed systems, almost always consist of a subset of all devices.
 %
@@ -82,7 +82,7 @@ This scenario may occur when other devices are out of reach in a spacial-depende
 %
 The default value is used when evaluating a NValue $\underline{\mathbf{w}} = l[\delta_1 \mapsto l_1, ..., \delta_n \mapsto l_n]$ for a given $\delta_i$ with $\delta_i$ not present in $\underline{\mathbf{w}}$.
 %
-The notation above can thus be read as \quotes{the nvalue $\underline{\mathbf{w}}$ is $l$ everywhere (i.e. for all neighbors) except for devices $\delta_1, ..., \delta_n$ with values $l_1, ..., l_n$, respectively}\cite{xc}.
+The notation above can thus be read as \quotes{the nvalue $\underline{\mathbf{w}}$ is $l$ everywhere (i.e. for all neighbors) except for devices $\delta_1, ..., \delta_n$ with values $l_1, ..., l_n$, respectively}~\cite{xc}.
 
 For example, in \cref{fig:xc-nvalues-exampke}, the device $\delta_2$ wakes up for computation $\epsilon_2^4$ and processes a nvalue $\underline{\mathbf{w}} = 0[\delta_1 \mapsto 5, \delta_3 \mapsto 4, \delta_4 \mapsto 2]$, which corresponds to the messages carrying the scalar values 5, 4, and 2 sent by devices $\delta_1$, $\delta_3$, and $\delta_4$, respectively, some of which while device $\delta_2$ was asleep.
 %
@@ -96,25 +96,25 @@ Evaluation of a nvalue for a given $\delta'$ can be noted as $\underline{\mathbf
 %
 For $\underline{\mathbf{w'}}$, $\underline{\mathbf{w'}}(\delta_1)$ is $7$, and $\underline{\mathbf{w'}}(\delta_3)$ is 0.
 %
-Another notation used in the paper is $\underline{A}$, to indicate the type of a nvalue $\underline{\mathbf{w}} = l[\delta_1 \mapsto l_1, ..., \delta_n \mapsto l_n]$ where $l_1, ..., l_n$ are of type $A$\cite{xc}.
+Another notation used in the paper is $\underline{A}$, to indicate the type of a nvalue $\underline{\mathbf{w}} = l[\delta_1 \mapsto l_1, ..., \delta_n \mapsto l_n]$ where $l_1, ..., l_n$ are of type $A$~\cite{xc}.
 
-NValues generalize local values, in the sense that a local value $l$ with type $A$ can be automatically converted to a nvalue $l[]$ with type $\underline{A}$, with $l$ as the default value for every device\cite{xc}.
+NValues generalize local values, in the sense that a local value $l$ with type $A$ can be automatically converted to a nvalue $l[]$ with type $\underline{A}$, with $l$ as the default value for every device~\cite{xc}.
 %
-This approach simplifies the formalization of \ac{XC}, where local values and nvalues are treated uniformly\cite{xc}.
+This approach simplifies the formalization of \ac{XC}, where local values and nvalues are treated uniformly~\cite{xc}.
 %
 The same principle can be applied to functions,  whereby they can be implicitly \quotes{lifted} to operate on NValues.
 %
-This can be achieved by applying said functions pointwise on the content of the maps, using the default values where required\cite{xc}.
+This can be achieved by applying said functions pointwise on the content of the maps, using the default values where required~\cite{xc}.
 %
 For example, given $\underline{\mathbf{w_1}} = 1[\delta_1 \mapsto 2, \delta_3 \mapsto 4]$ and $\underline{\mathbf{w_2}} = 3[\delta_1 \mapsto 5, \delta_2 \mapsto 6]$, $\underline{\mathbf{w_3}} = \underline{\mathbf{w_1}} + \underline{\mathbf{w_2}} = 4[\delta_1 \mapsto 7, \delta_2 \mapsto 7, \delta_3 \mapsto 7]$.
 %
 Another example is $\underline{\mathbf{w_4}} = \underline{\mathbf{w_1}} + 1 = 2[\delta_1 \mapsto 3, \delta_3 \mapsto 5]$, which uses the automatic promotion of $1$ to $1[]$.
 
-NValues can be folded over, using the built-in function $nfold(f : (A, B) \rightarrow A, \underline{\mathbf{w}} : \underline{B}, l : A) : B$, which takes an accumulator function $f$ repeatedly applied to neighbors' values in a nvalue, excluding the value for the \textit{self} device, starting from a base local value $l$, and using the default value of $\underline{\mathbf{w}}$ for neighbors not present in the map\cite{xc}.
+NValues can be folded over, using the built-in function $nfold(f : (A, B) \rightarrow A, \underline{\mathbf{w}} : \underline{B}, l : A) : B$, which takes an accumulator function $f$ repeatedly applied to neighbors' values in a nvalue, excluding the value for the \textit{self} device, starting from a base local value $l$, and using the default value of $\underline{\mathbf{w}}$ for neighbors not present in the map~\cite{xc}.
 %
 For example, given a device $\delta_1$ performing a $nfold$ operation on $\underline{\mathbf{w}} = 3[\delta_1 \mapsto 10, \delta_2 \mapsto 1, \delta_3 \mapsto 2]$ while the current set of its neighbors is $\{\delta_3, \delta_4\}$, then $nfold(+, \underline{\mathbf{w}}, 1) = 6$.
 %
-Given that nvalues are agnostic to the ordering of elements, i.e., the ordering of device identifiers in the map, $f$ is assumed to be associative and commutative\cite{xc}.
+Given that nvalues are agnostic to the ordering of elements, i.e., the ordering of device identifiers in the map, $f$ is assumed to be associative and commutative~\cite{xc}.
 
 \begin{figure}
     \centering
@@ -123,15 +123,15 @@ Given that nvalues are agnostic to the ordering of elements, i.e., the ordering 
     \label{fig:xc-nvalues-exampke}
 \end{figure}
 
-\paragraph{Additional built-in operations} on nvalues are $self(\underline{\mathbf{w}} : \underline{A}) : A$ which returns the local value $\underline{\mathbf{w}}(\delta)$ for the self device $\delta$, and $updateSelf(\underline{\mathbf{w}} : \underline{A}, l : A) : \underline{A}$ which returns a new nvalue with the same content of $\underline{\mathbf{w}}$ but with the value for the self device replaced by $l$\cite{xc}.
+\paragraph{Additional built-in operations} on nvalues are $self(\underline{\mathbf{w}} : \underline{A}) : A$ which returns the local value $\underline{\mathbf{w}}(\delta)$ for the self device $\delta$, and $updateSelf(\underline{\mathbf{w}} : \underline{A}, l : A) : \underline{A}$ which returns a new nvalue with the same content of $\underline{\mathbf{w}}$ but with the value for the self device replaced by $l$~\cite{xc}.
 %
 Given the built-in function $uid$ that returns the device identifier of the self device, the following property holds: $self(\underline{\mathbf{w}}) = \underline{\mathbf{w}}(uid)$.
 %
-The complete syntax for \ac{XC} is available in the original paper\cite[p. 4]{xc}.
+The complete syntax for \ac{XC} is available in the original paper~\cite[p. 4]{xc}.
 
 \subsection{The \quotes{exchange} primitive}
 
-The following description is based on the original paper for \ac{XC}\cite{xc}.
+The following description is based on the original paper for \ac{XC}~\cite{xc}.
 %
 The only communication primitive present in \ac{XC} is the function $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\return} e_r \mathbf{\send} e_s)$$ which is defined using syntactic sugar and translates to $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow (e_r, e_s))$$
 %
@@ -142,7 +142,7 @@ The evaluation of the primitive follows three steps:
     \item the device evaluates the expression $e_s$ to obtain a nvalue $\underline{\mathbf{w_s}}$ to be sent to neighbors such as $\delta'$, that will use their corresponding value $\underline{\mathbf{w_s}}(\delta')$ in their next execution round.
 \end{enumerate}
 
-As a shorthand, $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\return} e \mathbf{\send} e)$$ can be written as $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\retsend} e)$$ according to the \ac{XC} paper\cite{xc}.
+As a shorthand, $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\return} e \mathbf{\send} e)$$ can be written as $$exchange(e_i, (\underline{\mathbf{n}}) \Rightarrow \mathbf{\retsend} e)$$ according to the \ac{XC} paper~\cite{xc}.
 
 Two examples of reusable functions written in \ac{XC} can be seen in \cref{lst:xc-program}.
 %
@@ -167,49 +167,49 @@ In the examples provided, $\underline{senseDist}$ is a network-based sensor that
 
 A program can execute multiple exchanges in a single round and \ac{XC} ensures that messages are dispatched to corresponding exchange expressions using the concept of \textit{alignment}.
 %
-The corresponding exchange expressions are those that are located in the same position within the \ac{AST} and same stack frame, thus ensuring correct alignment in case of branches, function calls, and recursion\cite{xc}.
+The corresponding exchange expressions are those that are located in the same position within the \ac{AST} and same stack frame, thus ensuring correct alignment in case of branches, function calls, and recursion~\cite{xc}.
 %
 As a consequence, the evaluation of an aggregate program implicitly builds a tree representation, called \textit{value tree}.
 %
 All the aligned devices replicate and then exchange the value tree with each other, including the device itself in the next rounds.
 
-Conditionals such as $if (cond) {e_1} else {e_2}$ interfere with alignment because only the \texttt{exchange} operations in the same position within the \ac{AST} and stack frame align\cite{xc}.
+Conditionals such as $if (cond) {e_1} else {e_2}$ interfere with alignment because only the \texttt{exchange} operations in the same position within the \ac{AST} and stack frame align~\cite{xc}.
 %
 As a consequence, \texttt{exchange} only aligns across devices that take the same branch of all the conditionals that are the parent or the ancestor of the \texttt{exchange} operation in the \ac{AST}.
 
 Alignment controls the evaluation of sub-expressions, in particular the evaluation of expressions involving nvalues, because in such expressions only aligned neighbors are considered.
 %
-As a result, every \texttt{if} expression splits the network into two non-communicating sub-networks, with each device evaluating a different branch based on the condition\cite{xc}.
+As a result, every \texttt{if} expression splits the network into two non-communicating sub-networks, with each device evaluating a different branch based on the condition~\cite{xc}.
 %
 These isolated sub-networks are also referred to as \textit{sub-domains} or simply \textit{domains}.
 
 \subsection{Formalization of XC}
 
-\ac{XC} is formalized in the paper\cite{xc} in its syntax, operational semantics, and denotational semantics.
+\ac{XC} is formalized in the paper~\cite{xc} in its syntax, operational semantics, and denotational semantics.
 %
 The language takes inspiration from \ac{ML} and is a standard functional language with a classic Hindley-Milner type system.
 %
-Its formalization makes \ac{XC} type sound and deterministic once extended with \textit{value-tree} typing and \textit{configuration} typing\cite{xc}.
+Its formalization makes \ac{XC} type sound and deterministic once extended with \textit{value-tree} typing and \textit{configuration} typing~\cite{xc}.
 
 \subsection{Implementing FC primitives with exchange}
 
 Since \ac{FC} primitives and expressiveness can be implemented through \ac{XC}, \ac{XC} inherits all the findings reported in the literature that hold for \ac{FC}.
 %
-These include eventual recovery and stabilization after transient changes\cite{self-stabilisation-in-fc}, independence from the density of devices\cite{density-independence-in-fc}, real-time error tolerance, and convergence\cite{real-time-error-tolerance-in-fc}.
+These include eventual recovery and stabilization after transient changes~\cite{self-stabilisation-in-fc}, independence from the density of devices~\cite{density-independence-in-fc}, real-time error tolerance, and convergence~\cite{real-time-error-tolerance-in-fc}.
 %
-Furthermore, the list of benefits extends beyond these\cite{xc}.
+Furthermore, the list of benefits extends beyond these~\cite{xc}.
 %
 Additionally, \ac{XC} opens the possibilities for writing programs not expressible with \ac{FC}, thanks to the expressiveness of the \texttt{exchange} primitive which allows sending differentiated messages to neighbors.
 %
 In \ac{FC}, the concept of \textit{field}, also called \textit{neighboring value}, is defined as a neighbor-dependent value consisting of a map $\phi = \overline{\delta} \mapsto \overline{l}$ from neighbors to local values, which can be promoted to nvalue with any valid default value $l$.
 %
-This preserves the behavior of programs written in \ac{FC} but interpreted within \ac{XC}\cite{xc}.
+This preserves the behavior of programs written in \ac{FC} but interpreted within \ac{XC}~\cite{xc}.
 
 \ac{FC} presents three main primitives, all implementable through \ac{XC}:
 \begin{itemize}
-    \item \texttt{nbr}, used to access the neighbors' values\cite{from-dc-to-fc-and-ap};
-    \item \texttt{rep}, used to compute a new value of an expression based on the result of the same expression in the previous round\cite{from-dc-to-fc-and-ap};
-    \item \texttt{share}, used to efficiently access neighbors' values while computing a new value from the previous result with a single primitive\cite{share-operator}.
+    \item \texttt{nbr}, used to access the neighbors' values~\cite{from-dc-to-fc-and-ap};
+    \item \texttt{rep}, used to compute a new value of an expression based on the result of the same expression in the previous round~\cite{from-dc-to-fc-and-ap};
+    \item \texttt{share}, used to efficiently access neighbors' values while computing a new value from the previous result with a single primitive~\cite{share-operator}.
 \end{itemize}
 
 The \texttt{nbr} primitive can be implemented as: $$nbr(e: A): \underline{A} = exchange(e, (\underline{n}) \Rightarrow \return \underline{n} \send e)$$
@@ -224,7 +224,7 @@ Scala is a statically typed, general-purpose programming language designed to ex
 %
 Scala 3 is the latest major release of the Scala language, a high-level programming language that combines object-oriented and functional programming paradigms.
 %
-It is compiled using the \textit{Dotty} compiler\footnote{\url{https://github.com/lampepfl/dotty}}, which is based on the \ac{DOT} calculus\cite{dot}, while Scala 2 is compiled using the \textit{scalac} compiler\footnote{\url{https://github.com/scala/scala}}.
+It is compiled using the \textit{Dotty} compiler\footnote{\url{https://github.com/lampepfl/dotty}}, which is based on the \ac{DOT} calculus~\cite{dot}, while Scala 2 is compiled using the \textit{scalac} compiler\footnote{\url{https://github.com/scala/scala}}.
 %
 This section provides an overview of the main features of Scala 3, that are relevant for the re-design of ScaFi while also highlighting the differences between Scala 2 and Scala 3.
 
@@ -236,9 +236,9 @@ The Scala community has exploited this possibility to avoid reimplementing a new
 
 Natively, Scala 2 and Scala 3 compile to \ac{JVM} bytecode, but Scala 3 also supports the \ac{JS} and \textit{LLVM} backends, which are used to compile Scala code to JavaScript and native code, respectively.
 %
-These compiler backends exist thanks to community-driven projects\footnote{Scala.js at \url{https://scala-js.org}}\footnote{Scala Native at \url{https://scala-native.org}}\cite{scala-js}.
+These compiler backends exist thanks to community-driven projects\footnote{Scala.js at \url{https://scala-js.org}}\footnote{Scala Native at \url{https://scala-native.org}}~\cite{scala-js}.
 %
-The provided support for cross-platform distribution, together with the popularity of Scala for distributed systems development\cite{scala-popularity} and the flexibility of the upgraded language features for advanced internal \ac{DSL} design, makes Scala 3 a valuable choice for a new ScaFi implementation based on \ac{XC}.
+The provided support for cross-platform distribution, together with the popularity of Scala for distributed systems development~\cite{scala-popularity} and the flexibility of the upgraded language features for advanced internal \ac{DSL} design, makes Scala 3 a valuable choice for a new ScaFi implementation based on \ac{XC}.
 
 \subsection{Values in Scala}
 
@@ -273,7 +273,7 @@ In cases where a code block consists of many lines that make it difficult to fol
 
 \subsection{Traits and classes}
 
-Traits are a powerful feature that replaces Java's interfaces and abstract classes and were first introduced as a mechanism to organize behavior into small, modular units\cite{traits}.
+Traits are a powerful feature that replaces Java's interfaces and abstract classes and were first introduced as a mechanism to organize behavior into small, modular units~\cite{traits}.
 %
 In Scala, traits can be used to define interfaces and to provide partial implementations and can be composed and mixed into other traits or classes.
 %
@@ -299,7 +299,7 @@ Additionally, Scala supports import aliases to avoid name clashes.
 %
 Since Scala 3, import aliases have a dedicated syntax, following the pattern \texttt{import A as B}, where \texttt{A} is the fully qualified original name and \texttt{B} is the alias.
 
-An advanced example of trait usage can be found in \cref{lst:scala3-service-oriented-design}\footnote{\url{https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html}}, which shows how to use traits in a service-oriented way, a design pattern that promotes the use of traits to define services and their dependencies and to compose services into a single class\cite{service-oriented-design}.
+An advanced example of trait usage can be found in \cref{lst:scala3-service-oriented-design}\footnote{\url{https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html}}, which shows how to use traits in a service-oriented way, a design pattern that promotes the use of traits to define services and their dependencies and to compose services into a single class~\cite{service-oriented-design}.
 %
 In the mentioned example, some advanced features of Scala are presented, such as abstract type members, nested traits, and \textit{self-type annotations}.
 %
@@ -378,7 +378,7 @@ An example of a case class can be found in \cref{lst:scala3-sum-types}.
 
 Since Scala 2, it is possible to define a type as the intersection of other types using the \texttt{with} keyword, which is also used for mixin composition.
 %
-Mixin composition is the practice of combining multiple traits into a class, resembling multiple inheritance, but with the compromise of avoiding the diamond problem through linearization\cite{scala-patterns}.
+Mixin composition is the practice of combining multiple traits into a class, resembling multiple inheritance, but with the compromise of avoiding the diamond problem through linearization~\cite{scala-patterns}.
 %
 Mixin composition is employed in ScaFi to declare dependencies of programs, as shown in \Cref{lst:using-libraries-in-scafi}.
 

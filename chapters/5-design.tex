@@ -27,7 +27,7 @@ Each prototype is named after the Scala 3 feature it is mainly based on, and eac
 %
 This way, more than one semantic can be defined for the same syntax, and more than one implementation can be defined for the same semantic, allowing for more flexible customization and composition.
 %
-For the scope of \this, \ac{XC}\cite{xc} is the only semantics considered for implementation, but the design should be flexible enough to allow for future \quotes{calculi} to be implemented as alternative foundations.
+For the scope of \this, \ac{XC}~\cite{xc} is the only semantics considered for implementation, but the design should be flexible enough to allow for future \quotes{calculi} to be implemented as alternative foundations.
 %
 In practice, there is a very subtle difference between the semantics and the syntax of the same formal calculus.
 %
@@ -35,7 +35,7 @@ In the case of \ac{XC}, the syntax and the semantics both consist of two methods
 %
 The difference lies in the role of the two methods in the two contexts: in the syntax, they are constructs that the programmer uses to write programs, and should be treated as an \ac{API} at all effects, while in the semantics, they are constructs that the programmer uses to implement all the supported syntaxes \ac{API}, meaning they are not part of an \ac{API} used by aggregate programs and are focused on being as complete and simple to implement as possible.
 %
-For instance, the \texttt{exchange} method of the \texttt{ExchangeCalculusSyntax} trait is focused on its usage experience, attempting to mimick the syntax provided in the paper, meanwhile the \texttt{xcexchange} method of the \texttt{ExchangeCalculusSemantics} has \texttt{protected} visibility and its signature provides only the most complete and expressive version of the \texttt{exchange} primitive presented in the paper\cite{xc}.
+For instance, the \texttt{exchange} method of the \texttt{ExchangeCalculusSyntax} trait is focused on its usage experience, attempting to mimick the syntax provided in the paper, meanwhile the \texttt{xcexchange} method of the \texttt{ExchangeCalculusSemantics} has \texttt{protected} visibility and its signature provides only the most complete and expressive version of the \texttt{exchange} primitive presented in the paper~\cite{xc}.
 
 Each of the four prototypes retains the separation between syntax definitions, semantic definitions, syntax support declaration, and semantics implementations, and considers the programmer experience of all the three key users.
 %
@@ -232,7 +232,7 @@ In addition to that, it provides two abstract methods, one called \texttt{self} 
 
 Therefore, the \texttt{ExchangeCalculusSemantics} is left only with the definitions of its specific features, which are NValues additional operation on aggregate values, automatic conversion from local values and NValues, the core constructs \texttt{exchange}, here called \texttt{xc}, and \texttt{branch}, called \texttt{br}, to avoid conflicts with their counterparts defined in the implemented syntaxes.
 %
-The signature of the \texttt{xc} method has been simplified to simplify its implementation, written only in its complete form with both the \texttt{return} and \texttt{send} values explicitly passed as a couple, whereas the \texttt{exchange} method of the syntax allows different call signatures to imitate the syntax of the paper\cite{xc}, as shown in \cref{lst:exchange-syntax}.
+The signature of the \texttt{xc} method has been simplified to simplify its implementation, written only in its complete form with both the \texttt{return} and \texttt{send} values explicitly passed as a couple, whereas the \texttt{exchange} method of the syntax allows different call signatures to imitate the syntax of the paper~\cite{xc}, as shown in \cref{lst:exchange-syntax}.
 
 \lstinputlisting[float, language=Scala, caption={Supported syntaxes for invoking the \texttt{exchange} primitive.}, label={lst:exchange-syntax}]{listings/exchange-syntax.scala}
 
@@ -258,7 +258,7 @@ More information about the implementation of a \texttt{Context} for the \ac{XC} 
 %
 An \texttt{Import} is defined as an alias for a map from device identifiers to generic values, which for the only implemented context correspond to \textit{value trees}.
 %
-A \texttt{ValueTree} is an \ac{ADT} containing the values exchanged between devices coupled with their path in the \ac{AST} of the aggregate program, as described in the \ac{XC} paper\cite{xc}.
+A \texttt{ValueTree} is an \ac{ADT} containing the values exchanged between devices coupled with their path in the \ac{AST} of the aggregate program, as described in the \ac{XC} paper~\cite{xc}.
 %
 Here a \texttt{Path} is defined as an alias for a \texttt{List} of generic tokens so that every implementation of a semantic can control which type of token defines a location inside the \ac{AST} of the aggregate program.
 %
