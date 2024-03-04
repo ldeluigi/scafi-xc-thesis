@@ -13,7 +13,7 @@ An execution context for aggregate programs made with \this has been designed an
 
 In the third and final part, the design process concerned the execution engine and the simulator.
 
-The first and second part cover requirements \textit{F.1}, \textit{F.3}, \textit{F.6}, \textit{F.7}, and \textit{T.1}, while the third covers requirement \textit{F.5} from \cref{chap:analysis->sec:requirement-analysis}.
+The first and second part cover requirements \textit{F.1}, \textit{F.3}, \textit{F.6}, \textit{F.7}, and \textit{T.1}, while the third covers requirement \textit{F.5} from \Cref{chap:analysis->sec:requirement-analysis}.
 
 \section{Designing a scalable internal Domain Specific Language} \label{chap:design->sec:dsl}
 
@@ -21,7 +21,7 @@ The process of designing a new core \ac{DSL} for \this has been carried out thro
 %
 Prototipation has been necessary to explore the design space and to understand the trade-offs between different design choices, as well as to test in practice the interactions of different combinations of language features.
 %
-For each of the four prototypes, a brief description of the design choices and the programming experience is provided, followed by the final design described in \cref{chap:design->sec:final-dsl}.
+For each of the four prototypes, a brief description of the design choices and the programming experience is provided, followed by the final design described in \Cref{chap:design->sec:final-dsl}.
 %
 Each prototype is named after the Scala 3 feature it is mainly based on, and each aims to separate the definition of the syntax from the definition of the semantics, and separate the definition of the semantics from the actual implementation.
 %
@@ -46,7 +46,7 @@ For brevity, only the most relevant advantages and disadvantages are highlighted
 
 In this design, an \texttt{AggregateFoundation} base trait defines a common syntax for all the aggregate programming foundations, such as the existence of a type called \texttt{AggregateValue[T]} that represents a collection of values coming from neighboring devices, including self.
 %
-The \texttt{AggregateFoundation} trait also defines a set of \textit{abstract extension methods} that provide basic functionalities for aggregate values, such as \textit{lifting} for composition and mapping, \textit{folding} for reduction, methods for retrieving the value for the current device or exclude the current device, mimicking the functionalities of the \texttt{foldhood} and \texttt{foldhoodPlus} of ScaFi, as shown in \cref{lst:prototype-1-aggregate-foundation}.
+The \texttt{AggregateFoundation} trait also defines a set of \textit{abstract extension methods} that provide basic functionalities for aggregate values, such as \textit{lifting} for composition and mapping, \textit{folding} for reduction, methods for retrieving the value for the current device or exclude the current device, mimicking the functionalities of the \texttt{foldhood} and \texttt{foldhoodPlus} of ScaFi, as shown in \Cref{lst:prototype-1-aggregate-foundation}.
 %
 In the example, the source of the \texttt{Liftable} and \texttt{Foldable} type classes is included for completeness, but they are not part of the \texttt{AggregateFoundation} source file as they are located in the \texttt{commons} module.
 
@@ -54,7 +54,7 @@ In the example, the source of the \texttt{Liftable} and \texttt{Foldable} type c
 
 By defining an abstract type member \texttt{AggregateValue[T]}, semantics like \ac{XC} can override it to model any kind of specific interface, such as \textit{NValues}, on top of which they can provide any additional behavior and syntax, following the pattern of \textit{family polimorphism}.
 %
-Implicitly, this design abandons the \quotes{field-transparent} semantics of the \texttt{foooldhood*} methods of ScaFi in favor of having explicit \textit{field} types, similarly to FCPP (\cref{chap:state-of-the-art->sec:fcpp}) and the \ac{XC} \ac{DSL} experiment (\cref{chap:state-of-the-art->sec:xc-experiment}).
+Implicitly, this design abandons the \quotes{field-transparent} semantics of the \texttt{foooldhood*} methods of ScaFi in favor of having explicit \textit{field} types, similarly to FCPP (\Cref{chap:state-of-the-art->sec:fcpp}) and the \ac{XC} \ac{DSL} experiment (\Cref{chap:state-of-the-art->sec:xc-experiment}).
 %
 Nevertheless, a semantics design that replicates that lost feature can still be implemented with an extension of \texttt{AggregateFoundation} that provides a \texttt{foldhood} construct that works the same as the \texttt{foldhood*} methods of ScaFi.
 
@@ -68,17 +68,17 @@ Additionally, the semantics provides an abstract given instance of \texttt{CanEq
 %
 These core constructs of the semantics are protected in visibility because they are meant to be invoked only through a facade that corresponds to one or more syntax of a \textit{calculus}, whereas abstract given instances are public as they are meant to be available to libraries that depend on a specific semantics.
 %
-The syntaxes for both \ac{FC} and \ac{XC} are shown in \cref{lst:prototype-1-syntaxes}, and the \ac{XC} semantics is shown in \cref{lst:prototype-1-exchange-calculus-semantics}.
+The syntaxes for both \ac{FC} and \ac{XC} are shown in \Cref{lst:prototype-1-syntaxes}, and the \ac{XC} semantics is shown in \Cref{lst:prototype-1-exchange-calculus-semantics}.
 %
-Finally, \cref{lst:prototype-1-syntaxes-impl} shows the implementation of the syntaxes in terms of the \ac{XC} semantics.
+Finally, \Cref{lst:prototype-1-syntaxes-impl} shows the implementation of the syntaxes in terms of the \ac{XC} semantics.
 
 One notable feature of having a facade defined using extension methods is that the compatibility layer between a semantic and a syntax is provided through the implementation of a given instance, much like a written proof that a syntax can be obtained extending a given semantics.
 %
-The proof can \texttt{summon} other given instances of supported syntax in order to define a proof dependent on another proof, as shown in \cref{lst:prototype-1-syntaxes-impl}.
+The proof can \texttt{summon} other given instances of supported syntax in order to define a proof dependent on another proof, as shown in \Cref{lst:prototype-1-syntaxes-impl}.
 %
 Another significant feature is the possibility to import dependencies and preferred syntax/facade with an \texttt{import} statement at the beginning of the file, instead of having to mix in traits like in ScaFi.
 %
-Additionally, this design allows implementing a new library by simply writing new extension methods of a generic language \texttt{L} that extends \texttt{AggregateFoundation} and the required other syntaxes, as shown in \cref{lst:prototype-1-usage-lib}.
+Additionally, this design allows implementing a new library by simply writing new extension methods of a generic language \texttt{L} that extends \texttt{AggregateFoundation} and the required other syntaxes, as shown in \Cref{lst:prototype-1-usage-lib}.
 %
 This allows libraries to be singleton objects, imported where needed with a top-level \texttt{import} statement.
 %
@@ -90,7 +90,7 @@ One hidden feature of this design is the possibility to hide, by default, transi
 
 Even though this design proves to be very flexible and extensible, it has a few drawbacks.
 %
-The most important one is the impossibility of invoking an extension method without the \quotes{\texttt{.}}, having at best to invoke constructs on \texttt{this}, as in \cref{lst:prototype-1-usage}.
+The most important one is the impossibility of invoking an extension method without the \quotes{\texttt{.}}, having at best to invoke constructs on \texttt{this}, as in \Cref{lst:prototype-1-usage}.
 %
 The next prototypes focus on overcoming this limitation at any cost, even if it means losing some of the flexibility and clarity of the design, in order to provide empirical evidence of the trade-offs between the different design choices.
 
@@ -102,15 +102,15 @@ The next prototypes focus on overcoming this limitation at any cost, even if it 
 
 Even though the second prototype is based on the use of a context parameter that passes a semantics instance down to every construct invocation, the folding and lifting functionalities are provided through abstract given instances of type classes declaring extension methods, as per prototype 1.
 %
-Libraries, as well as core syntaxes, are defined as classes and traits, respectively, that take a context parameter of type \texttt{L}, short for \texttt{Language}, that must be a subtype of \texttt{AggregateFoundation}, as shown in \cref{lst:prototype-2-syntax}.
+Libraries, as well as core syntaxes, are defined as classes and traits, respectively, that take a context parameter of type \texttt{L}, short for \texttt{Language}, that must be a subtype of \texttt{AggregateFoundation}, as shown in \Cref{lst:prototype-2-syntax}.
 %
-Libraries dependent on other libraries must either instantiate their dependencies or require a context parameter that provides them, as shown in \cref{lst:prototype-2-usage-lib}.
+Libraries dependent on other libraries must either instantiate their dependencies or require a context parameter that provides them, as shown in \Cref{lst:prototype-2-usage-lib}.
 %
 This approach has the side effect that the type member \texttt{AggregateValue} present in the \texttt{AggregateFoundation} is seen as a different type for every dependent method of every library, thus making passing an aggregate value from a library method to another impossible.
 %
 This forced each semantics, library, and syntax to have a generic type constructor parameter \texttt{AV[\_]} that generalizes and uniformizes the type of the aggregate value for all the dependencies, making them compatible again.
 %
-\cref{lst:prototype-2-usage-lib} also shows how this design, with the additional cost of a static \texttt{import} for dependencies methods and given instance, allows to invoke constructs such as \texttt{branch} or \texttt{distanceTo} with having to use the \texttt{.} operator and the same applies to user programs.
+\Cref{lst:prototype-2-usage-lib} also shows how this design, with the additional cost of a static \texttt{import} for dependencies methods and given instance, allows to invoke constructs such as \texttt{branch} or \texttt{distanceTo} with having to use the \texttt{.} operator and the same applies to user programs.
 
 \lstinputlisting[float, language=Scala, caption={Prototype 2 - \ac{FC} syntax definition.}, label={lst:prototype-2-syntax}]{listings/prototype-2-syntax.scala}
 \lstinputlisting[float, language=Scala, caption={Prototype 2 - Example usage by a library developer.}, label={lst:prototype-2-usage-lib}]{listings/prototype-2-usage-lib.scala}
@@ -124,7 +124,7 @@ The next prototype attempts to improve the usability by returning to libraries d
 
 This prototype design shares some similarities with the previous one, but it has a different approach to the problem of passing the semantics instance to the constructs, and to dealing with library dependencies.
 %
-In this design, libraries are singleton objects, where each method takes a context parameter for the semantics and a context parameter for every syntax needed as a dependency, as shown in \cref{lst:prototype-3-usage-lib}.
+In this design, libraries are singleton objects, where each method takes a context parameter for the semantics and a context parameter for every syntax needed as a dependency, as shown in \Cref{lst:prototype-3-usage-lib}.
 %
 Alternatively, a library method can instantiate its syntax dependencies and only take a context parameter for the semantics, in a similar way to the previous prototype.
 %
@@ -138,13 +138,13 @@ The last prototype represents a return to the original mixin-oriented design use
 
 \subsection{Prototype 4: Mixin composition} \label{chap:design->sec:dsl->subsec:prototype-4-mixin-composition}
 
-In this design, the \texttt{AggregateFoundation} trait is the same as in prototype 1 (see \cref{lst:prototype-1-aggregate-foundation}), without the need for the generic type constructor for aggregate values, because syntaxes, semantics, and the foundation are meant to become part of the same type hierarchy, and a type member for aggregate values will be the same for all the mixed-in traits.
+In this design, the \texttt{AggregateFoundation} trait is the same as in prototype 1 (see \Cref{lst:prototype-1-aggregate-foundation}), without the need for the generic type constructor for aggregate values, because syntaxes, semantics, and the foundation are meant to become part of the same type hierarchy, and a type member for aggregate values will be the same for all the mixed-in traits.
 %
 For instance, given a semantics such as \texttt{ExchangeCalculusSemantics}, giving proof for the support for a syntax means to define a trait to be mixed in with the semantics, that implements the syntax in terms of the semantics.
 %
-Libraries are defined, like in ScaFi, with mixin traits that declare their dependencies using self-type annotations, as shown in \cref{lst:prototype-4-usage-lib}.
+Libraries are defined, like in ScaFi, with mixin traits that declare their dependencies using self-type annotations, as shown in \Cref{lst:prototype-4-usage-lib}.
 
-The main advantage of this design is the possibility to invoke constructs without the \texttt{.} operator, as shown in \cref{lst:prototype-4-usage-lib}, while the main disadvantage is the need to inherit from all the transitive dependencies together in the program class, and having to honor a global construct naming consistency both in all the libraries and in the semantics implementation.
+The main advantage of this design is the possibility to invoke constructs without the \texttt{.} operator, as shown in \Cref{lst:prototype-4-usage-lib}, while the main disadvantage is the need to inherit from all the transitive dependencies together in the program class, and having to honor a global construct naming consistency both in all the libraries and in the semantics implementation.
 
 \lstinputlisting[float, language=Scala, caption={Prototype 4 - Example usage by a library developer.}, label={lst:prototype-4-usage-lib}]{listings/prototype-4-usage-lib.scala}
 
@@ -160,7 +160,7 @@ The disadvantage of this design would have been the different invocation syntax 
 %
 This disadvantage has been overcome by defining a facade library for every core syntax, hiding the \quotes{\texttt{language.}} prefix necessary for invoking core syntax constructs, with the small cost of having to write a facade library for every future syntax developed by researchers.
 %
-An \ac{UML} diagram of the final model for the foundation is shown in \cref{fig:final-design-foundation-diagram}.
+An \ac{UML} diagram of the final model for the foundation is shown in \Cref{fig:final-design-foundation-diagram}.
 
 \begin{figure}
     \centering
@@ -186,7 +186,7 @@ An \ac{UML} diagram of the final model for the foundation is shown in \cref{fig:
 
 Thanks to this design, the gradient construct, also known as \texttt{distanceTo}, can be defined to work with any aggregate semantics that supports the field calculus syntax, and thanks to Scala context bounds it can also be defined to work with any numeric type that supports an upper bound, such as \texttt{Double}.
 %
-The resulting code for the \texttt{distanceTo} construct is shown in \cref{lst:distance-to}, which resembles the syntax of the prototype \ac{DSL} of \cref{lst:gradient-distance-xc-scala2-dsl}.
+The resulting code for the \texttt{distanceTo} construct is shown in \Cref{lst:distance-to}, which resembles the syntax of the prototype \ac{DSL} of \Cref{lst:gradient-distance-xc-scala2-dsl}.
 %
 The provided snippet demonstrates how this design effectively achieves the goals pursued by the other design prototypes:
 \begin{itemize}
@@ -208,7 +208,7 @@ By abstracting common features of aggregate programming languages such as \ac{FC
 %
 The reason is that whatever the next aggregate calculus semantics will be, it is expected to provide some kind of notion of field, which should allow iterating over values from neighbors, including self.
 %
-Additionally, \texttt{AggregateFoundation} provides the \ac{API} to exclude the value for self from an \texttt{AggregateValue}, as well as to retrieve the value for self only, using extensions method inspired by the \ac{XC} \ac{DSL} experiment of \cref{chap:state-of-the-art->sec:xc-experiment}.
+Additionally, \texttt{AggregateFoundation} provides the \ac{API} to exclude the value for self from an \texttt{AggregateValue}, as well as to retrieve the value for self only, using extensions method inspired by the \ac{XC} \ac{DSL} experiment of \Cref{chap:state-of-the-art->sec:xc-experiment}.
 %
 Referencing self has an important role in aggregate programs, and it was put here to provide all libraries and programs with that feature.
 %
@@ -232,11 +232,11 @@ In addition to that, it provides two abstract methods, one called \texttt{self} 
 
 Therefore, the \texttt{ExchangeCalculusSemantics} is left only with the definitions of its specific features, which are NValues additional operation on aggregate values, automatic conversion from local values and NValues, the core constructs \texttt{exchange}, here called \texttt{xc}, and \texttt{branch}, called \texttt{br}, to avoid conflicts with their counterparts defined in the implemented syntaxes.
 %
-The signature of the \texttt{xc} method has been simplified to simplify its implementation, written only in its complete form with both the \texttt{return} and \texttt{send} values explicitly passed as a couple, whereas the \texttt{exchange} method of the syntax allows different call signatures to imitate the syntax of the paper~\cite{xc}, as shown in \cref{lst:exchange-syntax}.
+The signature of the \texttt{xc} method has been simplified to simplify its implementation, written only in its complete form with both the \texttt{return} and \texttt{send} values explicitly passed as a couple, whereas the \texttt{exchange} method of the syntax allows different call signatures to imitate the syntax of the paper~\cite{xc}, as shown in \Cref{lst:exchange-syntax}.
 
 \lstinputlisting[float, language=Scala, caption={Supported syntaxes for invoking the \texttt{exchange} primitive.}, label={lst:exchange-syntax}]{listings/exchange-syntax.scala}
 
-The concrete implementation of the \ac{XC} operational semantics is discussed partly in the next section, and partly in \cref{chap:implementation->sec:xc-ops}.
+The concrete implementation of the \ac{XC} operational semantics is discussed partly in the next section, and partly in \Cref{chap:implementation->sec:xc-ops}.
 
 \subsection{The Engine} \label{chap:design->sec:final-dsl->subsec:engine}
 
@@ -254,7 +254,7 @@ The steps can be summarized into the following:
 %
 A \texttt{Context} is defined as an interface that takes inbound messages as input, called \texttt{Import}, gets altered by the aggregate program round of execution, and produces outbound messages as output, called \texttt{Export}.
 %
-More information about the implementation of a \texttt{Context} for the \ac{XC} semantics can be found in \cref{chap:implementation->sec:xc-ops}.
+More information about the implementation of a \texttt{Context} for the \ac{XC} semantics can be found in \Cref{chap:implementation->sec:xc-ops}.
 %
 An \texttt{Import} is defined as an alias for a map from device identifiers to generic values, which for the only implemented context correspond to \textit{value trees}.
 %
@@ -264,7 +264,7 @@ Here a \texttt{Path} is defined as an alias for a \texttt{List} of generic token
 %
 An \texttt{Export} instead is defined as an alias for a \texttt{MapWithDefault}, because it can send a dedicated message to a known neighbor and a default message to every other new neighbor of the device.
 %
-The \texttt{Network} is responsible for properly dispatching the messages to the intended recipients and is pictured with \ac{UML} in \cref{fig:engine-network-diagram}.
+The \texttt{Network} is responsible for properly dispatching the messages to the intended recipients and is pictured with \ac{UML} in \Cref{fig:engine-network-diagram}.
 
 \begin{figure}
     \centering
@@ -278,7 +278,7 @@ The \texttt{Network} is responsible for properly dispatching the messages to the
 
 In summary, the \texttt{Engine}, uses a \texttt{ContextFactory} to repeatedly instantiate a new \texttt{Context} for every cycle of the aggregate program execution, executes the program against the context, and finally sends the result to the network.
 %
-An \ac{UML} diagram of the \texttt{Context} and the \texttt{Engine} can be found in \cref{fig:engine-diagram}.
+An \ac{UML} diagram of the \texttt{Context} and the \texttt{Engine} can be found in \Cref{fig:engine-diagram}.
 
 \begin{figure}
     \centering
@@ -341,7 +341,7 @@ This is particularly useful to test the self-healing, self-organizing properties
 %
 Tests can be reproduced deterministically even in the random simulator thanks to the \texttt{seed} parameter that controls the generation of pseudo-random numbers.
 %
-The resulting \ac{UML} diagram of the simulator module design is shown in \cref{fig:simulator-uml}.
+The resulting \ac{UML} diagram of the simulator module design is shown in \Cref{fig:simulator-uml}.
 
 \begin{figure}
     \centering

@@ -6,17 +6,17 @@
 
 This chapter documents the implementation details of the models and libraries designed, as well as additional tools and extensions developed as research experiments and proof of concepts.
 %
-The implementation of the \texttt{core} and \texttt{simulator} modules has no external, third-party dependencies apart from the Scala standard library, thus satisfying the requirement \textit{T.7} from \cref{chap:analysis->sec:requirement-analysis}.
+The implementation of the \texttt{core} and \texttt{simulator} modules has no external, third-party dependencies apart from the Scala standard library, thus satisfying the requirement \textit{T.7} from \Cref{chap:analysis->sec:requirement-analysis}.
 %
-In particular, the chapter covers the implementation of an experimental \texttt{FoldhoodLibrary}, that demonstrates the expressiveness of the \this design by implementing an \ac{API} for \texttt{foldhood} and \texttt{foldhoodPlus} similar to the original ScaFi, and the prototype of a different implementation of the \texttt{AggregateFoundation} trait, which adds compile time assertions on the user code to prevent common mistakes and improve the quality of aggregate programs, at the expense of more complicated signatures of library methods, following requirement \textit{F.8} from \cref{chap:analysis->sec:requirement-analysis}.
+In particular, the chapter covers the implementation of an experimental \texttt{FoldhoodLibrary}, that demonstrates the expressiveness of the \this design by implementing an \ac{API} for \texttt{foldhood} and \texttt{foldhoodPlus} similar to the original ScaFi, and the prototype of a different implementation of the \texttt{AggregateFoundation} trait, which adds compile time assertions on the user code to prevent common mistakes and improve the quality of aggregate programs, at the expense of more complicated signatures of library methods, following requirement \textit{F.8} from \Cref{chap:analysis->sec:requirement-analysis}.
 %
-The chapter also covers the integration of \this with the Alchemist simulator (requirement \textit{F.4} from \cref{chap:analysis->sec:requirement-analysis}), which enables graphical and more realistic simulations, as well as additional proof of the functionality of \this.
+The chapter also covers the integration of \this with the Alchemist simulator (requirement \textit{F.4} from \Cref{chap:analysis->sec:requirement-analysis}), which enables graphical and more realistic simulations, as well as additional proof of the functionality of \this.
 
 \section{Implementation of the XC operational semantics} \label{chap:implementation->sec:xc-ops}
 
-The implementation of the operational semantics as described in paper~\cite{xc} follows the design of \cref{chap:design->sec:final-dsl->subsec:exchange-calculus-semantics-design} by defining a concrete class that inherits from \texttt{ExchangeCalculusSemantics}.
+The implementation of the operational semantics as described in paper~\cite{xc} follows the design of \Cref{chap:design->sec:final-dsl->subsec:exchange-calculus-semantics-design} by defining a concrete class that inherits from \texttt{ExchangeCalculusSemantics}.
 %
-Given that the same class serves as context for the execution of aggregate programs' rounds, following the engine design of \cref{chap:design->sec:final-dsl->subsec:engine}, it implements the \texttt{Context} interface too.
+Given that the same class serves as context for the execution of aggregate programs' rounds, following the engine design of \Cref{chap:design->sec:final-dsl->subsec:engine}, it implements the \texttt{Context} interface too.
 
 The implementation is named \texttt{BasicExchangeCalculusContext}, because it is meant to provide a simple yet readable and reliable implementation, without pursuing premature optimizations or additional features.
 %
@@ -24,7 +24,7 @@ A more advanced implementation could be developed in the future, maybe specifica
 %
 In order to maximize the reusability of its code, the logic and behavior that compose the operational semantics has been broken down into several mixin layers, with their dependencies declared through self-type annotations and abstract members.
 %
-These mixin layers have been organized into two packages based on their reusability: \texttt{context.common} with the most general and reusable mixins, and \texttt{context.exchange} with the mixins that are specific to the exchange calculus, as shown in \cref{fig:context-mixins-common,fig:context-mixins-exchange}.
+These mixin layers have been organized into two packages based on their reusability: \texttt{context.common} with the most general and reusable mixins, and \texttt{context.exchange} with the mixins that are specific to the exchange calculus, as shown in \Cref{fig:context-mixins-common,fig:context-mixins-exchange}.
 
 \begin{figure}
     \centering
@@ -57,13 +57,13 @@ If a primitive invocation is nested inside another, the invocation trace is push
 %
 This logic is implemented in the \texttt{scope} method of \texttt{StackSemantics} and is employed by the \texttt{xc} implementation of \texttt{exchange.ConstructsSemantics}.
 %
-For instance, the program in \cref{lst:value-tree-example}, at the first execution round with the \texttt{BasicExchangeCalculusContext}, would produce the value tree in \cref{fig:value-tree-example}.
+For instance, the program in \Cref{lst:value-tree-example}, at the first execution round with the \texttt{BasicExchangeCalculusContext}, would produce the value tree in \Cref{fig:value-tree-example}.
 
-\lstinputlisting[float, language=Scala, caption={Example of aggregate program that produces the value tree in \cref{fig:value-tree-example}.}, label={lst:value-tree-example}]{listings/value-tree-program.scala}
+\lstinputlisting[float, language=Scala, caption={Example of aggregate program that produces the value tree in \Cref{fig:value-tree-example}.}, label={lst:value-tree-example}]{listings/value-tree-program.scala}
 
 \begin{figure}
     \centering
-    \caption{Example of value tree produced by the program in \cref{lst:value-tree-example}.}
+    \caption{Example of value tree produced by the program in \Cref{lst:value-tree-example}.}
     \label{fig:value-tree-example}
     \bigskip
     \resizebox{0.5\linewidth}{!}{
@@ -97,17 +97,17 @@ For the scope of \this, all the simulations are executed using the \texttt{Messa
 
 \section{The build system}
 
-Following the requirements listed in \cref{chap:analysis->sec:requirement-analysis}, the chosen build system for the project is \ac{SBT}, in particular version \texttt{1.9.8}, following requirement \textit{T.3} from \cref{chap:analysis->sec:requirement-analysis}.
+Following the requirements listed in \Cref{chap:analysis->sec:requirement-analysis}, the chosen build system for the project is \ac{SBT}, in particular version \texttt{1.9.8}, following requirement \textit{T.3} from \Cref{chap:analysis->sec:requirement-analysis}.
 %
 The build tool has been customized with the following plugins:
 \begin{itemize}
-    \item \texttt{sbt-scalafix} to lint the code with \textit{scalafix}, further explained in \cref{chap:evaluation->sec:code-style}, following requirement \textit{T.6} from \cref{chap:analysis->sec:requirement-analysis};
-    \item \texttt{sbt-scalafmt} to lint the code with \textit{scalafmt}, further explained in \cref{chap:evaluation->sec:code-style}, following requirement \textit{T.6} from \cref{chap:analysis->sec:requirement-analysis};
-    \item \texttt{sbt-scalajs} and \texttt{bt-scalajs-crossproject} to cross-build the project for \textit{JavaScript} with \textit{scala-js}, following requirement \textit{T.4} from \cref{chap:analysis->sec:requirement-analysis};
-    \item \texttt{sbt-scala-native} and \texttt{sbt-scala-native-crossproject} to cross-build the project for \textit{native} with \textit{scala-native}, following requirement \textit{T.5} from \cref{chap:analysis->sec:requirement-analysis}.
+    \item \texttt{sbt-scalafix} to lint the code with \textit{scalafix}, further explained in \Cref{chap:evaluation->sec:code-style}, following requirement \textit{T.6} from \Cref{chap:analysis->sec:requirement-analysis};
+    \item \texttt{sbt-scalafmt} to lint the code with \textit{scalafmt}, further explained in \Cref{chap:evaluation->sec:code-style}, following requirement \textit{T.6} from \Cref{chap:analysis->sec:requirement-analysis};
+    \item \texttt{sbt-scalajs} and \texttt{bt-scalajs-crossproject} to cross-build the project for \textit{JavaScript} with \textit{scala-js}, following requirement \textit{T.4} from \Cref{chap:analysis->sec:requirement-analysis};
+    \item \texttt{sbt-scala-native} and \texttt{sbt-scala-native-crossproject} to cross-build the project for \textit{native} with \textit{scala-native}, following requirement \textit{T.5} from \Cref{chap:analysis->sec:requirement-analysis}.
 \end{itemize}
 %
-In addition to that, the Dotty compiler has been customized with flags that enhance the quality of the code, such as the aforementioned \textit{explicit nulls} and \textit{multiversal equality}, but also enforcement for indentation over curly braces style, warnings as errors, safe initialization checks, warnings on value discards, and more (requirement \textit{T.2} from \cref{chap:analysis->sec:requirement-analysis}).
+In addition to that, the Dotty compiler has been customized with flags that enhance the quality of the code, such as the aforementioned \textit{explicit nulls} and \textit{multiversal equality}, but also enforcement for indentation over curly braces style, warnings as errors, safe initialization checks, warnings on value discards, and more (requirement \textit{T.2} from \Cref{chap:analysis->sec:requirement-analysis}).
 
 \section{The \quotes{FoldhoodLibrary}} \label{chap:implementation->sec:foldhood-library}
 
@@ -115,7 +115,7 @@ As a proof of concept of the expressiveness of the \this design, an experimental
 %
 The library works for any aggregate context that supports the \texttt{FieldCalculusSyntax}, and implements \texttt{foldhood}, \texttt{foldhoodPlus}, \texttt{nbr}, and \texttt{nbrRange} for contexts that also support \texttt{DistanceSensor}.
 %
-The resulting \ac{API} can be seen used in \cref{lst:foldhood-library-usage},
+The resulting \ac{API} can be seen used in \Cref{lst:foldhood-library-usage},
 where \texttt{nbr} is not the same as the one defined in \texttt{FielCalculusLibrary} but has a different signature, that takes a lazy expression of type \texttt{=> T} and returns a \texttt{T}.
 %
 When evaluating a foldhood, the expression is evaluated as is and the values passed to \texttt{nbr} are recorded and returned in order, then shared with neighbors.
@@ -126,7 +126,7 @@ If the context implements the \texttt{DistanceSensor} trait, \texttt{nbrRange} c
 %
 The only difference between \texttt{foldhood} and \texttt{foldhoodPlus} is that the former does not include the expression value of the current node in the folding result, while the latter does.
 %
-The example of \cref{lst:foldhood-library-usage} demonstrates that \texttt{nbr} can be used with arguments of any type, as long as they type check in the foldhood expression.
+The example of \Cref{lst:foldhood-library-usage} demonstrates that \texttt{nbr} can be used with arguments of any type, as long as they type check in the foldhood expression.
 
 \lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{FoldhoodLibrary}.}, label={lst:foldhood-library-usage}]{listings/foldhood-usage.scala}
 
@@ -139,7 +139,7 @@ The idea is to use context bounds on every method that is supposed to share valu
 %
 Through these context bounds, the types able to be shared can be restricted by a set of rules, that, if not satisfied, won't provide the context parameter needed to invoke the method.
 %
-The type class used as bound is called \texttt{Shareable}, and its counterpart negating it is named \texttt{NotShareable}, as shown in \cref{lst:shareable-type-classes}.
+The type class used as bound is called \texttt{Shareable}, and its counterpart negating it is named \texttt{NotShareable}, as shown in \Cref{lst:shareable-type-classes}.
 %
 By default, in order to allow libraries that abstract over the semantics implementation to share at the very least primitive types and classes marked as \texttt{Serializable}, a global given instance of \texttt{Shareable} is provided for subtypes of \texttt{AnyVal} or \texttt{Serializable}.
 %
@@ -147,7 +147,7 @@ Given that the \texttt{Shareable} type class is marked as \texttt{open} and has 
 %
 As a side-effect, the \texttt{Shareable} could potentially be instantiated manually to force any type to be shareable, probably resulting in a runtime error during the actual serialization phase that would have occurred anyway without this whole feature enabled.
 %
-Nevertheless, in a typical scenario, the constraint works as expected, as shown in \cref{lst:shareable-type-classes-usage}, where the \texttt{Shareable} constraint is violated by the attempt to share a value of type \texttt{AggregateValue[Int]}, while it is marked as \texttt{NotShareable} by the \texttt{AggregateFoundation}.
+Nevertheless, in a typical scenario, the constraint works as expected, as shown in \Cref{lst:shareable-type-classes-usage}, where the \texttt{Shareable} constraint is violated by the attempt to share a value of type \texttt{AggregateValue[Int]}, while it is marked as \texttt{NotShareable} by the \texttt{AggregateFoundation}.
 %
 In the same snipped, the new signature of the \texttt{nbr} method with the context bound shows how signatures get affected by this change, in case it was merged and applied to the main branch.
 
@@ -170,9 +170,9 @@ Inside an Alchemist simulation of a network of devices, each device is represent
 %
 Each node has visibility over its neighbors and takes care to send outbound messages to the right recipients when invoked, after the execution round.
 %
-During each of the rounds, the engine will invoke the aggregate program using \textit{Java reflections}, because the program's fully qualified name is passed as a string through the configuration file written in \textit{yaml}, such as the one in \cref{lst:alchemist-demo-configuration}.
+During each of the rounds, the engine will invoke the aggregate program using \textit{Java reflections}, because the program's fully qualified name is passed as a string through the configuration file written in \textit{yaml}, such as the one in \Cref{lst:alchemist-demo-configuration}.
 %
-If the provided configuration is run with the program of \cref{lst:alchemist-demo-program}, the expected output will be similar to the snapshot of \cref{fig:alchemist-simulation}.
+If the provided configuration is run with the program of \Cref{lst:alchemist-demo-program}, the expected output will be similar to the snapshot of \Cref{fig:alchemist-simulation}.
 
 \lstinputlisting[float, style=yaml, caption={Example of Alchemist configuration file.}, label={lst:alchemist-demo-configuration}]{listings/alchemist-demo.yml}
 
@@ -180,7 +180,7 @@ If the provided configuration is run with the program of \cref{lst:alchemist-dem
 
 \begin{figure}
     \centering
-    \caption{Snapshot of the Alchemist simulation of the program in \cref{lst:alchemist-demo-program}, with the configuration in \cref{lst:alchemist-demo-configuration}.}
+    \caption{Snapshot of the Alchemist simulation of the program in \Cref{lst:alchemist-demo-program}, with the configuration in \Cref{lst:alchemist-demo-configuration}.}
     \label{fig:alchemist-simulation}
     \bigskip
     \includegraphics[width=\linewidth]{figures/alchemist-demo.png}

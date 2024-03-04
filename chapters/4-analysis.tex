@@ -26,7 +26,7 @@ During the stakeholder interviews, a comprehensive list of functional and techni
 
 \paragraph{Functional requirements} are the features that the library must provide to the users. The following are the most relevant functional requirements identified:
 \begin{enumerate}[label=\textbf{F.\arabic*}]
-    \item Redesign and implement a new \ac{API} for the \texttt{core} package\cref{chap:analysis->sec:scafi-analysis};
+    \item Redesign and implement a new \ac{API} for the \texttt{core} package\Cref{chap:analysis->sec:scafi-analysis};
     \item Redesign and implement the \texttt{tests} package with acceptance tests, easy to read and understand, and that can be used as examples;
     \item Use the \ac{XC} as the foundation of the (default) implementation of constructs, while still providing a \ac{FC} based API;
     \item Develop an \textit{Alchemist incarnation}\footnote{\url{https://github.com/AlchemistSimulator/Alchemist}}~\cite{alchemist}, enabling \this programs to run on the well-tested and widely used Alchemist simulator;
@@ -39,7 +39,7 @@ During the stakeholder interviews, a comprehensive list of functional and techni
 \paragraph{Technical requirements} are the constraints and guidelines that the library must follow to ensure the quality of code and user experience.
 \begin{enumerate}[label=\textbf{T.\arabic*}]
     \item Use Scala 3 as the host language to leverage its advanced features and enhancements;
-    \item Enable quality options on the Scala 3 compiler such as explicit nulls (\cref{chap:background->sec:scala3->subsec:explicit-nulls}) and multiversal equality (\cref{chap:background->sec:scala3->subsec:multiversal-equality});
+    \item Enable quality options on the Scala 3 compiler such as explicit nulls (\Cref{chap:background->sec:scala3->subsec:explicit-nulls}) and multiversal equality (\Cref{chap:background->sec:scala3->subsec:multiversal-equality});
     \item Employ \ac{SBT} as build system;
     \item Cross-build the project for \textit{scala-js}\footnote{\url{https://www.scala-js.org}};
     \item Cross-build the project for \textit{scala-native}\footnote{\url{https://scala-native.org}};
@@ -97,7 +97,7 @@ Finally, before starting with the design of the solution, given that the project
 
 \section{ScaFi} \label{chap:analysis->sec:scafi-analysis}
 
-The ScaFi repository\footnote{\url{https://github.com/scafi/scafi}} is organized in modules, as illustrated in \cref{fig:scafi-project-org}.
+The ScaFi repository\footnote{\url{https://github.com/scafi/scafi}} is organized in modules, as illustrated in \Cref{fig:scafi-project-org}.
 %
 For most of the use cases, only a small subset of the modules should be imported.
 %
@@ -105,7 +105,7 @@ The \this project primarily focuses on redesigning and implementing the \texttt{
 %
 However, it should be noted that the simulator implementation planned for this project will be a minimal version written in pure Scala 3, as opposed to the existing \texttt{simulator} module, which is a complex and feature-rich suite of tools for simulating aggregate programs in space and time.
 %
-Porting the remaining modules, which encompass various \ac{GUI} implementations, demos, and integration with \textit{Akka}\footnote{\url{https://akka.io}} for actual deployment of real-world aggregate applications, is out of the scope of \this, and will be addressed in \cref{chap:conclusion-and-future-work}.
+Porting the remaining modules, which encompass various \ac{GUI} implementations, demos, and integration with \textit{Akka}\footnote{\url{https://akka.io}} for actual deployment of real-world aggregate applications, is out of the scope of \this, and will be addressed in \Cref{chap:conclusion-and-future-work}.
 
 \begin{figure}
     \centering
@@ -124,7 +124,7 @@ Furthermore, the \texttt{RichLanguage} trait extends \texttt{Language} with addi
 %
 The \texttt{Semantics} trait implements the \ac{FC} constructs, the value tree building, and the \textit{foldhood context semantics}.
 %
-More insights on the foldhood semantics are provided in \cref{chap:analysis->sec:scafi-analysis->subsec:foldhood-semantics}.
+More insights on the foldhood semantics are provided in \Cref{chap:analysis->sec:scafi-analysis->subsec:foldhood-semantics}.
 %
 In addition to that, the \texttt{core} module contains other packages, such as \texttt{lib} offering standard libraries, and the utilities to provide a fully-fledged aggregate program execution environment called \textit{incarnation}.
 %
@@ -132,7 +132,7 @@ The \texttt{distributed} and \texttt{spala} modules enable ScaFi to run on real-
 %
 Lastly, the \texttt{simulator} and affiliated modules provide an advanced simulation suite featuring spacial and temporal simulation alongside multiple \ac{GUI} options, including a tridimensional renderer.
 
-To use a library component in ScaFi, the user must mix in the library trait with the \texttt{AggregateProgram} base class, as shown in \cref{lst:using-libraries-in-scafi}.
+To use a library component in ScaFi, the user must mix in the library trait with the \texttt{AggregateProgram} base class, as shown in \Cref{lst:using-libraries-in-scafi}.
 %
 As a consequence, all the transitive dependencies of the mixed-in libraries become visible within the scope of the program, necessitating careful construction of libraries to avoid conflicts.
 
