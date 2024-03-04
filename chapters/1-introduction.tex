@@ -33,16 +33,18 @@ That project is the main subject of this thesis.
 Named \quotes{\this}, it has the ambition to \textit{scale}, meaning to grow with the demand of its user without losing its qualities, such as expressiveness, reusability, maintainability, readability, and performance.
 
 
-\paragraph{Structure of the Thesis} This thesis first introduces the state of the art in aggregate computing tools and languages.
+\paragraph{Structure of the Thesis} The thesis is structured as follows.
 %
-Then, it presents a more in-depth dissertation on \ac{XC} and Scala 3, which are the main theoretical and practical foundations of \this, respectively.
+In \Cref{chap:state-of-the-art}, the state of the art is reviewed, focusing on prominent frameworks and tools such as Protelis, FCPP, ScaFi, and an experimental implementation of \ac{XC} in Scala.
 %
-In the analysis chapter, the requirements of the project are discussed, followed by the analysis of the current state of the ScaFi framework, from which this project originates.
+\Cref{chap:background} discusses the background information necessary for understanding the thesis, including discussions on the Exchange Calculus and Scala 3, covering topics such as the type system, explicit nulls, and multiversal equality.
 %
-In the design chapter, the architecture of the \texttt{core} module of \this is presented, along with the design choices that have been made for the supportive modules such as \texttt{simulator} and \texttt{tests}.
+\Cref{chap:analysis} conducts a comprehensive analysis, beginning with a detailed examination of the requirements, followed by the analysis of the current state of the ScaFi framework, from which this project originates.
 %
-Implementation details are then explained in the following chapter, along with experimental and exploratory developments.
+\Cref{chap:design} outlines the design process, starting with the study of four proposed prototypes, and culminating in the final design of the core DSL and associated components such as the engine and the simulator.
 %
-The evaluation chapter presents results from the testing and validation of the project, including techniques employed for code quality and maintainability.
+\Cref{chap:implementation} focuses on the implementation details, covering aspects such as the implementation of the \ac{XC} operational semantics, the build system, and integration with the Alchemist simulator.
 %
-Finally, the thesis concludes with a discussion of the results and the future work that can be done to improve the project.
+\Cref{chap:evaluation} presents the evaluation methodology and results, including unit tests, acceptance tests, continuous integration, and techniques employed for code quality and maintainability.
+%
+Finally, \Cref{chap:conclusion-and-future-work} concludes the thesis and provides insights into future work and potential extensions or improvements.
