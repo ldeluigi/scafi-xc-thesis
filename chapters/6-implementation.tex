@@ -130,7 +130,6 @@ The example of \Cref{lst:foldhood-library-usage} demonstrates that \texttt{nbr} 
 
 \lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{FoldhoodLibrary}.}, label={lst:foldhood-library-usage}]{listings/foldhood-usage.scala}
 
-
 \section{Context-based constraints on shared values} \label{chap:implementation->sec:context-based-constraints}
 
 This proof of concept has been implemented on a different feature branch of the repository, as it represents a very impactful change on the entire framework.
@@ -155,7 +154,6 @@ In the same snipped, the new signature of the \texttt{nbr} method with the conte
 
 \lstinputlisting[float, language=Scala, caption={Usage example of the \texttt{Shareable} type class, that demonstrates a violation of the constraint.}, label={lst:shareable-type-classes-usage}]{listings/context-based-constraints-violation.scala}
 
-
 \section{Integration with the Alchemist simulator}
 
 As stated in the GitHub repo\footnote{\url{https://github.com/AlchemistSimulator/Alchemist}}, Alchemist is a simulator for pervasive, aggregate, and nature-inspired computing.
@@ -170,9 +168,9 @@ Inside an Alchemist simulation of a network of devices, each device is represent
 %
 Each node has visibility over its neighbors and takes care to send outbound messages to the right recipients when invoked, after the execution round.
 %
-During each of the rounds, the engine will invoke the aggregate program using \textit{Java reflections}, because the program's fully qualified name is passed as a string through the configuration file written in \textit{yaml}, such as the one in \Cref{lst:alchemist-demo-configuration}.
-%
-If the provided configuration is run with the program of \Cref{lst:alchemist-demo-program}, the expected output will be similar to the snapshot of \Cref{fig:alchemist-simulation}.
+During each of the rounds, the engine will invoke the aggregate program using \textit{Java reflections}, because the program's fully qualified name is passed as a string through the configuration file written in \textit{yaml}.
+\newpage
+For instance, if the configuration of \Cref{lst:alchemist-demo-configuration} is run with the program of \Cref{lst:alchemist-demo-program}, the expected output will be similar to the snapshot of \Cref{fig:alchemist-simulation}.
 
 \lstinputlisting[float, style=yaml, caption={Example of Alchemist configuration file.}, label={lst:alchemist-demo-configuration}]{listings/alchemist-demo.yml}
 

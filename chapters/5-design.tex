@@ -290,7 +290,6 @@ An \ac{UML} diagram of the \texttt{Context} and the \texttt{Engine} can be found
     }
 \end{figure}
 
-
 \section{Network-based sensors} \label{chap:design->sec:network-based-sensors}
 
 In general, sensors and actuators are not part of the \ac{DSL} of \this.
@@ -319,7 +318,6 @@ If an aggregate context implements the \texttt{DistanceSensor[N: Numeric]} trait
 The availability of the distance sensor in the context enables the invocation of library constructs based on that, such as the \texttt{sensorDistanceTo} of the \texttt{GradientLibrary} which uses the sensors as metric for the distance to the neighbors.
 %
 The distance sensor is generic on the type of the measurement, as long as it is a numeric type, to allow for different configurations, such as measuring with floats, integers, or custom types that provide a \texttt{Numeric} given instance.
-
 
 \section{The simulator}
 

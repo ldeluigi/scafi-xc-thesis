@@ -8,7 +8,6 @@ This chapter presents the evaluation techniques employed in the project, as well
 %
 Mainly, the evaluation consists of passing the test suite, which includes both unit and acceptance tests, while the quality of the code of libraries and programs is partially ensured by the continuous integration pipeline and the code style enforcement tools.
 
-
 \section{Unit tests}
 
 The unit test framework used for the project is ScalaTest, a popular testing framework for Scala.
@@ -29,7 +28,6 @@ Where possible, unit tests are written as traits, to be mixed in with the actual
 %
 Examples of these abstract tests can be found for collections and abstractions of the \texttt{commons} module.
 
-
 \section{Acceptance tests}
 
 Acceptance tests are an important validation tool for the project, as they are the only way to ensure that the libraries are working as expected in simulated scenarios.
@@ -37,6 +35,10 @@ Acceptance tests are an important validation tool for the project, as they are t
 The tests are aimed to be as readable as possible, using the unit test \ac{DSL}, but also hiding all the complexity of the simulation setup and execution.
 %
 The idea is to use acceptance tests both as a validation tool and as a documentation tool, on one side proving the correctness of the implementations and on the other demonstrating the usage and quality of aggregate programs written with the standard libraries.
+
+In \this, acceptance tests extend the \texttt{AcceptanceTest} trait, which is a subtype of \texttt{UnitTest}, and they are located in the \texttt{tests} module.
+%
+As a consequence, acceptance tests inherit the same assertion \ac{DSL} used in unit tests, that is \texttt{AnyFlatSpec} with \texttt{ShouldMatchers}, and the same utilities for testing, providing consistency across the whole test suite.
 
 One of the most important acceptance tests currently present is named\linebreak\texttt{GradientWithObstacleTest}, which is a simulation of a bi-dimensional grid-like network of devices that compute a gradient from a source, with an obstacle in the middle of the grid that appears halfway through the simulation, as shown in \Cref{lst:gradient-with-obstacle-test}.
 %
@@ -49,7 +51,6 @@ The gradient is expected to be recalculated after the obstacle appears, and the 
 Both unit and acceptance tests are run automatically by the continuous integration pipeline, built with \textit{GitHub Actions}\footnote{\url{https://github.com/features/actions}} and hosted by GitHub\footnote{\url{https://github.com/ldeluigi/scafi-xc/actions}}.
 %
 The pipeline is invoked on every push to the repository, and it runs the tests on the latest version of the codebase, as well as on every push on open pull requests, given that \this is meant to be open source, under the \textit{Apache License 2.0}.
-
 
 \section{Code Style} \label{chap:evaluation->sec:code-style}
 
