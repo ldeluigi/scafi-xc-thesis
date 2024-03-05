@@ -5,11 +5,11 @@
 %----------------------------------------------------------------------------------------
 The design of \this has been divided into three main phases.
 %
-In the first part, four design prototypes have been developed in order to choose the best user experience for three key users, the \textit{program developer}, the \textit{library developer}, and finally \textit{a new foundation researcher}, which represents a novelty in the use cases of an aggregate programming library.
+In the first part, four design prototypes have been developed in order to determine the optimal user experience for three key users: the \textit{program developer}, the \textit{library developer}, and finally \textit{a new foundation researcher}, representing a novel addition to the use cases of an aggregate programming library.
 
 In the second part, the final version of the \ac{DSL} has been designed, taking the best features from the prototypes and integrating them into a new core \ac{DSL} for \this.
 %
-An execution context for aggregate programs made with \this has been designed and called \quotes{engine}.
+Additionally, an execution context for aggregate programs made with \this, called \quotes{engine}, has been designed.
 
 In the third and final part, the design process concerned the execution engine and the simulator.
 
@@ -19,23 +19,23 @@ The first and second part cover requirements \textit{F.1}, \textit{F.3}, \textit
 
 The process of designing a new core \ac{DSL} for \this has been carried out through rapid prototyping of four competing designs of different \acp{DSL}, each coming with a set of advantages and disadvantages, highlighted using code snippets for every key user.
 %
-Prototipation has been necessary to explore the design space and to understand the trade-offs between different design choices, as well as to test in practice the interactions of different combinations of language features.
+Prototipation has been necessary to explore the design space and to understand the trade-offs between different design options, as well as to test in practice the interactions of different combinations of language features.
 %
 For each of the four prototypes, a brief description of the design choices and the programming experience is provided, followed by the final design described in \Cref{chap:design->sec:final-dsl}.
 %
 Each prototype is named after the Scala 3 feature it is mainly based on, and each aims to separate the definition of the syntax from the definition of the semantics, and separate the definition of the semantics from the actual implementation.
 %
-This way, more than one semantic can be defined for the same syntax, and more than one implementation can be defined for the same semantic, allowing for more flexible customization and composition.
+This way, more than one semantics can be defined for the same syntax, and more than one implementation can be defined for the same semantics, allowing for more flexible customization and composition.
 %
-For the scope of \this, \ac{XC}~\cite{xc} is the only semantics considered for implementation, but the design should be flexible enough to allow for future \quotes{calculi} to be implemented as alternative foundations.
+While the \ac{XC}~\cite{xc} is the only semantics considered for implementation within the scope of \this, the design should be flexible enough for potential future \quotes{calculi} to be implemented as alternative foundations.
 %
-In practice, there is a very subtle difference between the semantics and the syntax of the same formal calculus.
+It is worth noting that there exists a subtle distinction between the semantics and syntax of the same formal calculus in practice.
 %
-In the case of \ac{XC}, the syntax and the semantics both consist of two methods, \texttt{branch} and \texttt{exchange}.
+In the case of \ac{XC}, both the syntax and the semantics consist of two methods, \texttt{branch} and \texttt{exchange}.
 %
 The difference lies in the role of the two methods in the two contexts: in the syntax, they are constructs that the programmer uses to write programs, and should be treated as an \ac{API} at all effects, while in the semantics, they are constructs that the programmer uses to implement all the supported syntaxes \ac{API}, meaning they are not part of an \ac{API} used by aggregate programs and are focused on being as complete and simple to implement as possible.
 %
-For instance, the \texttt{exchange} method of the \texttt{ExchangeCalculusSyntax} trait is focused on its usage experience, attempting to mimick the syntax provided in the paper, meanwhile the \texttt{xcexchange} method of the \texttt{ExchangeCalculusSemantics} has \texttt{protected} visibility and its signature provides only the most complete and expressive version of the \texttt{exchange} primitive presented in the paper~\cite{xc}.
+For instance, the \texttt{exchange} method of the \texttt{ExchangeCalculusSyntax} trait is focused on its usage experience, attempting to imitate the syntax provided in the paper, meanwhile the \texttt{xcexchange} method of the \texttt{ExchangeCalculusSemantics} has \texttt{protected} visibility and its signature provides only the most complete and expressive version of the \texttt{exchange} primitive presented in the paper~\cite{xc}.
 
 Each of the four prototypes retains the separation between syntax definitions, semantic definitions, syntax support declaration, and semantics implementations, and considers the programmer experience of all the three key users.
 %

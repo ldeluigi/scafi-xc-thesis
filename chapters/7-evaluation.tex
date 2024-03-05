@@ -38,10 +38,11 @@ The tests are aimed to be as readable as possible, using the unit test \ac{DSL},
 %
 The idea is to use acceptance tests both as a validation tool and as a documentation tool, on one side proving the correctness of the implementations and on the other demonstrating the usage and quality of aggregate programs written with the standard libraries.
 
-One of the most important acceptance tests currently present is named\linebreak\texttt{GradientWithObstacleTest}, which is a simulation of a bi-dimensional grid-like network of devices that compute a gradient from a source, with an obstacle in the middle of the grid that appears halfway through the simulation.
+One of the most important acceptance tests currently present is named\linebreak\texttt{GradientWithObstacleTest}, which is a simulation of a bi-dimensional grid-like network of devices that compute a gradient from a source, with an obstacle in the middle of the grid that appears halfway through the simulation, as shown in \Cref{lst:gradient-with-obstacle-test}.
 %
 The gradient is expected to be recalculated after the obstacle appears, and the test checks that the devices adapt to the new environment, confirming the self-organizing properties of the aggregate system and the functionality of the library.
 
+\lstinputlisting[float, language=Scala, caption={\texttt{GradientWithObstacleTest} acceptance test.}, label={lst:gradient-with-obstacle-test}]{listings/gradient-with-obstacle-test.scala}
 
 \section{Continuous Integration} \label{chap:evaluation->sec:continuous-integration}
 
