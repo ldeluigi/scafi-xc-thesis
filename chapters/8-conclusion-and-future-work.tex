@@ -4,54 +4,58 @@
 \label{chap:conclusion-and-future-work}
 %----------------------------------------------------------------------------------------
 
-\this is intended to be the core of a new ScaFi framework based on the Exchange Calculus, written with Scala 3.
+The objective of this work has been to develop a new ScaFi framework, called \this, based on the Exchange Calculus and written in Scala 3, focusing on the core internal Domain Specific Language.
+%
+The methodologies employed include prototyping, interviews, advanced programming patterns with Scala 3, continuous integration, and acceptance testing.
 %
 The requirements for \this, including optional ones, have all been satisfied, so the final result can be considered a success.
+%
+However, the current implementation covers only a fraction of the functionality offered by the original ScaFi framework, leaving room for further extensions.
 
-Given that the implementation covers only some of the many modules and features of the original ScaFi framework, there is still a lot of room for future work.
+The concrete implementations presented here aim for simplicity, readability, correctness, and reusability, deferring concerns about performance and efficiency for future iterations.
 %
-The concrete implementations provided in this work aim for simplicity, readability, correctness, and reusability, leaving the concern about performance and efficiency as future work.
+Furthermore, the developed simulator offers a very restricted set of features in comparison to the original ScaFi simulator, needing improvements to support more complex scenarios and one or more graphical interfaces for the user to interact with the simulator.
 %
-Additionally, the provided simulator offers a very restricted set of features if compared to the original ScaFi simulator, so it could be improved to support more complex scenarios and to provide one or more graphical interfaces for the user to interact with the simulation.
-%
-The following paragraphs provide a list of possible future developments for \this.
+The following paragraphs provide a list of possible future developments.
 
-\paragraph{Performance and efficiency improvements} The current implementation of the context and the simulator is not optimized for performance, so it could be improved to be more efficient.
+\paragraph{Performance optimization} The current implementation of the context and the simulator is not optimized for performance.
 %
-For example, the context leverages the \texttt{Map} data structure to represent \texttt{ValueTree}s, even though it is not the most efficient data structure for this purpose, while the simulator uses standard maps for the representation of the network.
+For example, the context leverages the \texttt{Map} data structure to represent \texttt{ValueTree}s, which is not the most efficient data structure for this purpose, as it stores multiple copies of all the common prefixes of the keys.
 
-\paragraph{Complete re-implementation of the core module} The \texttt{core} module is the most important module of the ScaFi framework, as it contains the basic building blocks for the development of aggregate programs.
+\paragraph{Complete re-implementation of the core module} The \texttt{core} module is the foundation of the ScaFi framework, as it contains the basic building blocks for the development of aggregate programs.
 %
-In \this, it has been implemented only partially, as only a very restricted subset of the standard library has been ported.
+In \this, it has been implemented only partially, since the only advanced construct implemented is the gradient.
 %
-Specifically, the only advanced construct implemented is the gradient.
-%
-An almost necessary future development would be the rewriting of the remaining libraries.
+A comprehensive extension to include the full standard library is essential for the framework's completeness.
 
-\paragraph{A more complete simulator} The current simulator is very basic and does not support many of the features of the original ScaFi simulator.
+\paragraph{Enhancements of the simulator} The current simulator does not support many of the features of the original ScaFi simulator and is limited to discrete time.
 %
-Additionally, it only supports discrete time and could be improved or entirely reimplemented to provide a more complete set of features.
-%
-Among these, it could provide support for graphical user interfaces, as done by the original ScaFi simulator.
+Extensions of the implementation or a complete redesign can provide a more comprehensive feature set, including support for graphical user interfaces.
 
-\paragraph{Support for real-world distributed systems} The original ScaFi allowed the deployment of aggregate programs on real-world distributed systems with the \texttt{spala} and \texttt{distributed} modules, which \this entirely lacks.
+\paragraph{Support for real-world distributed systems} The original ScaFi allowed the deployment of aggregate programs on real-world distributed systems with the \texttt{spala} and \texttt{distributed} modules, currently absent in \this.
 %
-Implementing such support is a necessary step for \this to be considered a complete replacement for the original ScaFi, as well as a framework for the programming of real-world collective adaptive systems.
+Implementing such support is a crucial step to consider \this a valid replacement for the original ScaFi.
 
-\paragraph{Experimental developments with aggregate programming} Thanks to the reusability and the modularity of the new core module, it is possible to extend it with new, experimental libraries and semantics in the scope of research projects, towards which \this is designed.
+\paragraph{Experimental developments with aggregate programming} The reusability and the modularity of the new core module allow it to be extended with new, experimental libraries and semantics, fostering research projects exploring novel aspects of aggregate programming.
 
 \paragraph{Adding more acceptance tests} Most of the reliability of the framework comes from the functionality and readability of its tests.
 %
 In particular, acceptance tests are designed to be proofreadable by experts in the field, and they are the most important tests for the framework.
 %
-Nevertheless, only a few acceptance tests are currently present, so adding more of them would be a good way to improve the reliability of the framework.
-
-\paragraph{Improvement of the Alchemist incarnation} The integration with the Alchemist simulator is still just a prototype.
+Nevertheless, only a few acceptance tests are currently present.
 %
-A more complete implementation would enable more interesting simulation scenarios, such as the simulation of situated agents, with sensors and actuators actively managed by the aggregate program.
+Strengthening the test suite would enhance the reliability of the framework, ensuring its robustness in a wider range of scenarios.
+
+\paragraph{Improvement of the Alchemist incarnation} The integration with the Alchemist simulator is still a prototype.
+%
+A more complete implementation would enable more sophisticated simulation scenarios, such as those involving situated agents, with sensors and actuators actively managed by the aggregate program.
 
 \paragraph{Survey evaluation of the framework} A survey evaluation of the framework could be conducted to assess the usability and effectiveness of the framework in the development of aggregate programs.
 %
 Additionally, it could provide conclusive results regarding the impact of the Context-based constraints on shared values discussed in \Cref{chap:implementation->sec:context-based-constraints}.
 %
 Whether or not the proposed changes to the core represent a valid improvement is still an open question, and a survey evaluation of the proposal could provide a definitive answer.
+
+In conclusion, while \this marks a significant step towards a new ScaFi framework, there is still much work to be done.
+%
+With continued development and iteration, it has the potential to significantly contribute to the field of aggregate programming, both as a development framework and as a research tool.
