@@ -16,3 +16,8 @@ deployments:
     parameters: [200, 0, 0, 20, 20]
     programs:
       - *program
+
+monitors:
+  type: SwingGUI
+  parameters:
+    graphics: alchemist-incarnation/src/main/resources/effect.json
